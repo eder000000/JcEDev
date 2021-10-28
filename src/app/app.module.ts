@@ -12,6 +12,8 @@ import { ProDetailsComponent } from './catalog/pro-details/pro-details.component
 import { CatalogComponent } from './catalog/catalog.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { AppRoutingModule } from './app-routing.module';
     ListProComponent,
     ProDetailsComponent,
     CatalogComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
