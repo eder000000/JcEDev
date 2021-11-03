@@ -17,6 +17,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { FooterComponent } from './navigation/footer/footer.component';
 import { ContentComponent } from './navigation/content/content.component';
+import { AuthService } from './auth/auth.service';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { ContentComponent } from './navigation/content/content.component';
     AppRoutingModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,1 +1,47 @@
-<p>login works!</p>
+<section class="signup-form">
+  <mat-card  class="box mat-elevation-z8" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <form  class="login-form" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <mat-card-header>
+        <mat-card-title>Ingresar</mat-card-title>
+      </mat-card-header>
+      <mat-form-field class="login-full-width">
+          <input 
+              type="email" 
+              matInput 
+              placeholder="Ingresa tu correo eletrónico" 
+              ngModel 
+              name="email"
+              required
+              #emailInput="ngModel">
+              <mat-error *ngIf="emailInput.hasError('required')">El campo no debe estar vacio.</mat-error>
+              <mat-error *ngIf="!emailInput.hasError('required')">Correo electronico inválido</mat-error>
+      </mat-form-field>
+      <mat-form-field  class="login-full-width" hintLabel="Debe contener al menos 6 caracteres.">
+          <input 
+              type="password" 
+              matInput 
+              placeholder="Contraseña" 
+              ngModel 
+              name="password" 
+              autocomplete="off"
+              minlength="6"
+              required
+              #pwInput="ngModel">
+              <mat-hint align="end"> {{ pwInput.value?.length }} / 6</mat-hint>
+              <mat-error>Debe contener al menos 6 caracteres.</mat-error>
+      </mat-form-field>
+      <mat-card-actions>
+        <button class="login-button"
+          type="submit" 
+          mat-raised-button 
+          color="primary"
+          [disabled]= "f.invalid">
+          Entrar
+      </button>
+      </mat-card-actions>
+      
+  </form>
+
+  </mat-card>
+  
+</section>

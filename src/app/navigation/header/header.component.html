@@ -1,1 +1,18 @@
-<p>header works!</p>
+<mat-toolbar class="toolbar-theme">
+    <div fxHide.gt-xs>
+        <button mat-icon-button class="toolbar-theme" (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div >
+        <a routerLink="/home">JcE</a>
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="flex-end">
+            <ul  fxLayout fxLayoutGap="20px" class="navigation-items" fxHide.xs>
+                <li><a routerLink="/">Registro</a></li>
+                <li><a routerLink="/login">Ingresar</a></li>
+                <li><a routerLink="/">Explorar</a></li>
+                <li><a routerLink="/">Salir</a></li>
+            </ul>
+    </div>
+</mat-toolbar>

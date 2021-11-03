@@ -1,8 +1,6 @@
-.toolbar-theme {
-	background: #ff8e3c;
-	border: none;
-	color: #fff;
-	font-size: 37px;
+html,
+body {
+	min-height: 100vh;
 }
 
 a{
@@ -10,15 +8,21 @@ a{
     color: white;
 }
 
+.footer 
+ {
+	background-color: #ff8e3c;
+	color: white;
+}
+
 a:hover,
 a:active {
 	color: lightgray;
 }
 
-.navigation-items {
+
+.navigation-footer-items{
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	font-size: 16px;
 }
-
