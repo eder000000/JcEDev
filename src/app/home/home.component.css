@@ -1,0 +1,103 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-body-strong_1 {
+	font-size: 40px;
+}
+
+.mat-headlinel {
+	font-size: 3px;
+}
+
+mat-card-content {
+	text-align: center;
+}
+
+mat-card-actions {
+	background-color: white;
+	align-self: flex-end;
+}
+
+.presentation-card {
+	width: 95%;
+	margin: 1em;
+	border-radius: 15px;
+}
+
+.search-pro-card {
+	width: 100%;
+	background-color: #eff0f3;
+	padding: .25em;
+	border-style: none;
+}
+
+.reg-pro-card {
+	margin-top: 1em;
+	width: 100%;
+	background-color: #eff0f3;
+}
+
+.explore-card {
+	background-color: white;
+}
+
+.img-xs-small {
+	margin: 0;
+	width: 100%;
+	max-width: 250px;
+	height: auto;
+}
+
+.img-sm-small {
+	margin: 0;
+	width: 100%;
+	max-width: 400px;
+	height: auto;
+}
+
+.img-md-medium {
+	margin: 0;
+	width: 100%;
+	max-width: 600px;
+	height: auto;
+}
+
+.img-xxs-small {
+	margin: 0;
+	background-color: rgba(255, 255, 255, .5);
+	mix-blend-mode: multiply;
+	width: 100%;
+	max-width: 100px;
+	height: auto;
+}
+
+.small-label {
+	font-size: 16px;
+}
+
+.explore-button {
+	background-color: #ff8e3c;
+	color: white;
+	width: 150px; 
+   	height: 50px; 
+   	line-height: 24px; 
+	border: 0;
+	border-radius: 10px;
+}
+
+.info-button {
+	background-color: #ff8e3c;
+	color: #eff0f3;
+	width: 120px; 
+   	height: 30px; 
+   	line-height: 24px; 
+	border: 0;
+	border-radius: 10px;
+}

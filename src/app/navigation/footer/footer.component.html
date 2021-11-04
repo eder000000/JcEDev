@@ -2,10 +2,11 @@
    <div fxFlex="row" fxLayout fxLayoutAlign="flex-end">
     <ul  fxLayout fxLayoutGap="20px" class="navigation-footer-items">
         <li><a routerLink="/home">Home</a></li>
-        <li><a routerLink="/">Registro</a></li>
-        <li><a routerLink="/login">Ingresar</a></li>
-        <li><a routerLink="/">Explorar</a></li>
-        <li><a routerLink="/">Salir</a></li>
+        <li *ngIf="!isAuth"><a routerLink="/">Registro</a></li>
+        <li *ngIf="!isAuth"><a routerLink="/login">Ingresar</a></li>
+        <li *ngIf="isAuth"><a routerLink="/">Explorar</a></li>
+        <li *ngIf="isAuth"><a routerLink="/register">Registrar profesional</a></li>
+        <li *ngIf="isAuth"><a routerLink="/">Salir</a></li>
     </ul>
    
    </div>

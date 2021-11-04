@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import {MatCardModule} from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -8,7 +9,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input'
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from "@angular/material/core";
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -23,7 +26,10 @@ import { MatInputModule } from '@angular/material/input'
             MatMenuModule,
             ReactiveFormsModule,
             FormsModule,
-            MatInputModule
+            MatInputModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            MatCheckboxModule
           ],
 
   exports: [MatCardModule,
@@ -35,7 +41,10 @@ import { MatInputModule } from '@angular/material/input'
             MatMenuModule,
             ReactiveFormsModule,
             FormsModule,
-            MatInputModule]
+            MatInputModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            MatCheckboxModule]
 })
 
 export class MaterialModule {}

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-register-pro',
@@ -6,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-pro.component.css']
 })
 export class RegisterProComponent implements OnInit {
+  createForm : FormGroup;
+  maxDate;
+
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+  }
+
+  onSubmit(form: NgForm) {
+    
   }
 
 }

@@ -1,1 +1,46 @@
-<p>home works!</p>
+<!--Redesign of homepage
+Author: Edmundo y Eder Garcia-->
+<section class="home-container" fxFlex fxLayout="column" fxLayoutAlign="center center">
+
+    <mat-card class="search-pro-card" fxLayout="column" fxLayoutAlign="center center">
+       <mat-card-content>
+           <p class="mat-body-strong">Encuentra a los profesionales</p>
+            <mat-form-field class="form-search-bar" >
+               <mat-label class="small-label">Buscar</mat-label>
+                <input matInput="search" placeholder="Ex. Fontanero" >
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="presentation-card mat-elevation-z8" 
+    fxLayout.sm="column"  
+     fxLayoutAlign="start center">
+        <img class="img-xs-small"
+        mat-card-image src="\assets\img\undraw_under_construction_46pa.png" 
+        alt="Busca a los profesionales">
+         <mat-card-content >
+                            <p class="mat-body-strong">
+                            Jalisco con Empleo te conecta con los profesionales para todos
+                            tus proyectos de construcción, mejora, y/o reparación.
+                            </p>
+
+            <mat-card-actions>
+                <button class="explore-button" mat-raised-button align="end">Conecta</button>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+
+
+
+    <mat-card class="reg-pro-card" fxLayout fxLayoutAlign="center center">
+        <img class="img-xxs-small" mat-card-image src="\assets\img\undraw_coffee_break_h3uu_thumbnails.png">
+        <mat-card-content>
+            <p fxHide fxShow.xs class="mat-body-strong">Soy un profesional, ¿Cómo puedo suscribirme?</p>
+            <p fxHide fxShow.gt-xs class="mat-subheading-2">Soy un profesional, ¿Cómo puedo suscribirme?</p>
+            <button class="info-button" mat-button >Mas información</button>
+        </mat-card-content>
+    </mat-card>
+</section>
+

@@ -1,1 +1,73 @@
-<p>register-pro works!</p>
+<section >
+    <mat-card  class="box mat-elevation-z8" 
+               fxLayout="column" 
+               fxLayoutAlign="center center" 
+               fxLayoutGap="10px">
+
+        <form class="register-form" 
+            fxLayout="column" 
+            fxLayoutAlign="center center" 
+            fxLayoutGap="10px" 
+            #f="ngForm"
+            (ngSubmit)="onSubmit(f)">
+    
+                <mat-form-field class="register-full-width">
+                <mat-label class="small-label">Nombres</mat-label>
+                <input matInput #input maxlength="40" required >
+                </mat-form-field>
+            
+                <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Appellido Paterno </mat-label>
+                <input matInput #input maxlength="40"  required>
+                </mat-form-field>
+
+                <mat-form-field  class="register-full-width">
+                    <mat-label class="small-label">Appellido Materno </mat-label>
+                    <input matInput #input maxlength="40"  required>
+                </mat-form-field>
+
+                <mat-form-field  class="register-full-width">
+                <input matInput placeholder="Fecha de nacimiento" [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+                <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Numero celular</mat-label>
+                <input matInput #input maxlength="10"    required>
+                </mat-form-field>
+                
+                <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Calle</mat-label>
+                <input matInput #input maxlength="40"    required>
+                </mat-form-field>
+                
+                <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Numero exterior</mat-label>
+                <input matInput #input maxlength="5"    required>
+                </mat-form-field>
+
+                <mat-form-field  class="register-small-width">
+                    <mat-label class="small-label">Numero interior</mat-label>
+                    <input matInput #input maxlength="4"    required>
+                </mat-form-field>
+
+                <mat-form-field  class="register-small-width">
+                    <mat-label class="small-label">Colonia</mat-label>
+                    <input matInput #input maxlength="30"    required>
+                </mat-form-field>
+
+                <mat-form-field  class="register-small-width">
+                    <mat-label class="small-label">Municipio</mat-label>
+                    <input matInput #input maxlength="50"    required>
+                </mat-form-field>
+
+                <mat-checkbox ngModel name="agree" required color="primary">Agree to Terms and Conditions.</mat-checkbox>
+                <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+
+    
+    </form>
+</mat-card>
+    
+    </section>
+    

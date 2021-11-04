@@ -1,0 +1,32 @@
+html,
+body {
+	min-height: 100vh;
+	margin: 0;
+	background-color: #ffffff;
+	font-family: 'Roboto', sans-serif;
+}
+
+.register-form {
+	min-width: 150px;
+	max-width: 400px;
+	width: 100%;
+}
+
+.register-full-width{
+    width: 100%;
+}
+
+.register-small-width{
+    width: 30%;
+}
+
+.register-form .mat-label  {
+    color: #ff8e3c;
+  } 
+
+
+.login-button {
+	text-align: center;
+	background-color: #ff8e3c;
+	color: white;
+}
