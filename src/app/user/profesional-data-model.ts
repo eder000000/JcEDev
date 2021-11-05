@@ -4,10 +4,16 @@ export class Profesional {
     apellidoMaterno: string;
     fechaNacimiento: Date;
     numeroCelular: number;
+    fotoPerfil: String;
     calle: string;
     numExterior: number;
     numInterior: number;
     colonia: string;
     municipio: string;
-    fotoPerfil; String;
+    oficio: string;
+    descripcionOficio: string;
+    ubicacionTrabajo: string;
+    email: string;
+    contraseña: string;
+    
 }

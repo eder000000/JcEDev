@@ -4,66 +4,114 @@
                fxLayoutAlign="center center" 
                fxLayoutGap="10px">
 
-        <form class="register-form" 
+        <form [formGroup]="formNewProfesional"
+            class="register-form" 
             fxLayout="column" 
             fxLayoutAlign="center center" 
             fxLayoutGap="10px" 
-            #f="ngForm"
-            (ngSubmit)="onSubmit(f)">
+            (ngSubmit)="onSubmit()">
     
                 <mat-form-field class="register-full-width">
                 <mat-label class="small-label">Nombres</mat-label>
-                <input matInput #input maxlength="40" required >
+                <input matInput #input formControlName="nombres">
+                <mat-error *ngIf="formNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
                 </mat-form-field>
             
                 <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Appellido Paterno </mat-label>
-                <input matInput #input maxlength="40"  required>
+                <input matInput #input formControlName="apellidoPaterno">
+                <mat-error>El campo es requerido.</mat-error>
                 </mat-form-field>
 
                 <mat-form-field  class="register-full-width">
                     <mat-label class="small-label">Appellido Materno </mat-label>
-                    <input matInput #input maxlength="40"  required>
+                    <input matInput #input formControlName="apellidoMaterno">
+                    <mat-error>El campo es requerido.</mat-error>
                 </mat-form-field>
 
                 <mat-form-field  class="register-full-width">
-                <input matInput placeholder="Fecha de nacimiento" [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate" required>
+                <input 
+                matInput 
+                placeholder="Fecha de nacimiento" 
+                [matDatepicker]="picker" 
+                [max]="maxDate" 
+                formControlName="fechaNacimiento">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+                <mat-error>El campo es requerido.</mat-error>
               </mat-form-field>
 
-                <mat-form-field  class="register-full-width">
+              <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
-                <input matInput #input maxlength="10"    required>
+                <input matInput #input    formControlName="numeroCelular">
+                <mat-error>El campo es requerido.</mat-error>
+             </mat-form-field>
+
+                <mat-form-field  class="register-small-width">
+                    <mat-label class="small-label">Foto de perfil</mat-label>
+                    <input matInput #input     formControlName="fotoPerfil">
                 </mat-form-field>
+
                 
                 <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Calle</mat-label>
-                <input matInput #input maxlength="40"    required>
+                <input matInput #input formControlName="calle">
                 </mat-form-field>
                 
                 <mat-form-field  class="register-small-width">
                 <mat-label class="small-label">Numero exterior</mat-label>
-                <input matInput #input maxlength="5"    required>
+                <input matInput #input formControlName="numExterior">
                 </mat-form-field>
 
                 <mat-form-field  class="register-small-width">
                     <mat-label class="small-label">Numero interior</mat-label>
-                    <input matInput #input maxlength="4"    required>
+                    <input matInput #input     formControlName="numInterior">
                 </mat-form-field>
 
-                <mat-form-field  class="register-small-width">
+                <mat-form-field  class="register-full-width">
                     <mat-label class="small-label">Colonia</mat-label>
-                    <input matInput #input maxlength="30"    required>
+                    <input matInput #input    formControlName="colonia">
                 </mat-form-field>
 
-                <mat-form-field  class="register-small-width">
+                <mat-form-field  class="register-full-width">
                     <mat-label class="small-label">Municipio</mat-label>
-                    <input matInput #input maxlength="50"    required>
+                    <mat-select formControlName="municipio">
+                        <mat-option value="zapopan">Zapopan</mat-option>
+                        <mat-option value="guadalajara">Guadalajara</mat-option>
+                        <mat-option value="tonala">Tonala</mat-option>
+                        <mat-option value="tlaquepaque">Tlaquepaque</mat-option>
+                        <mat-option value="tlajomulco">Tlajomulco</mat-option>
+                        <mat-option value="elSalto">El Salto</mat-option>
+                      </mat-select>
+                    <input matInput #input   >
                 </mat-form-field>
 
-                <mat-checkbox ngModel name="agree" required color="primary">Agree to Terms and Conditions.</mat-checkbox>
-                <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+                <mat-form-field  class="register-full-width">
+                    <mat-label class="small-label">Oficio</mat-label>
+                    <input matInput #input     formControlName="oficio">
+                </mat-form-field>
+    
+                <mat-form-field  class="register-full-width">
+                    <mat-label class="small-label">Especialidad</mat-label>
+                    <input matInput #input    formControlName="descripcionOficio">
+                </mat-form-field>
+
+                <mat-form-field  class="register-full-width">
+                    <mat-label class="small-label">Ubicacion para trabajar</mat-label>
+                    <mat-select formControlName="ubicacionTrabajo">
+                        <mat-option value="zapopan">Zapopan</mat-option>
+                        <mat-option value="guadalajara">Guadalajara</mat-option>
+                        <mat-option value="tonala">Tonala</mat-option>
+                        <mat-option value="tlaquepaque">Tlaquepaque</mat-option>
+                        <mat-option value="tlajomulco">Tlajomulco</mat-option>
+                        <mat-option value="elSalto">El Salto</mat-option>
+                      </mat-select>
+                    <input matInput #input  >
+                </mat-form-field>
+
+                <mat-checkbox  name="agree" >Agree to Terms and Conditions.</mat-checkbox>
+
+                <input type="submit" value="Enviar" class="btn btn-block btn-info"  [disabled]=!formNewProfesional.valid>
 
     
     </form>
