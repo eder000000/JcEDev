@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Profesional } from './profesional-data-model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -7,13 +8,20 @@ import { Profesional } from './profesional-data-model';
 export class ProfesionalService {
   arrProfesional: Profesional[];
 
-  constructor() { 
+  constructor(private router: Router) { 
     this.arrProfesional = [];
   }
 
   insert(dataProfesional): void{
     this.arrProfesional.push(dataProfesional);
     console.log(this.arrProfesional);
+    this.router.navigate(['/listado']);
 
+  }
+
+  getAll(): Promise<Profesional[]>{
+    return new Promise((resolve, reject) => {
+      resolve(this.arrProfesional);
+    });
   }
 }

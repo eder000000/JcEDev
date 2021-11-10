@@ -9,7 +9,10 @@ import { ProfesionalService } from 'src/app/user/profesional.service';
   styleUrls: ['./register-pro.component.css']
 })
 export class RegisterProComponent implements OnInit {
+  isLinear = true;
   formNewProfesional : FormGroup;
+  
+  
   maxDate;
 
 
@@ -82,7 +85,7 @@ export class RegisterProComponent implements OnInit {
       })
      });
   }
- 
+
 
   onSubmit() {
     console.log(this.formNewProfesional.value);

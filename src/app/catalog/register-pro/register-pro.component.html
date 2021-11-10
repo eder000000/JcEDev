@@ -1,9 +1,13 @@
 <section >
-    <mat-card  class="box mat-elevation-z8" 
+    <mat-card  
                fxLayout="column" 
                fxLayoutAlign="center center" 
                fxLayoutGap="10px">
 
+               <mat-vertical-stepper orientation="vertical" [linear]="isLinear" #stepper>
+                <mat-step [stepControl]="formNewProfesional">
+                    <ng-template matStepLabel>Ingresar nuevo profesional</ng-template>
+    
         <form [formGroup]="formNewProfesional"
             class="register-form" 
             fxLayout="column" 
@@ -76,12 +80,12 @@
                 <mat-form-field  class="register-full-width">
                     <mat-label class="small-label">Municipio</mat-label>
                     <mat-select formControlName="municipio">
-                        <mat-option value="zapopan">Zapopan</mat-option>
-                        <mat-option value="guadalajara">Guadalajara</mat-option>
-                        <mat-option value="tonala">Tonala</mat-option>
-                        <mat-option value="tlaquepaque">Tlaquepaque</mat-option>
-                        <mat-option value="tlajomulco">Tlajomulco</mat-option>
-                        <mat-option value="elSalto">El Salto</mat-option>
+                        <mat-option value="Zapopan">Zapopan</mat-option>
+                        <mat-option value="Guadalajara">Guadalajara</mat-option>
+                        <mat-option value="Tonala">Tonala</mat-option>
+                        <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
+                        <mat-option value="Tlajomulco">Tlajomulco</mat-option>
+                        <mat-option value="ElSalto">El Salto</mat-option>
                       </mat-select>
                     <input matInput #input   >
                 </mat-form-field>
@@ -99,22 +103,31 @@
                 <mat-form-field  class="register-full-width">
                     <mat-label class="small-label">Ubicacion para trabajar</mat-label>
                     <mat-select formControlName="ubicacionTrabajo">
-                        <mat-option value="zapopan">Zapopan</mat-option>
-                        <mat-option value="guadalajara">Guadalajara</mat-option>
-                        <mat-option value="tonala">Tonala</mat-option>
-                        <mat-option value="tlaquepaque">Tlaquepaque</mat-option>
-                        <mat-option value="tlajomulco">Tlajomulco</mat-option>
-                        <mat-option value="elSalto">El Salto</mat-option>
+                        <mat-option value="Zapopan">Zapopan</mat-option>
+                        <mat-option value="Guadalajara">Guadalajara</mat-option>
+                        <mat-option value="Tonala">Tonala</mat-option>
+                        <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
+                        <mat-option value="Tlajomulco">Tlajomulco</mat-option>
+                        <mat-option value="ElSalto">El Salto</mat-option>
                       </mat-select>
                     <input matInput #input  >
                 </mat-form-field>
 
-                <mat-checkbox  name="agree" >Agree to Terms and Conditions.</mat-checkbox>
+              
 
-                <input type="submit" value="Enviar" class="btn btn-block btn-info"  [disabled]=!formNewProfesional.valid>
+                <button mat-button matStepperNext class="save-button">Guardar</button>
 
     
     </form>
+</mat-step>
+
+    <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    Registro Completado. 
+    </mat-step>
+
+
+</mat-vertical-stepper>
 </mat-card>
     
     </section>
