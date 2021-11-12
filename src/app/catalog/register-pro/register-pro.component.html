@@ -1,8 +1,8 @@
 <section >
     <mat-card  
-               fxLayout="column" 
-               fxLayoutAlign="center center" 
-               fxLayoutGap="10px">
+        fxLayout="column" 
+        fxLayoutAlign="center center" 
+        fxLayoutGap="10px">
 
         <mat-vertical-stepper orientation="vertical" [linear]="isLinear" #stepper>
         <mat-step [stepControl]="firstFormNewProfesional">
@@ -14,25 +14,25 @@
             fxLayoutAlign="center center" 
             fxLayoutGap="10px">
     
-                <mat-form-field class="register-full-width">
-                <mat-label class="small-label">Nombres</mat-label>
-                <input matInput #input formControlName="nombres">
-                <mat-error *ngIf="firstFormNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
-                </mat-form-field>
+        	<mat-form-field class="register-full-width">
+        		<mat-label class="small-label">Nombres</mat-label>
+        		<input matInput #input formControlName="nombres">
+        		<mat-error *ngIf="firstFormNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
+        	</mat-form-field>
             
-                <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Appellido Paterno </mat-label>
-                <input matInput #input formControlName="apellidoPaterno">
+        	<mat-form-field  class="register-full-width">
+        		<mat-label class="small-label">Appellido Paterno </mat-label>
+        		<input matInput #input formControlName="apellidoPaterno">
+        		<mat-error>El campo es requerido.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Appellido Materno </mat-label>
+                <input matInput #input formControlName="apellidoMaterno">
                 <mat-error>El campo es requerido.</mat-error>
-                </mat-form-field>
+            </mat-form-field>
 
-                <mat-form-field  class="register-full-width">
-                    <mat-label class="small-label">Appellido Materno </mat-label>
-                    <input matInput #input formControlName="apellidoMaterno">
-                    <mat-error>El campo es requerido.</mat-error>
-                </mat-form-field>
-
-                <mat-form-field  class="register-full-width">
+            <mat-form-field  class="register-full-width">
                 <input 
                 matInput 
                 placeholder="Fecha de nacimiento" 
@@ -42,93 +42,92 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error>El campo es requerido.</mat-error>
-              </mat-form-field>
+            </mat-form-field>
             
-              <mat-form-field  class="register-small-width">
+            <mat-form-field  class="register-small-width">
                 <mat-label class="small-label">Foto de perfil</mat-label>
                 <input matInput #input     formControlName="fotoPerfil">
             </mat-form-field>
 
-              <mat-form-field  class="register-full-width">
+            <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
                 <input matInput #input    formControlName="numeroCelular">
                 <mat-error>El campo es requerido.</mat-error>
              </mat-form-field>
-
              <div>
                 <button mat-button matStepperNext>Next</button>
               </div>
         </form>
-    </mat-step>
+    	</mat-step>
 
 
-    <mat-step [stepControl]="secondFormNewProfesional">
-    <form [formGroup]="secondFormNewProfesional"
-    class="register-form" 
-    fxLayout="column" 
-    fxLayoutAlign="center center" 
-    fxLayoutGap="10px">
-     <ng-template matStepLabel>Direccion personal</ng-template>
+    	<mat-step [stepControl]="secondFormNewProfesional">
+    	<form [formGroup]="secondFormNewProfesional"
+    		class="register-form" 
+    		fxLayout="column" 
+    		fxLayoutAlign="center center" 
+    		fxLayoutGap="10px">
+     	<ng-template matStepLabel>Direccion personal</ng-template>
                 
-                <mat-form-field  class="register-full-width">
+            <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Calle</mat-label>
                 <input matInput #input formControlName="calle">
-                </mat-form-field>
+            </mat-form-field>
                 
-                <mat-form-field  class="register-small-width">
+            <mat-form-field  class="register-small-width">
                 <mat-label class="small-label">Numero exterior</mat-label>
                 <input matInput #input formControlName="numExterior">
-                </mat-form-field>
+            </mat-form-field>
 
-                <mat-form-field  class="register-small-width">
-                    <mat-label class="small-label">Numero interior</mat-label>
-                    <input matInput #input     formControlName="numInterior">
-                </mat-form-field>
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Numero interior</mat-label>
+                <input matInput #input     formControlName="numInterior">
+            </mat-form-field>
 
-                <mat-form-field  class="register-full-width">
-                    <mat-label class="small-label">Colonia</mat-label>
-                    <input matInput #input    formControlName="colonia">
-                </mat-form-field>
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Colonia</mat-label>
+                <input matInput #input    formControlName="colonia">
+            </mat-form-field>
 
-                <mat-form-field  class="register-full-width">
-                    <mat-label class="small-label">Municipio</mat-label>
-                    <mat-select formControlName="municipio">
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Municipio</mat-label>
+                <mat-select formControlName="municipio">
                         <mat-option value="Zapopan">Zapopan</mat-option>
                         <mat-option value="Guadalajara">Guadalajara</mat-option>
                         <mat-option value="Tonala">Tonala</mat-option>
                         <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
                         <mat-option value="Tlajomulco">Tlajomulco</mat-option>
                         <mat-option value="ElSalto">El Salto</mat-option>
-                      </mat-select>
-                    <input matInput #input   >
-                </mat-form-field>
-
-                <div>
-                    <button mat-button matStepperNext>Next</button>
-                  </div>
-            </form>
+                </mat-select>
+                <input matInput #input   >
+            </mat-form-field>
+            <div>
+				<button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
         </mat-step>
 
         <mat-step [stepControl]="thirdFormNewProfesional">
         <form [formGroup]="thirdFormNewProfesional"
-        class="register-form" 
-        fxLayout="column" 
-        fxLayoutAlign="center center" 
-        fxLayoutGap="10px">
+        	class="register-form" 
+        	fxLayout="column" 
+        	fxLayoutAlign="center center" 
+        	fxLayoutGap="10px">
          <ng-template matStepLabel>Direccion personal</ng-template>
 
-                <mat-form-field  class="register-full-width">
-                    <mat-label class="small-label">Oficio</mat-label>
-                    <input matInput #input     formControlName="oficio">
-                </mat-form-field>
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Oficio</mat-label>
+                <input matInput #input     formControlName="oficio">
+            </mat-form-field>
     
-                <mat-form-field  class="register-full-width">
-                    <mat-label class="small-label">Especialidad</mat-label>
-                    <input matInput #input    formControlName="descripcionOficio">
-                </mat-form-field>
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Especialidad</mat-label>
+                <input matInput #input formControlName="descripcionOficio">
+            </mat-form-field>
 
-                <mat-form-field  class="register-full-width">
-                    <mat-label class="small-label">Ubicacion para trabajar</mat-label>
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Ubicacion para trabajar</mat-label>
                     <mat-select formControlName="ubicacionTrabajo">
                         <mat-option value="Zapopan">Zapopan</mat-option>
                         <mat-option value="Guadalajara">Guadalajara</mat-option>
@@ -136,20 +135,19 @@
                         <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
                         <mat-option value="Tlajomulco">Tlajomulco</mat-option>
                         <mat-option value="ElSalto">El Salto</mat-option>
-                      </mat-select>
-                    <input matInput #input  >
-                </mat-form-field>
-                <button mat-button class="save-button"(click)="save()">Guardar</button>
-    </form>
-</mat-step>
+                    </mat-select>
+                <input matInput #input  >
+            </mat-form-field>
+			<button mat-button matStepperPrevious>Back</button>
+            <button mat-button class="save-button"(click)="save()">Guardar</button>
+    	</form>
+		</mat-step>
 
-    <mat-step>
-    <ng-template matStepLabel> Registro Completado. </ng-template>
-    </mat-step>
+    	<mat-step>
+    	<ng-template matStepLabel> Registro Completado. </ng-template>
+    	</mat-step>
 
-
-</mat-vertical-stepper>
-</mat-card>
-    
-    </section>
+		</mat-vertical-stepper>
+	</mat-card>
+</section>
     
