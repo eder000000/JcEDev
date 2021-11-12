@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ProfesionalService } from 'src/app/user/profesional.service';
 
 
@@ -14,9 +14,14 @@ export class RegisterProComponent implements OnInit {
   
   
   maxDate;
+  firstFormNewProfesional: FormGroup;
+  secondFormNewProfesional: FormGroup;
+  thirdFormNewProfesional: FormGroup;
 
 
-  constructor(private profesionalService: ProfesionalService) { }
+  constructor(private profesionalService: ProfesionalService,
+              private formBuilder:FormBuilder) { 
+ }
 
     
 
@@ -24,7 +29,10 @@ export class RegisterProComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
 
-    this.formNewProfesional = new FormGroup({
+
+
+    
+    this.firstFormNewProfesional = this.formBuilder.group({
       
       nombres: new FormControl('', {
         validators: [Validators.required, Validators.maxLength(30)]
@@ -49,8 +57,11 @@ export class RegisterProComponent implements OnInit {
       }),
 
       fotoPerfil: new FormControl(''
-      ),
+      )
+    });
 
+
+    this.secondFormNewProfesional = this.formBuilder.group({           
       calle: new FormControl('', {
         validators: [Validators.required]
       }),
@@ -71,7 +82,9 @@ export class RegisterProComponent implements OnInit {
         validators: [Validators.required]
       }),
 
+    });
 
+    this.thirdFormNewProfesional = this.formBuilder.group({  
       oficio: new FormControl('', {
         validators: [Validators.required, Validators.maxLength(20)]
       }),
@@ -83,8 +96,15 @@ export class RegisterProComponent implements OnInit {
       ubicacionTrabajo: new FormControl('', {
         validators: [Validators.required]
       })
-     });
-  }
+
+    });
+
+}
+
+
+
+
+
 
 
   onSubmit() {
@@ -92,5 +112,11 @@ export class RegisterProComponent implements OnInit {
     this.profesionalService.insert(this.formNewProfesional.value);
   }
 
+save(){
+  console.log(this.firstFormNewProfesional.value);
+  console.log(this.secondFormNewProfesional.value);
+  console.log(this.thirdFormNewProfesional.value);
+
+}
 
 }

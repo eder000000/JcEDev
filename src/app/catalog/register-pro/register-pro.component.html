@@ -4,21 +4,20 @@
                fxLayoutAlign="center center" 
                fxLayoutGap="10px">
 
-               <mat-vertical-stepper orientation="vertical" [linear]="isLinear" #stepper>
-                <mat-step [stepControl]="formNewProfesional">
-                    <ng-template matStepLabel>Ingresar nuevo profesional</ng-template>
+        <mat-vertical-stepper orientation="vertical" [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormNewProfesional">
+        <ng-template matStepLabel>Información personal </ng-template>
     
-        <form [formGroup]="formNewProfesional"
+        <form [formGroup]="firstFormNewProfesional"
             class="register-form" 
             fxLayout="column" 
             fxLayoutAlign="center center" 
-            fxLayoutGap="10px" 
-            (ngSubmit)="onSubmit()">
+            fxLayoutGap="10px">
     
                 <mat-form-field class="register-full-width">
                 <mat-label class="small-label">Nombres</mat-label>
                 <input matInput #input formControlName="nombres">
-                <mat-error *ngIf="formNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
+                <mat-error *ngIf="firstFormNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
                 </mat-form-field>
             
                 <mat-form-field  class="register-full-width">
@@ -44,6 +43,11 @@
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error>El campo es requerido.</mat-error>
               </mat-form-field>
+            
+              <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Foto de perfil</mat-label>
+                <input matInput #input     formControlName="fotoPerfil">
+            </mat-form-field>
 
               <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
@@ -51,11 +55,20 @@
                 <mat-error>El campo es requerido.</mat-error>
              </mat-form-field>
 
-                <mat-form-field  class="register-small-width">
-                    <mat-label class="small-label">Foto de perfil</mat-label>
-                    <input matInput #input     formControlName="fotoPerfil">
-                </mat-form-field>
+             <div>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+        </form>
+    </mat-step>
 
+
+    <mat-step [stepControl]="secondFormNewProfesional">
+    <form [formGroup]="secondFormNewProfesional"
+    class="register-form" 
+    fxLayout="column" 
+    fxLayoutAlign="center center" 
+    fxLayoutGap="10px">
+     <ng-template matStepLabel>Direccion personal</ng-template>
                 
                 <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Calle</mat-label>
@@ -90,6 +103,20 @@
                     <input matInput #input   >
                 </mat-form-field>
 
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                  </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="thirdFormNewProfesional">
+        <form [formGroup]="thirdFormNewProfesional"
+        class="register-form" 
+        fxLayout="column" 
+        fxLayoutAlign="center center" 
+        fxLayoutGap="10px">
+         <ng-template matStepLabel>Direccion personal</ng-template>
+
                 <mat-form-field  class="register-full-width">
                     <mat-label class="small-label">Oficio</mat-label>
                     <input matInput #input     formControlName="oficio">
@@ -112,18 +139,12 @@
                       </mat-select>
                     <input matInput #input  >
                 </mat-form-field>
-
-              
-
-                <button mat-button matStepperNext class="save-button">Guardar</button>
-
-    
+                <button mat-button class="save-button"(click)="save()">Guardar</button>
     </form>
 </mat-step>
 
     <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    Registro Completado. 
+    <ng-template matStepLabel> Registro Completado. </ng-template>
     </mat-step>
 
 
