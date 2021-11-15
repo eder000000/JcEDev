@@ -9,3 +9,9 @@ $custom-theme-warn : mat-palette($mat-red);
 $custom-theme-jc : mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 
 @include angular-material-theme($custom-theme-jc);
+
+  
+  .class-b .mat-vertical-stepper-header .mat-step-icon {
+    background: #ff8e3c;
+  }
+  

@@ -1,10 +1,16 @@
-<section >
+<section class="register-container" fxFlex fxLayout="column" fxLayoutAlign="center center">
     <mat-card  
         fxLayout="column" 
         fxLayoutAlign="center center" 
         fxLayoutGap="10px">
 
-        <mat-vertical-stepper orientation="vertical" [linear]="isLinear" #stepper>
+        <mat-vertical-stepper
+        class="class-b"
+        orientation="vertical" 
+        [linear]="isLinear"
+        #stepper
+        >
+
         <mat-step [stepControl]="firstFormNewProfesional">
         <ng-template matStepLabel>Información personal </ng-template>
     
@@ -55,7 +61,7 @@
                 <mat-error>El campo es requerido.</mat-error>
              </mat-form-field>
              <div>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button class="save-button" matStepperNext>Siguiente</button>
               </div>
         </form>
     	</mat-step>
@@ -89,6 +95,11 @@
                 <input matInput #input    formControlName="colonia">
             </mat-form-field>
 
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Codigo Postal</mat-label>
+                <input matInput #input     formControlName="codigoPostal">
+            </mat-form-field>
+
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Municipio</mat-label>
                 <mat-select formControlName="municipio">
@@ -102,8 +113,8 @@
                 <input matInput #input   >
             </mat-form-field>
             <div>
-				<button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+				<button mat-button class="save-button" matStepperPrevious>Regresar</button>
+                <button mat-button class="save-button" matStepperNext>Siguiente</button>
             </div>
         </form>
         </mat-step>
@@ -114,11 +125,11 @@
         	fxLayout="column" 
         	fxLayoutAlign="center center" 
         	fxLayoutGap="10px">
-         <ng-template matStepLabel>Direccion personal</ng-template>
+         <ng-template matStepLabel>Oficio</ng-template>
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Oficio</mat-label>
-                <input matInput #input     formControlName="oficio">
+                <input matInput #input formControlName="oficio">
             </mat-form-field>
     
             <mat-form-field  class="register-full-width">
@@ -138,8 +149,8 @@
                     </mat-select>
                 <input matInput #input  >
             </mat-form-field>
-			<button mat-button matStepperPrevious>Back</button>
-            <button mat-button class="save-button"(click)="save()">Guardar</button>
+			<button mat-button class="save-button" matStepperPrevious>Regresar</button>
+            <button mat-button class="save-button" (click)="save()">Guardar</button>
     	</form>
 		</mat-step>
 
