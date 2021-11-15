@@ -12,6 +12,7 @@ export class Profesional {
 	municipio: string;
 	codigoPostal: number;
 	oficio: string;
+	especialidadOficio: string;
 	descripcionOficio: string;
 	ubicacionTrabajo: string;
 	email: string;
