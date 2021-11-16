@@ -25,6 +25,14 @@ body {
   max-width: 400px;
 }
 
+.acordion {
+  border-radius: 15px;
+  width: 70%;
+  min-width: 100px;
+  max-width: 300px;
+
+}
+
 .example-header-image {
   background-image: url('https://rickandmortyapi.com/api/character/avatar/1.jpeg');
   background-size: cover;
@@ -51,12 +59,7 @@ body {
 
 
 .details-button {
-  background-color: #ff8e3c;
-  color: white;
-  width: 170px;
-  height: 40px;
-
-  border: 0;
-  border-radius: 10px;
-  margin: 8px 8px 8px 0;
+  text-decoration: none;
+  color: #ff8e3c;
+  line-height: 24px;
 }
