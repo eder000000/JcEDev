@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Oficio } from 'src/app/job/oficios.model';
+import { OficiosService } from 'src/app/job/oficios.service';
 
 @Component({
 	selector: 'app-list-pro',
@@ -6,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: [ './list-pro.component.css' ]
 })
 export class ListProComponent implements OnInit {
+	oficios: Oficio[];
 	panelOpenState = false;
 
-	constructor() {}
+	constructor(private oficiosService: OficiosService) {}
 
-	ngOnInit(): void {}
+	ngOnInit() {
+		this.oficios = this.oficiosService.getOficios();
+	}
 }
