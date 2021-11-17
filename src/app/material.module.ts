@@ -15,6 +15,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
 	imports: [
@@ -33,7 +34,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 		MatCheckboxModule,
 		MatSelectModule,
 		MatStepperModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatChipsModule
 	],
 
 	exports: [
@@ -52,7 +54,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 		MatCheckboxModule,
 		MatSelectModule,
 		MatStepperModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatChipsModule
 	]
 })
 export class MaterialModule {}
