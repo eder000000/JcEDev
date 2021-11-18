@@ -17,6 +17,7 @@ body {
 }
 
 .profesional-card {
+  background-color: #f8f5f2;
   width: 85%;
   margin: .5em;
   border-radius: 15px;
@@ -62,6 +63,16 @@ body {
   padding-right: 15%;
 }
 
+.label-card {
+  font-weight: 500;
+
+}
+
+.card-text {
+  color: #2a2a2a;
+  margin-right: 20px;
+}
+
 
 .details-button {
   text-decoration: none;
@@ -78,4 +89,48 @@ body {
   padding: 5px 10px;
   margin: 5px;
   font-size: 12px;
+}
+
+button.oficios-button {
+  background-color: white;
+  border-color: #ff8e3c;
+  border-style: solid;
+  border-width: 1px;
+  color: #2a2a2a;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button.oficios-button:hover,
+button.oficios-button:focus {
+  background-color: #f3a167;
+  color: #f8f5f2;
+
+}
+
+
+
+.mat-chip-category {
+  background-color: #f8f5f2;
+}
+
+
+.location-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.myGallery {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.myGallery img {
+  width: 100%;
 }
