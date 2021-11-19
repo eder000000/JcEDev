@@ -1,5 +1,5 @@
 .toolbar-theme {
-  background-image: linear-gradient(135deg, #FDD819 10%, #E80505 100%);
+  background: #ff8e3c;
   border: none;
   color: #fff;
   font-size: 37px;
@@ -14,7 +14,7 @@ a {
 .material-icons.color_white {
   background: transparent;
   border: none;
-  color: #E80505;
+  color: white;
 }
 
 a:hover,
