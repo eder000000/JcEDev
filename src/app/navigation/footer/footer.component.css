@@ -25,7 +25,7 @@ a:active {
   margin: 0;
   font-size: 16px;
   font-weight: 300px;
-  text-shadow: 1px 1px 2px #d9376e;
+  text-shadow: 1px 1px 2px #e16162;
 }
 
 .cintilla {
@@ -36,5 +36,6 @@ a:active {
 .img {
   margin-top: 10px;
   padding: 0 10px;
-  filter: drop-shadow(1px 1px 2px #b8c1ec);
+  filter: drop-shadow(1px 1px 2px #e16162);
+
 }
