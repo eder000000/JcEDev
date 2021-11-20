@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
-import { ProfesionalService } from 'src/app/user/profesional.service';
-
+import { Router } from '@angular/router';
+// import { ProfesionalService } from 'src/app/user/profesional.service';
+import { FirebaseService } from 'src/app/firebase/firebase.service';
 
 @Component({
   selector: 'app-register-pro',
@@ -12,13 +13,9 @@ export class RegisterProComponent implements OnInit {
   isLinear = true;
   formNewProfesional : FormGroup;
   
-  
   maxDate;
 
-
-  constructor(private profesionalService: ProfesionalService) { }
-
-    
+  constructor(private firebaseService: FirebaseService, private router: Router) { }    
 
   ngOnInit(){
     this.maxDate = new Date();
@@ -88,9 +85,10 @@ export class RegisterProComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.formNewProfesional.value);
-    this.profesionalService.insert(this.formNewProfesional.value);
+    this.firebaseService.post(this.formNewProfesional.value).then(() => {
+      this.router.navigate(['/listado']);      
+    }).catch(e => {
+      console.log('Firebase Error: ', e)
+    });
   }
-
-
 }

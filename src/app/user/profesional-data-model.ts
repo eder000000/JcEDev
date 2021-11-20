@@ -14,6 +14,5 @@ export class Profesional {
     descripcionOficio: string;
     ubicacionTrabajo: string;
     email: string;
-    contraseña: string;
-    
+    contraseña: string;   
 }

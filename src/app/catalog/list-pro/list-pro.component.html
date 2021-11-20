@@ -1,34 +1,19 @@
-<mat-card class="example-card mat-elevation-z8" fxLayout="column" fxLayoutAlign="center center" >
-    <mat-card-header>
-       <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Name</mat-card-title>
-        <mat-card-subtitle>Municipios</mat-card-subtitle>
-    </mat-card-header>
-      <mat-card-content >
-       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil libero optio facere excepturi repellat, 
-           aut omnis iste? </p>
-        <mat-card-actions >
-           <section>
-               <a class="explore-button" mat-raised-button align="end" routerLink="/selectedProviderComponent">Ver mas</a>
-           </section>
-        </mat-card-actions>
-      </mat-card-content>
-  </mat-card>
-
- 
-  <mat-card class="example-card mat-elevation-z8" fxLayout="column" fxLayoutAlign="center center" >
-    <mat-card-header>
-       <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Name</mat-card-title>
-        <mat-card-subtitle>Municipios</mat-card-subtitle>
-    </mat-card-header>
-      <mat-card-content >
-       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil libero optio facere excepturi repellat, 
-           aut omnis iste? </p>
-        <mat-card-actions >
-           <section>
-               <a class="explore-button" mat-raised-button align="end" routerLink="/selectedProviderComponent">Ver mas</a>
-           </section>
-        </mat-card-actions>
-      </mat-card-content>
-  </mat-card>
+<div *ngFor="let pro of allPros">
+    <mat-card class="example-card mat-elevation-z8" fxLayout="column" fxLayoutAlign="center center">
+        <mat-card-header>
+            <img mat-card-avatar src={{pro.fotoPerfil}}>
+            <mat-card-title>{{pro.nombres}}</mat-card-title>
+            <mat-card-subtitle>{{pro.municipio}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil libero optio facere excepturi repellat,
+                aut omnis iste? </p>
+            <mat-card-actions>
+                <section>
+                    <a class="explore-button" mat-raised-button align="end" routerLink="/selectedProviderComponent">Ver
+                        mas</a>
+                </section>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>

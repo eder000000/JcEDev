@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "jce-db": {
+      "hosting": {
+        "JcEApp": [
+          "jce-db"
+        ]
+      }
+    }
+  }
+}
