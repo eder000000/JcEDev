@@ -15,22 +15,33 @@ Author: Edmundo y Eder Garcia-->
 
 
     <mat-card class="presentation-card mat-elevation-z8" 
-    fxLayout.sm="column"  
-     fxLayoutAlign="start center">
-        <img class="img-xs-small"
-        mat-card-image src="\assets\img\undraw_under_construction_46pa.png" 
-        alt="Busca a los profesionales">
-         <mat-card-content >
-                            <p class="mat-body-strong">
-                            Jalisco con Empleo te conecta con los profesionales para todos
-                            tus proyectos de construcción, mejora, y/o reparación.
-                            </p>
+    fxLayout.xs="column"  fxLayoutAlign.xs="center center"
+    fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="start center"
+    fxLayout.gt-sm="column" fxLayoutAlign.gt-sm="start center"
+    fxLayout.gt-md="row" fxLayoutAlign.gt-md="space-around center">
 
+        <img  
+        class="img-md-medium" 
+        mat-card-image src="{{ imageConstruction }}" 
+        alt="Busca a los profesionales">
+
+
+         <mat-card-content >
+            <p  
+            [ngClass.lt-md]="'font-class-small'"
+            [ngClass.gt-sm]="{'font-class-medium': true}"
+            [ngClass.gt-md]="{'font-class-large': true}">
+                {{textPresentationCard}}
+            </p>
+
+        
+          
             <mat-card-actions>
-                <button class="explore-button" mat-raised-button align="end">Conecta</button>
+                <button class="explore-button" mat-button routerLink="/catalog">Conecta</button>
             </mat-card-actions>
         </mat-card-content>
     </mat-card>
+
 
 
 

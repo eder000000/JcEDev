@@ -83,13 +83,16 @@ mat-card-actions {
 }
 
 .explore-button {
-  background-color: #ff8e3c;
-  color: white;
-  width: 150px;
-  height: 50px;
+  background-color: white;
+  color: #ff8e3c;
+  font-weight: 600;
+  width: 120px;
+  height: 35px;
   line-height: 24px;
-  border: 0;
+  border-color: #ff8e3c;
+  border-style: solid;
   border-radius: 10px;
+
 }
 
 .info-button {
@@ -100,4 +103,21 @@ mat-card-actions {
   line-height: 24px;
   border: 0;
   border-radius: 10px;
+}
+
+.font-class-small {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.font-class-medium {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.font-class-large {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.5em;
+  margin-bottom: 50px;
 }
