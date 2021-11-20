@@ -1,42 +1,45 @@
 html,
 body {
-	min-height: 100vh;
-	margin: 0;
-	background-color: #ffffff;
-	font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
 }
 
 mat-card {
-	background-color: #eff0f3;
+  background-color: #eff0f3;
 }
 
 mat-card-header {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 mat-card-title {
-	color: #ff8e3c;
+  color: #ff8e3c;
 }
 
 .box {
-	margin: 15% 5%;
+  margin: 15% 5%;
 }
 
 .login-form {
-	min-width: 150px;
-	max-width: 300px;
-	width: 100%;
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
 }
 
 .login-full-width {
-	width: 100%;
+  width: 100%;
 }
 
 .login-button {
-	text-align: right;
-	text-align: center;
-	background-color: #ff8e3c;
-	color: white;
+  background-color: #ff8e3c;
+  color: white;
+  width: 120px;
+  height: 30px;
+  line-height: 24px;
+  border: 0;
+  border-radius: 10px;
 }
