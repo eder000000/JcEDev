@@ -22,6 +22,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { FooterComponent } from './navigation/footer/footer.component';
 import { ContentComponent } from './navigation/content/content.component';
 import { AuthService } from './auth/auth.service';
+import { OficiosComponent } from './job/oficios/oficios.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { AuthService } from './auth/auth.service';
     HeaderComponent,
     SidenavListComponent,
     FooterComponent,
-    ContentComponent
+    ContentComponent,
+    OficiosComponent
   ],
   imports: [
     BrowserModule,

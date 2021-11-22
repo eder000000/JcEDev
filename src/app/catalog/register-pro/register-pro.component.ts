@@ -1,88 +1,96 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { ProfesionalService } from 'src/app/user/profesional.service';
 import { FirebaseService } from 'src/app/firebase/firebase.service';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-register-pro',
-  templateUrl: './register-pro.component.html',
-  styleUrls: ['./register-pro.component.css']
+	selector: 'app-register-pro',
+	templateUrl: './register-pro.component.html',
+	styleUrls: [ './register-pro.component.css' ]
 })
 export class RegisterProComponent implements OnInit {
-  isLinear = true;
-  formNewProfesional : FormGroup;
-  
-  maxDate;
+	isLinear = true;
+	formNewProfesional: FormGroup;
+	selected: any;
 
-  constructor(private firebaseService: FirebaseService, private router: Router) { }    
+	maxDate;
+	firstFormNewProfesional: FormGroup;
+	secondFormNewProfesional: FormGroup;
+	thirdFormNewProfesional: FormGroup;
 
-  ngOnInit(){
-    this.maxDate = new Date();
-    this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
+	constructor(private firebaseService: FirebaseService, private formBuilder: FormBuilder) {}
 
-    this.formNewProfesional = new FormGroup({
-      
-      nombres: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(30)]
-      }),
+	ngOnInit() {
+		this.maxDate = new Date();
+		this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
 
-      apellidoPaterno: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(30)]
-      }),
+		this.firstFormNewProfesional = this.formBuilder.group({
+			nombres: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(30) ]
+			}),
 
-      apellidoMaterno: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(30)]
-      }),
+			apellidoPaterno: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(30) ]
+			}),
 
-      fechaNacimiento: new FormControl('', {
-        validators: [Validators.required]
-      }),
+			apellidoMaterno: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(30) ]
+			}),
 
-      numeroCelular: new FormControl('', {
-        validators: [Validators.required, 
-                      Validators.maxLength(12),  
-                      Validators.pattern(/^-?(0|[1-9]\d*)?$/)]
-      }),
+			fechaNacimiento: new FormControl('', {
+				validators: [ Validators.required ]
+			}),
 
-      fotoPerfil: new FormControl(''
-      ),
+			numeroCelular: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
+			}),
 
-      calle: new FormControl('', {
-        validators: [Validators.required]
-      }),
+			fotoPerfil: new FormControl('')
+		});
 
-      numExterior: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(6)]
-      }),
-      
-      numInterior: new FormControl('', {
-        validators: [Validators.maxLength(6)]
-      }),
+		this.secondFormNewProfesional = this.formBuilder.group({
+			calle: new FormControl('', {
+				validators: [ Validators.required ]
+			}),
 
-      colonia: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(30)]
-      }),
+			numExterior: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(6) ]
+			}),
 
-      municipio: new FormControl('', {
-        validators: [Validators.required]
-      }),
+			numInterior: new FormControl('', {
+				validators: [ Validators.maxLength(6) ]
+			}),
 
+			colonia: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(30) ]
+			}),
 
-      oficio: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(20)]
-      }),
+			codigoPostal: new FormControl('', {
+				validators: [ Validators.required ]
+			}),
+			municipio: new FormControl('', {
+				validators: [ Validators.required ]
+			})
+		});
 
-      descripcionOficio: new FormControl('', {
-        validators: []
-      }),
+		this.thirdFormNewProfesional = this.formBuilder.group({
+			oficio: new FormControl('', {
+				validators: [ Validators.required, Validators.maxLength(20) ]
+			}),
 
-      ubicacionTrabajo: new FormControl('', {
-        validators: [Validators.required]
-      })
-     });
-  }
+			especialidadOficio: new FormControl('', {
+				validators: []
+			}),
 
+			descripcionOficio: new FormControl('', {
+				validators: []
+			}),
+
+			ubicacionTrabajo: new FormControl('', {
+				validators: [ Validators.required ]
+			})
+		});
+	}
 
   onSubmit() {
     this.firebaseService.post(this.formNewProfesional.value).then(() => {
@@ -91,4 +99,10 @@ export class RegisterProComponent implements OnInit {
       console.log('Firebase Error: ', e)
     });
   }
+
+	save() {
+		console.log(this.firstFormNewProfesional.value);
+		console.log(this.secondFormNewProfesional.value);
+		console.log(this.thirdFormNewProfesional.value);
+	}
 }

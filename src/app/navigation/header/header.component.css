@@ -1,24 +1,34 @@
 .toolbar-theme {
-	background: #ff8e3c;
-	border: none;
-	color: #fff;
-	font-size: 37px;
+  background: #ff8e3c;
+  border: none;
+  color: #fff;
+  font-size: 37px;
 }
 
-a{
-    text-decoration: none;
-    color: white;
+a {
+  text-decoration: none;
+  color: white;
+
+}
+
+.logo {
+  text-shadow: 1px 1px 2px #b8c1ec;
+}
+
+.material-icons.color_white {
+  background: transparent;
+  border: none;
+  color: white;
 }
 
 a:hover,
 a:active {
-	color: lightgray;
+  color: lightgray;
 }
 
 .navigation-items {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	font-size: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
 }
-
