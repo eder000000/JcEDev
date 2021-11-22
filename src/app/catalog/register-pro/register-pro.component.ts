@@ -18,7 +18,7 @@ export class RegisterProComponent implements OnInit {
 	secondFormNewProfesional: FormGroup;
 	thirdFormNewProfesional: FormGroup;
 
-	constructor(private firebaseService: FirebaseService, private formBuilder: FormBuilder) {}
+	constructor(private firebaseService: FirebaseService, private formBuilder: FormBuilder, private router:Router) {}
 
 	ngOnInit() {
 		this.maxDate = new Date();
