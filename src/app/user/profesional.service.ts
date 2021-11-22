@@ -1,3 +1,5 @@
+// #FIXME: Unused service: Replaced with firebase-service
+
 import { Injectable } from '@angular/core';
 import { Profesional } from './profesional-data-model';
 import { Router } from '@angular/router';

@@ -14,3 +14,6 @@ body {
 .mat-expansion-indicator::after {
   color: #ff8e3c;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

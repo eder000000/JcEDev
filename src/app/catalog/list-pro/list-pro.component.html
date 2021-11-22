@@ -1,12 +1,9 @@
 <section class="profesionals-list">
-        <div *ngFor="let num of [1,2, 3, 4, 5]">
-
-
-            
+        <div *ngFor="let pro of allPros">
         <mat-card class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
                <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title>Eder Garcia</mat-card-title>
+                <mat-card-title>{{pro.nombres}}</mat-card-title>
                 <mat-card-subtitle>
                     <div class="profesionals-list" > 
                         <button class="oficios-button">Carpintero</button>
@@ -32,10 +29,7 @@
                     </div>
 
                     <div class="location-list">
-                        <p class="card-text">Zapopan</p> 
-                        <p class="card-text">Guadalajara</p> 
-                        <p class="card-text">Tlaquepaque</p> 
-
+                        <p class="card-text">{{pro.municipio}}</p>  
                     </div>
                     <div>
                         <p class="label-card">Telefono de contacto : </p> 
@@ -77,11 +71,5 @@
 
               </mat-card-content>
         </mat-card>
-
-
-            
         </div>
-    
-
-
 </section>
