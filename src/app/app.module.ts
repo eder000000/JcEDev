@@ -23,6 +23,7 @@ import { FooterComponent } from './navigation/footer/footer.component';
 import { ContentComponent } from './navigation/content/content.component';
 import { AuthService } from './auth/auth.service';
 import { OficiosComponent } from './job/oficios/oficios.component';
+import { AddOficioComponent } from './job/add-oficio/add-oficio.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { OficiosComponent } from './job/oficios/oficios.component';
     SidenavListComponent,
     FooterComponent,
     ContentComponent,
-    OficiosComponent
+    OficiosComponent,
+    AddOficioComponent
   ],
   imports: [
     BrowserModule,
