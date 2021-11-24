@@ -18,7 +18,7 @@ export class RegisterProComponent implements OnInit {
 	secondFormNewProfesional: FormGroup;
 	thirdFormNewProfesional: FormGroup;
 
-	constructor(private firebaseService: FirebaseService, private formBuilder: FormBuilder, private router:Router) {}
+	constructor(private firebaseService: FirebaseService, private formBuilder: FormBuilder, private router: Router) {}
 
 	ngOnInit() {
 		this.maxDate = new Date();
@@ -92,13 +92,16 @@ export class RegisterProComponent implements OnInit {
 		});
 	}
 
-  onSubmit() {
-    this.firebaseService.post(this.formNewProfesional.value).then(() => {
-      this.router.navigate(['/listado']);      
-    }).catch(e => {
-      console.log('Firebase Error: ', e)
-    });
-  }
+	onSubmit() {
+		this.firebaseService
+			.post(this.formNewProfesional.value)
+			.then(() => {
+				this.router.navigate([ '/listado' ]);
+			})
+			.catch((e) => {
+				console.log('Firebase Error: ', e);
+			});
+	}
 
 	save() {
 		console.log(this.firstFormNewProfesional.value);
