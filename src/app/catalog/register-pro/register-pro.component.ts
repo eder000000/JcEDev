@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/firebase/firebase.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Profesional } from 'src/app/user/profesional-data-model';
+
+import { concatJSON } from '../../../utils/json-utils';
 
 @Component({
 	selector: 'app-register-pro',
@@ -92,17 +95,18 @@ export class RegisterProComponent implements OnInit {
 		});
 	}
 
-  onSubmit() {
-    this.firebaseService.post(this.formNewProfesional.value).then(() => {
-      this.router.navigate(['/listado']);      
-    }).catch(e => {
-      console.log('Firebase Error: ', e)
-    });
-  }
-
 	save() {
 		console.log(this.firstFormNewProfesional.value);
 		console.log(this.secondFormNewProfesional.value);
 		console.log(this.thirdFormNewProfesional.value);
+
+		var profesional = concatJSON(this.firstFormNewProfesional.value, this.secondFormNewProfesional.value);
+		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
+
+		this.firebaseService.post(profesional).then(() => {
+		this.router.navigate(['/listado']);      
+		}).catch(e => {
+		console.log('Firebase Error: ', e)
+		});
 	}
 }

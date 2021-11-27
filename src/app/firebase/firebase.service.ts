@@ -14,7 +14,8 @@ export class FirebaseService {
     this.allPros = db.collection('pro').valueChanges();
   }
 
-  post(profesional: Profesional): any {
+  post(profesional: any): any {
+    console.log(profesional);
     return this.db.collection('pro').add(profesional);
   }
   
