@@ -74,7 +74,30 @@
     		fxLayoutAlign="center center" 
     		fxLayoutGap="10px">
      	<ng-template matStepLabel>Direccion personal</ng-template>
-                
+
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Codigo Postal</mat-label>
+                <input matInput #input     formControlName="codigoPostal" (focusout) = "renderAddress($event.srcElement.value)">
+            </mat-form-field>
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Municipio</mat-label>
+                <mat-select formControlName="municipio" (selectionChange) = "renderColonies($event.value)">
+                        <mat-option *ngFor="let mun of allMunicipalities" value={{mun.id_municipality}}>
+                            {{mun.municipality_name}}
+                        </mat-option>
+                </mat-select>
+                <input matInput #input   >
+            </mat-form-field> 
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Colonia</mat-label>
+                <mat-select formControlName="colonia" (selectionChange) = "renderZip($event.value)">
+                        <mat-option *ngFor="let col of allColonies" value={{col.id_colony_code}}>{{col.colony_name}}</mat-option>
+                </mat-select>
+                <input matInput #input>
+            </mat-form-field>
+
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Calle</mat-label>
                 <input matInput #input formControlName="calle">
@@ -90,28 +113,6 @@
                 <input matInput #input     formControlName="numInterior">
             </mat-form-field>
 
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Colonia</mat-label>
-                <input matInput #input    formControlName="colonia">
-            </mat-form-field>
-
-            <mat-form-field  class="register-small-width">
-                <mat-label class="small-label">Codigo Postal</mat-label>
-                <input matInput #input     formControlName="codigoPostal">
-            </mat-form-field>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Municipio</mat-label>
-                <mat-select formControlName="municipio">
-                        <mat-option value="Zapopan">Zapopan</mat-option>
-                        <mat-option value="Guadalajara">Guadalajara</mat-option>
-                        <mat-option value="Tonala">Tonala</mat-option>
-                        <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
-                        <mat-option value="Tlajomulco">Tlajomulco</mat-option>
-                        <mat-option value="ElSalto">El Salto</mat-option>
-                </mat-select>
-                <input matInput #input   >
-            </mat-form-field>
             <div>
 				<button mat-button class="save-button" matStepperPrevious>Regresar</button>
                 <button mat-button class="save-button" matStepperNext>Siguiente</button>
