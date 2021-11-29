@@ -47,23 +47,23 @@ export class RegisterProComponent implements OnInit {
 
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoPaterno: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoMaterno: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			fechaNacimiento: new FormControl('', {
-				// validators: [ Validators.required ]
+				validators: [ Validators.required ]
 			}),
 
 			numeroCelular: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
+				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
 			}),
 
 			fotoPerfil: new FormControl('')
