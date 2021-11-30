@@ -9,7 +9,7 @@ import { Municipality } from '../address/municipality-model';
   providedIn: 'root'
 })
 export class HerokuAddressService {
-  endpoint:string = 'http://localhost:4000'
+  endpoint:string = 'https://addressing-mexico-api.herokuapp.com'
   constructor(private httpClient:HttpClient) { }
 
   httpHeader = {

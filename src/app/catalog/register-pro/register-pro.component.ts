@@ -29,6 +29,8 @@ export class RegisterProComponent implements OnInit {
 	allColonies: Colony[]
 	selectedMun: string
 
+	profileImageUrl: string
+
 	constructor(
 		private firebaseService: FirebaseService, 
 		private formBuilder: FormBuilder, 
@@ -64,9 +66,7 @@ export class RegisterProComponent implements OnInit {
 
 			numeroCelular: new FormControl('', {
 				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
-			}),
-
-			fotoPerfil: new FormControl('')
+			})
 		});
 
 		this.secondFormNewProfesional = this.formBuilder.group({
@@ -116,6 +116,7 @@ export class RegisterProComponent implements OnInit {
 	save() {
 		var profesional = concatJSON(this.firstFormNewProfesional.value, this.secondFormNewProfesional.value);
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
+		profesional = concatJSON(profesional, { "fotoPerfil": this.profileImageUrl })
 
 		this.firebaseService.post(profesional).then(() => {
 		this.router.navigate(['/listado']);      
@@ -153,5 +154,14 @@ export class RegisterProComponent implements OnInit {
 				});
 			}
 		})
+	}
+
+	uploadImage(event) {
+		const observable = this.firebaseService.uploadImage(event)
+		setTimeout(() => 
+			observable.subscribe(url => {
+				this.profileImageUrl = url
+			}), 4000
+		)
 	}
 }

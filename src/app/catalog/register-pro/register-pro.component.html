@@ -50,16 +50,16 @@
                 <mat-error>El campo es requerido.</mat-error>
             </mat-form-field>
             
-            <mat-form-field  class="register-small-width">
-                <mat-label class="small-label">Foto de perfil</mat-label>
-                <input matInput #input     formControlName="fotoPerfil">
-            </mat-form-field>
+            <mat-label>Foto de Perfil</mat-label>
+            <input type="file" placeholder="Basic Input" accept=".png, .jpg" (change)="uploadImage($event)"/>
+            <mat-icon matSuffix>folder</mat-icon>
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
                 <input matInput #input    formControlName="numeroCelular">
                 <mat-error>El campo es requerido.</mat-error>
              </mat-form-field>
+
              <div>
                 <button mat-button class="save-button" matStepperNext>Siguiente</button>
               </div>
