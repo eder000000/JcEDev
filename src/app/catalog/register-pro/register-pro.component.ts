@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/firebase/firebase.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
 	selector: 'app-register-pro',
@@ -74,21 +74,18 @@ export class RegisterProComponent implements OnInit {
 		});
 
 		this.thirdFormNewProfesional = this.formBuilder.group({
-			oficio: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(20) ]
-			}),
-
-			especialidadOficio: new FormControl('', {
-				validators: []
-			}),
-
-			descripcionOficio: new FormControl('', {
-				validators: []
-			}),
-
-			ubicacionTrabajo: new FormControl('', {
-				validators: [ Validators.required ]
-			})
+			oficios: new FormArray([
+				new FormGroup({
+					oficio_name: new FormControl('', Validators.required),
+					oficio_descripcion: new FormControl('', Validators.required)
+				})
+			])
+			/* 			oficio: this.formBuilder.array([
+				this.formBuilder.group({
+					oficio_name: [ 'user1', Validators.required ],
+					oficio_descripcion: [ '', Validators.required ]
+				})
+			]) */
 		});
 	}
 
@@ -101,6 +98,26 @@ export class RegisterProComponent implements OnInit {
 			.catch((e) => {
 				console.log('Firebase Error: ', e);
 			});
+	}
+	removeFormControl(i) {
+		let usersArray = this.thirdFormNewProfesional.controls.oficios as FormArray;
+		usersArray.removeAt(i);
+	}
+
+	addFormControl() {
+		let usersArray = this.thirdFormNewProfesional.controls.oficios as FormArray;
+		let arraylen = usersArray.length;
+
+		let newUsergroup: FormGroup = this.formBuilder.group({
+			oficio_name: [ '', Validators.required ],
+			oficio_descripcion: [ '', Validators.required ]
+		});
+
+		usersArray.insert(arraylen, newUsergroup);
+	}
+
+	get oficios(): FormArray {
+		return this.thirdFormNewProfesional.get('oficios') as FormArray;
 	}
 
 	save() {

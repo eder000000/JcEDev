@@ -127,13 +127,37 @@
         	fxLayoutGap="10px">
          <ng-template matStepLabel>Oficio</ng-template>
 
+         
+         <ng-container formArrayName="oficios">
+         <div *ngFor="let _ of oficios.controls; let i=index">
+                <ng-container [formGroupName]="i">
+                    <mat-form-field  class="register-full-width">
+                        <mat-label class="small-label">Oficio</mat-label>
+                        <input type="text" matInput #input formControlName="oficio_name">
+                    </mat-form-field>
+                    <mat-form-field  class="register-full-width">
+                        <mat-label class="small-label">Descripcion</mat-label>
+                        <input type="text" matInput #input formControlName="oficio_descripcion">
+                    </mat-form-field>
+                <label>
+                    <button (click)="removeFormControl(i)">remove formGroup</button>
+                  </label>
+                </ng-container>
+            </div>
+        </ng-container>
+        <button (click)="addFormControl()">add new user formGroup</button>
+      
+       
+    
+
+<!-- 
           <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Oficio</mat-label>
                 <input matInput #input formControlName="oficio">
             </mat-form-field>
 
 
-        
+
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Especialidad</mat-label>
@@ -144,8 +168,9 @@
                 <mat-label class="small-label">Description</mat-label>
                 <input matInput #input    formControlName="descripcionOficio">
             </mat-form-field>
+         -->
 
-            <mat-form-field  class="register-full-width">
+    <!--         <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Ubicacion para trabajar</mat-label>
                     <mat-select formControlName="ubicacionTrabajo">
                         <mat-option value="Zapopan">Zapopan</mat-option>
@@ -156,7 +181,7 @@
                         <mat-option value="ElSalto">El Salto</mat-option>
                     </mat-select>
                 <input matInput #input  >
-            </mat-form-field>
+            </mat-form-field> -->
 			<button mat-button class="save-button" matStepperPrevious>Regresar</button>
             <button mat-button class="save-button" (click)="save()">Guardar</button>
     	</form>
