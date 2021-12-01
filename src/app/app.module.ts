@@ -8,6 +8,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireStorageModule } from '@angular/fire/storage'
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,8 +26,6 @@ import { FooterComponent } from './navigation/footer/footer.component';
 import { ContentComponent } from './navigation/content/content.component';
 import { AuthService } from './auth/auth.service';
 import { OficiosComponent } from './job/oficios/oficios.component';
-import { FirebaseService } from './firebase/firebase.service';
-import { HerokuAddressService } from './heroku-address/heroku-address.service';
 
 
 @NgModule({
@@ -54,10 +53,13 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
     FlexLayoutModule, 
     AngularFirestoreModule, 
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig), 
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

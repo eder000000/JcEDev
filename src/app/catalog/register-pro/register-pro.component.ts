@@ -29,6 +29,8 @@ export class RegisterProComponent implements OnInit {
 	allColonies: Colony[]
 	selectedMun: string
 
+	profileImageUrl: string
+
 	constructor(
 		private firebaseService: FirebaseService, 
 		private formBuilder: FormBuilder, 
@@ -47,26 +49,24 @@ export class RegisterProComponent implements OnInit {
 
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoPaterno: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoMaterno: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			fechaNacimiento: new FormControl('', {
-				// validators: [ Validators.required ]
+				validators: [ Validators.required ]
 			}),
 
 			numeroCelular: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
-			}),
-
-			fotoPerfil: new FormControl('')
+				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
+			})
 		});
 
 		this.secondFormNewProfesional = this.formBuilder.group({
@@ -141,6 +141,7 @@ export class RegisterProComponent implements OnInit {
 	save() {
 		var profesional = concatJSON(this.firstFormNewProfesional.value, this.secondFormNewProfesional.value);
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
+		profesional = concatJSON(profesional, { "fotoPerfil": this.profileImageUrl })
 
 		this.firebaseService.post(profesional).then(() => {
 		this.router.navigate(['/listado']);      
@@ -178,5 +179,14 @@ export class RegisterProComponent implements OnInit {
 				});
 			}
 		})
+	}
+
+	uploadImage(event) {
+		const observable = this.firebaseService.uploadImage(event)
+		setTimeout(() => 
+			observable.subscribe(url => {
+				this.profileImageUrl = url
+			}), 4000
+		)
 	}
 }
