@@ -52,7 +52,9 @@
             
             <mat-label>Foto de Perfil</mat-label>
             <input type="file" placeholder="Basic Input" accept=".png, .jpg" (change)="uploadImage($event)"/>
-            <mat-icon matSuffix>folder</mat-icon>
+            <div *ngIf="showProfilePicturePreview">
+                <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Photo of a Shiba Inu">
+            </div>
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
@@ -127,8 +129,6 @@
         	fxLayoutAlign="center center" 
         	fxLayoutGap="10px">
          <ng-template matStepLabel>Oficio</ng-template>
-
-         
          <ng-container formArrayName="oficios">
          <div *ngFor="let _ of oficios.controls; let i=index">
                 <ng-container [formGroupName]="i">
@@ -152,46 +152,11 @@
             
             </div>
         </ng-container>
+          
         <button class="details-button" (click)="addFormControl()">Agregar empleo</button>
-      
-       
-    
-
-<!-- 
-          <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Oficio</mat-label>
-                <input matInput #input formControlName="oficio">
-            </mat-form-field>
-
-
-
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Especialidad</mat-label>
-                <input matInput #input formControlName="especialidadOficio">
-            </mat-form-field>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Description</mat-label>
-                <input matInput #input    formControlName="descripcionOficio">
-            </mat-form-field>
-         -->
-
-    <!--         <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Ubicacion para trabajar</mat-label>
-                    <mat-select formControlName="ubicacionTrabajo">
-                        <mat-option value="Zapopan">Zapopan</mat-option>
-                        <mat-option value="Guadalajara">Guadalajara</mat-option>
-                        <mat-option value="Tonala">Tonala</mat-option>
-                        <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
-                        <mat-option value="Tlajomulco">Tlajomulco</mat-option>
-                        <mat-option value="ElSalto">El Salto</mat-option>
-                    </mat-select>
-                <input matInput #input  >
-            </mat-form-field> -->
             <div>
-            <button mat-button class="save-button" matStepperPrevious>Regresar</button>
-            <button mat-button class="save-button" (click)="save()">Guardar</button>
+              <button mat-button class="save-button" matStepperPrevious>Regresar</button>
+              <button mat-button class="save-button" (click)="save()">Guardar</button>
             </div>
 			
     	</form>
@@ -204,4 +169,4 @@
 		</mat-vertical-stepper>
 	</mat-card>
 </section>
-    
+   
