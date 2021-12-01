@@ -127,35 +127,38 @@
         	class="register-form" 
         	fxLayout="column" 
         	fxLayoutAlign="center center" 
-        	fxLayoutGap="10px
-            ">
-
-            <ng-template matStepLabel>Oficio</ng-template>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Oficio</mat-label>
-                <input matInput #input formControlName="oficio">
-            </mat-form-field>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Descripcion</mat-label>
-                <input matInput #input    formControlName="descripcionOficio">
-            </mat-form-field>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Ubicacion para trabajar</mat-label>
-                    <mat-select formControlName="ubicacionTrabajo">
-                        <mat-option value="Zapopan">Zapopan</mat-option>
-                        <mat-option value="Guadalajara">Guadalajara</mat-option>
-                        <mat-option value="Tonala">Tonala</mat-option>
-                        <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
-                        <mat-option value="Tlajomulco">Tlajomulco</mat-option>
-                        <mat-option value="ElSalto">El Salto</mat-option>
-                    </mat-select>
-                <input matInput #input  >
-            </mat-form-field>
-            <button mat-button class="save-button" matStepperPrevious>Regresar</button>
-            <button mat-button class="save-button" (click)="save()">Guardar</button>
+        	fxLayoutGap="10px">
+         <ng-template matStepLabel>Oficio</ng-template>
+         <ng-container formArrayName="oficios">
+         <div *ngFor="let _ of oficios.controls; let i=index">
+                <ng-container [formGroupName]="i">
+                    <mat-card class="profesional-card mat-elevation-z4">
+                    <mat-form-field  class="register-full-width">
+                        <mat-label class="small-label">Oficio</mat-label>
+                        <input type="text" matInput #input formControlName="oficio_name">
+                    </mat-form-field>
+                    <mat-form-field  class="register-full-width">
+                        <mat-label class="small-label">Descripcion</mat-label>
+                        <input type="text" matInput #input formControlName="oficio_descripcion">
+                    </mat-form-field>
+                    <mat-card-actions align="end">
+                        <label>
+                            <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
+                          </label>
+                    </mat-card-actions>
+                
+                </mat-card>
+                </ng-container>
+            
+            </div>
+        </ng-container>
+          
+        <button class="details-button" (click)="addFormControl()">Agregar empleo</button>
+            <div>
+              <button mat-button class="save-button" matStepperPrevious>Regresar</button>
+              <button mat-button class="save-button" (click)="save()">Guardar</button>
+            </div>
+			
     	</form>
 		</mat-step>
 
@@ -166,4 +169,4 @@
 		</mat-vertical-stepper>
 	</mat-card>
 </section>
-    
+   

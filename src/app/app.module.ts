@@ -8,7 +8,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
-import { AngularFireStorageModule } from '@angular/fire/storage'
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,39 +26,38 @@ import { FooterComponent } from './navigation/footer/footer.component';
 import { ContentComponent } from './navigation/content/content.component';
 import { AuthService } from './auth/auth.service';
 import { OficiosComponent } from './job/oficios/oficios.component';
-
+import { FirebaseService } from './firebase/firebase.service';
+import { HerokuAddressService } from './heroku-address/heroku-address.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    SignupComponent,
-    RegisterProComponent,
-    ListProComponent,
-    ProDetailsComponent,
-    CatalogComponent,
-    HomeComponent,
-    HeaderComponent,
-    SidenavListComponent,
-    FooterComponent,
-    ContentComponent,
-    OficiosComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    AppRoutingModule,
-    FlexLayoutModule, 
-    AngularFirestoreModule, 
-    AngularFireDatabaseModule,
-    AngularFireStorageModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig), 
-    HttpClientModule
-  ],
-  providers: [
-    AuthService
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		LoginComponent,
+		SignupComponent,
+		RegisterProComponent,
+		ListProComponent,
+		ProDetailsComponent,
+		CatalogComponent,
+		HomeComponent,
+		HeaderComponent,
+		SidenavListComponent,
+		FooterComponent,
+		ContentComponent,
+		OficiosComponent
+	],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		AppRoutingModule,
+		FlexLayoutModule,
+		AngularFirestoreModule,
+		AngularFireDatabaseModule,
+		AngularFireStorageModule,
+		AngularFireModule.initializeApp(environment.firebaseConfig),
+		HttpClientModule
+	],
+	providers: [ AuthService ],
+	bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}
