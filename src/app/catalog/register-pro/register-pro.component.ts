@@ -101,10 +101,6 @@ export class RegisterProComponent implements OnInit {
 				validators: [ Validators.required, Validators.maxLength(20) ]
 			}),
 
-			especialidadOficio: new FormControl('', {
-				validators: []
-			}),
-
 			descripcionOficio: new FormControl('', {
 				validators: []
 			}),

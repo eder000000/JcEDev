@@ -127,24 +127,18 @@
         	class="register-form" 
         	fxLayout="column" 
         	fxLayoutAlign="center center" 
-        	fxLayoutGap="10px">
-         <ng-template matStepLabel>Oficio</ng-template>
+        	fxLayoutGap="10px
+            ">
 
-          <mat-form-field  class="register-full-width">
+            <ng-template matStepLabel>Oficio</ng-template>
+
+            <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Oficio</mat-label>
                 <input matInput #input formControlName="oficio">
             </mat-form-field>
 
-
-        
-
             <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Especialidad</mat-label>
-                <input matInput #input formControlName="especialidadOficio">
-            </mat-form-field>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Description</mat-label>
+                <mat-label class="small-label">Descripcion</mat-label>
                 <input matInput #input    formControlName="descripcionOficio">
             </mat-form-field>
 
@@ -160,7 +154,7 @@
                     </mat-select>
                 <input matInput #input  >
             </mat-form-field>
-			<button mat-button class="save-button" matStepperPrevious>Regresar</button>
+            <button mat-button class="save-button" matStepperPrevious>Regresar</button>
             <button mat-button class="save-button" (click)="save()">Guardar</button>
     	</form>
 		</mat-step>
