@@ -137,6 +137,10 @@ export class RegisterProComponent implements OnInit {
 		usersArray.insert(arraylen, newUsergroup);
 	}
 
+	get oficios(): FormArray {
+		return this.thirdFormNewProfesional.get('oficios') as FormArray;
+	}
+
 	save() {
 		var profesional = concatJSON(this.firstFormNewProfesional.value, this.secondFormNewProfesional.value);
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
