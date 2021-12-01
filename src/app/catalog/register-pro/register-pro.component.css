@@ -42,3 +42,23 @@ mat-card {
   margin-right: 15px;
   margin-left: 15px;
 }
+
+
+.details-button {
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  border: 1px solid #ff8e3c;
+  line-height: 24px;
+}
+
+
+.profesional-card {
+  background-color: #f8f5f2;
+  width: 85%;
+  margin: .5em;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  min-width: 200px;
+  max-width: 250px;
+}

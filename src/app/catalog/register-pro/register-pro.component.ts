@@ -77,7 +77,8 @@ export class RegisterProComponent implements OnInit {
 			oficios: new FormArray([
 				new FormGroup({
 					oficio_name: new FormControl('', Validators.required),
-					oficio_descripcion: new FormControl('', Validators.required)
+					oficio_descripcion: new FormControl('', Validators.required),
+					oficio_imagen: new FormControl('')
 				})
 			])
 			/* 			oficio: this.formBuilder.array([

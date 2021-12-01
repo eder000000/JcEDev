@@ -131,6 +131,7 @@
          <ng-container formArrayName="oficios">
          <div *ngFor="let _ of oficios.controls; let i=index">
                 <ng-container [formGroupName]="i">
+                    <mat-card class="profesional-card mat-elevation-z4">
                     <mat-form-field  class="register-full-width">
                         <mat-label class="small-label">Oficio</mat-label>
                         <input type="text" matInput #input formControlName="oficio_name">
@@ -139,13 +140,18 @@
                         <mat-label class="small-label">Descripcion</mat-label>
                         <input type="text" matInput #input formControlName="oficio_descripcion">
                     </mat-form-field>
-                <label>
-                    <button (click)="removeFormControl(i)">remove formGroup</button>
-                  </label>
+                    <mat-card-actions align="end">
+                        <label>
+                            <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
+                          </label>
+                    </mat-card-actions>
+                
+                </mat-card>
                 </ng-container>
+            
             </div>
         </ng-container>
-        <button (click)="addFormControl()">add new user formGroup</button>
+        <button class="details-button" (click)="addFormControl()">Agregar empleo</button>
       
        
     
@@ -182,8 +188,11 @@
                     </mat-select>
                 <input matInput #input  >
             </mat-form-field> -->
-			<button mat-button class="save-button" matStepperPrevious>Regresar</button>
+            <div>
+            <button mat-button class="save-button" matStepperPrevious>Regresar</button>
             <button mat-button class="save-button" (click)="save()">Guardar</button>
+            </div>
+			
     	</form>
 		</mat-step>
 
