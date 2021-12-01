@@ -52,7 +52,9 @@
             
             <mat-label>Foto de Perfil</mat-label>
             <input type="file" placeholder="Basic Input" accept=".png, .jpg" (change)="uploadImage($event)"/>
-            <mat-icon matSuffix>folder</mat-icon>
+            <div *ngIf="showProfilePicturePreview">
+                <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Photo of a Shiba Inu">
+            </div>
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>

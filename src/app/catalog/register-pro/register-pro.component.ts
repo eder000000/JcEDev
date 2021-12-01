@@ -30,6 +30,7 @@ export class RegisterProComponent implements OnInit {
 	selectedMun: string
 
 	profileImageUrl: string
+	showProfilePicturePreview: boolean
 
 	constructor(
 		private firebaseService: FirebaseService, 
@@ -42,6 +43,7 @@ export class RegisterProComponent implements OnInit {
 		this.maxDate = new Date();
 		this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
 		this.selectedMun = ""
+		this.showProfilePicturePreview = false
 
 		this.addressService.getMunicipalities(14).subscribe(mun => {
 			this.allMunicipalities = mun;
@@ -156,12 +158,13 @@ export class RegisterProComponent implements OnInit {
 		})
 	}
 
-	uploadImage(event) {
-		const observable = this.firebaseService.uploadImage(event)
-		setTimeout(() => 
-			observable.subscribe(url => {
-				this.profileImageUrl = url
-			}), 4000
-		)
+	async uploadImage(event) {
+		console.log("Uploading image")
+		const observable = await this.firebaseService.uploadImage(event)
+		observable.subscribe(url => {
+			this.profileImageUrl = url
+			this.showProfilePicturePreview = true
+			console.log(url)
+		})
 	}
 }

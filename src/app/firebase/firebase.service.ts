@@ -27,10 +27,10 @@ export class FirebaseService {
     return this.allPros;
   }
 
-  uploadImage(event: any): any {
+  async uploadImage(event: any) {
       const id = Math.random().toString(36).substring(2);
       this.storageRef = this.storage.ref(id);
-      this.storageRef.put(event.target.files[0])
+      await this.storageRef.put(event.target.files[0])
       return this.storageRef.getDownloadURL()
   }
 }
