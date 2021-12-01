@@ -142,9 +142,13 @@
                         <input type="text" matInput #input formControlName="oficio_descripcion">
                     </mat-form-field>
                     <mat-card-actions align="end">
-                        <label>
-                            <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
-                          </label>
+                 <!--  <label>
+                         <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
+                  </label>  -->
+                          
+                     <label>
+                            <button class="remove-button" (click)="removeFormControl(i)"><mat-icon>clear</mat-icon></button>
+                     </label> 
                     </mat-card-actions>
                 
                 </mat-card>
@@ -152,7 +156,8 @@
             
             </div>
         </ng-container>
-        <button class="details-button" (click)="addFormControl()">Agregar empleo</button>
+     <button class="add-button" (click)="addFormControl()"> <mat-icon>add_circle_outline</mat-icon></button>
+       
       
        
     

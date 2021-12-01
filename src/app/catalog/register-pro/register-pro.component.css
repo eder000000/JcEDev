@@ -52,6 +52,20 @@ mat-card {
   line-height: 24px;
 }
 
+.add-button {
+  text-decoration: none;
+  background-color: white;
+  color: #ff8e3c;
+  border: none;
+}
+
+.remove-button {
+  text-decoration: none;
+  background-color: #f8f5f2;
+  color: #ff8e3c;
+  border: none;
+}
+
 
 .profesional-card {
   background-color: #f8f5f2;
