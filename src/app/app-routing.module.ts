@@ -7,7 +7,6 @@ import { ListProComponent } from './catalog/list-pro/list-pro.component';
 import { ProDetailsComponent } from './catalog/pro-details/pro-details.component';
 import { RegisterProComponent } from './catalog/register-pro/register-pro.component';
 import { HomeComponent } from './home/home.component';
-import { AddOficioComponent } from './job/add-oficio/add-oficio.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -17,8 +16,7 @@ const routes: Routes = [
 	{ path: 'catalog', component: CatalogComponent },
 	{ path: 'register', component: RegisterProComponent },
 	{ path: 'listado', component: ListProComponent },
-	{ path: 'detalle', component: ProDetailsComponent },
-	{ path: 'oficios', component: AddOficioComponent }
+	{ path: 'detalle', component: ProDetailsComponent }
 ];
 
 @NgModule({
