@@ -1,27 +1,29 @@
 <section class="profesionals-list">
-        <div *ngFor="let pro of allPros">
+        <div *ngFor="let pro of allPros; let p = index">
         <mat-card class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
                <img mat-card-avatar src={{pro.fotoPerfil}}/>
                 <mat-card-title>{{pro.nombres}} {{pro.apellidoPaterno}} {{pro.apellidoMaterno}}</mat-card-title>
                 <mat-card-subtitle>
                     <div class="profesionals-list" > 
-                        <button class="oficios-button">Carpintero</button>
-                        <button class="oficios-button">Electricista</button>
-                        <button class="oficios-button">Soñador</button>
+                        <button 
+                            *ngFor="let oficio of pro.oficios; let i=index" 
+                            class="oficios-button"
+                            (click)="updateJobInfo(p, i)"
+                        >
+                        {{oficio.oficio_name}}</button>
                     </div>
                 </mat-card-subtitle>
             </mat-card-header>
               <mat-card-content >
-                <p>Diseño y fabricación artesanal de mobiliario de autor</p>
-          
+                <p>{{pro.oficios[selectedJob[p]].oficio_descripcion}}</p>
             <mat-accordion class="acordion">
-                <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState[p] = true" (closed)="panelOpenState[p] = false">
                     <mat-expansion-panel-header>
                         <mat-panel-description>
                             <a class="details-button" 
                             mat-raised-button align="end" 
-                            routerLink="/selectedProviderComponent"> Ver {{panelOpenState ? 'menos' : 'mas'}}</a>
+                            routerLink="/selectedProviderComponent"> Ver {{panelOpenState[p] ? 'menos' : 'mas'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div>
@@ -29,42 +31,22 @@
                     </div>
 
                     <div class="location-list">
-                        <p class="card-text">{{pro.municipio}}</p>  
+                        <p class="card-text">{{pro.ubicacionTrabajo}}</p>  
                     </div>
                     <div>
-                        <p class="label-card">Telefono de contacto : </p> 
+                        <p class="label-card">Telefono de contacto: </p> 
                     </div>
 
                     <div class="location-list">
                         <p class="card-text">{{pro.numeroCelular}}</p> 
                     </div>
+
                     <div>
-                        <ul><p>Especialidad</p>
-                            <li>Estantes</li>
-                            <li>Camas</li>
-                            <li>Bares</li>
-                            <li>Libreros</li>
-                        </ul>
+                        <p class="label-card">Imagenes de trabajos: </p> 
                     </div>
-
-
                     <div class="myGallery">
-                        <img src="https://static.wixstatic.com/media/779a74_fca2089b4aed48dc8d581c38189cfc20~mv2_d_1982_2643_s_2.jpg/v1/fill/w_516,h_689,al_c,q_85,usm_0.66_1.00_0.01/779a74_fca2089b4aed48dc8d581c38189cfc20~mv2_d_1982_2643_s_2.webp" />
-                        <img src="https://static.wixstatic.com/media/779a74_c4715eb4c1c54964957c614571772ffc~mv2_d_1982_2643_s_2.jpg/v1/fill/w_516,h_689,al_c,q_85,usm_0.66_1.00_0.01/779a74_c4715eb4c1c54964957c614571772ffc~mv2_d_1982_2643_s_2.webp" />
-                        <div class="item">
-                          <img src="https://static.wixstatic.com/media/779a74_3a264ccae00c46499c2f107397bfa72c~mv2_d_1536_2048_s_2.jpg/v1/fill/w_516,h_689,al_c,q_85,usm_0.66_1.00_0.01/779a74_3a264ccae00c46499c2f107397bfa72c~mv2_d_1536_2048_s_2.webp" />
-                          <span class="caption">Librero</span>
-                        </div>
-                        <div class="item">
-                          <img src="https://static.wixstatic.com/media/779a74_74268659dd0b4ea399a95f25aafb5724.jpg/v1/fill/w_919,h_689,al_c,q_85,usm_0.66_1.00_0.01/779a74_74268659dd0b4ea399a95f25aafb5724.webp" />
-                          <span class="caption">Meson caballete</span>
-                        </div>
-                        <div class="item">
-                          <img src="https://static.wixstatic.com/media/779a74_cc22a61f33a540c8b6101ebe3d784929~mv2.jpg/v1/fill/w_982,h_574,al_c,q_85/779a74_cc22a61f33a540c8b6101ebe3d784929~mv2.webp" />
-                          <span class="caption">Camas tipo Montessori</span>
-                        </div>
-                       
-                      </div>
+                        <img *ngFor="let foto of pro.oficios[selectedJob[p]].fotos" src={{foto}}/>   
+                    </div>
                     
                 </mat-expansion-panel>
             </mat-accordion>

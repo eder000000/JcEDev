@@ -10,8 +10,11 @@ export class Profesional {
     numInterior: number;
     colonia: string;
     municipio: string;
-    oficio: string;
-    descripcionOficio: string;
+    oficios: {
+        fotos: string[]; 
+        oficio_descripcion: string;
+        oficio_name: string;
+    }[];
     ubicacionTrabajo: string;
     email: string;
     contraseña: string;   

@@ -51,8 +51,14 @@
             </mat-form-field>
             
             <mat-label>Foto de Perfil</mat-label>
-            <input type="file" placeholder="Basic Input" accept=".png, .jpg" (change)="uploadImage($event)"/>
-            <mat-icon matSuffix>folder</mat-icon>
+            <label class="input-file-label" for="profile">Upload Photo</label>
+            <input class="input-file" id="profile" type="file" placeholder="Basic Input" accept=".png, .jpg, .jfif" (change)="uploadImage($event)"/>
+            <div *ngIf="showProfilePicturePreview === 'visible';else loadingProfilePic">
+                <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Profile Picture">
+            </div>
+            <ng-template #loadingProfilePic>
+                <mat-spinner *ngIf="showProfilePicturePreview === 'loading'"></mat-spinner>
+            </ng-template>
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
@@ -65,7 +71,6 @@
               </div>
         </form>
     	</mat-step>
-
 
     	<mat-step [stepControl]="secondFormNewProfesional">
     	<form [formGroup]="secondFormNewProfesional"
@@ -127,8 +132,6 @@
         	fxLayoutAlign="center center" 
         	fxLayoutGap="10px">
          <ng-template matStepLabel>Oficio</ng-template>
-
-         
          <ng-container formArrayName="oficios">
          <div *ngFor="let _ of oficios.controls; let i=index">
                 <ng-container [formGroupName]="i">
@@ -141,6 +144,22 @@
                         <mat-label class="small-label">Descripcion</mat-label>
                         <input type="text" matInput #input formControlName="oficio_descripcion">
                     </mat-form-field>
+                    <mat-label>Fotos de Trabajos</mat-label><br>
+                    <label 
+                    class="input-file-label"
+                    [attr.for]="'images' + i"
+                    >Upload Photos</label>
+                    <input 
+                    class="input-file" 
+                    type="file" 
+                    placeholder="Basic Input" 
+                    multiple="true" 
+                    accept=".png, .jpg, .jfif" 
+                    (change)="uploadPhotoEvidence($event, i)"
+                    [attr.id]="'images' + i"/>
+                    <div style="margin-bottom: 30;" *ngIf="isPhotoEvidencesLoading[i]">
+                        <mat-spinner></mat-spinner>
+                    </div>
                     <mat-card-actions align="end">
                  <!--  <label>
                          <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
@@ -162,41 +181,19 @@
        
     
 
-<!-- 
-          <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Oficio</mat-label>
-                <input matInput #input formControlName="oficio">
-            </mat-form-field>
+        <mat-form-field  class="register-full-width">
+            <mat-label class="small-label">Ubicacion para trabajar</mat-label>
+            <mat-select formControlName="ubicacionTrabajo">
+                    <mat-option *ngFor="let mun of allMunicipalities" value={{mun.municipality_name}}>
+                        {{mun.municipality_name}}
+                    </mat-option>
+            </mat-select>
+            <input matInput #input   >
+        </mat-form-field> 
 
-
-
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Especialidad</mat-label>
-                <input matInput #input formControlName="especialidadOficio">
-            </mat-form-field>
-
-            <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Description</mat-label>
-                <input matInput #input    formControlName="descripcionOficio">
-            </mat-form-field>
-         -->
-
-    <!--         <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Ubicacion para trabajar</mat-label>
-                    <mat-select formControlName="ubicacionTrabajo">
-                        <mat-option value="Zapopan">Zapopan</mat-option>
-                        <mat-option value="Guadalajara">Guadalajara</mat-option>
-                        <mat-option value="Tonala">Tonala</mat-option>
-                        <mat-option value="Tlaquepaque">Tlaquepaque</mat-option>
-                        <mat-option value="Tlajomulco">Tlajomulco</mat-option>
-                        <mat-option value="ElSalto">El Salto</mat-option>
-                    </mat-select>
-                <input matInput #input  >
-            </mat-form-field> -->
             <div>
-            <button mat-button class="save-button" matStepperPrevious>Regresar</button>
-            <button mat-button class="save-button" (click)="save()">Guardar</button>
+              <button mat-button class="save-button" matStepperPrevious>Regresar</button>
+              <button mat-button class="save-button" (click)="save()">Guardar</button>
             </div>
 			
     	</form>
@@ -209,4 +206,4 @@
 		</mat-vertical-stepper>
 	</mat-card>
 </section>
-    
+   
