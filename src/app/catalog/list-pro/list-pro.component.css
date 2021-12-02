@@ -134,3 +134,66 @@ button.oficios-button:focus {
 .myGallery img {
   width: 100%;
 }
+
+.gallery-list {
+  display: flex;
+  overflow-x: scroll;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scroll-snap-type: x mandatory;
+}
+
+.gallery-list::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-item {
+  height: 240px;
+  width: 100%;
+  flex-shrink: 0;
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.gallery-list {
+  list-style: none;
+  padding: 0;
+  border: 5px solid #fff;
+  border-radius: 4px;
+}
+
+.gallery-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-viewport {
+  max-width: 420px;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.gallery-container,
+.gallery-container::before,
+.gallery-container::after {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.gallery-container {
+  height: 100%;
+}
+
+.gallery-container {
+  font-family: "Fredoka One", serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;;
+}
+
