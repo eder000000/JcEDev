@@ -9,7 +9,7 @@ import { Profesional } from 'src/app/user/profesional-data-model';
 	styleUrls: [ './list-pro.component.css' ]
 })
 export class ListProComponent implements OnInit {
-	panelOpenState = false;
+	panelOpenState: boolean[];
   allPros: Profesional[];
   obsPerson: Observable<Profesional[]>
 
@@ -19,10 +19,13 @@ export class ListProComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedJob = []
+    this.panelOpenState = []
+
     this.firebaseService.getAll().subscribe(pros => {
       this.allPros = pros;
       this.allPros.forEach(() => {
         this.selectedJob.push(0)
+        this.panelOpenState.push(false)
       })
     })
   }

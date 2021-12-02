@@ -18,12 +18,12 @@
               <mat-card-content >
                 <p>{{pro.oficios[selectedJob[p]].oficio_descripcion}}</p>
             <mat-accordion class="acordion">
-                <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState[p] = true" (closed)="panelOpenState[p] = false">
                     <mat-expansion-panel-header>
                         <mat-panel-description>
                             <a class="details-button" 
                             mat-raised-button align="end" 
-                            routerLink="/selectedProviderComponent"> Ver {{panelOpenState ? 'menos' : 'mas'}}</a>
+                            routerLink="/selectedProviderComponent"> Ver {{panelOpenState[p] ? 'menos' : 'mas'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div>
