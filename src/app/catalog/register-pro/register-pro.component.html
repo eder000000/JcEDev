@@ -144,8 +144,19 @@
                         <mat-label class="small-label">Descripcion</mat-label>
                         <input type="text" matInput #input formControlName="oficio_descripcion">
                     </mat-form-field>
-                    <mat-label>Fotos de Trabajos</mat-label>
-                    <input mat-button type="file" placeholder="Basic Input" multiple="true" accept=".png, .jpg, .jfif" (change)="uploadPhotoEvidence($event, i)"/>
+                    <mat-label>Fotos de Trabajos</mat-label><br>
+                    <label 
+                    class="input-file-label"
+                    [attr.for]="'images' + i"
+                    >Upload Photos</label>
+                    <input 
+                    class="input-file" 
+                    type="file" 
+                    placeholder="Basic Input" 
+                    multiple="true" 
+                    accept=".png, .jpg, .jfif" 
+                    (change)="uploadPhotoEvidence($event, i)"
+                    [attr.id]="'images' + i"/>
                     <div style="margin-bottom: 30;" *ngIf="isPhotoEvidencesLoading[i]">
                         <mat-spinner></mat-spinner>
                     </div>
