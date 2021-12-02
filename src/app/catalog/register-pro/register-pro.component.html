@@ -51,9 +51,10 @@
             </mat-form-field>
             
             <mat-label>Foto de Perfil</mat-label>
-            <input mat-button type="file" placeholder="Basic Input" accept=".png, .jpg, .jfif" (change)="uploadImage($event)"/>
+            <label class="input-file-label" for="profile">Upload Photo</label>
+            <input class="input-file" id="profile" type="file" placeholder="Basic Input" accept=".png, .jpg, .jfif" (change)="uploadImage($event)"/>
             <div *ngIf="showProfilePicturePreview === 'visible';else loadingProfilePic">
-                <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Photo of a Shiba Inu">
+                <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Profile Picture">
             </div>
             <ng-template #loadingProfilePic>
                 <mat-spinner *ngIf="showProfilePicturePreview === 'loading'"></mat-spinner>
@@ -161,6 +162,17 @@
         </ng-container>
           
         <button class="details-button" (click)="addFormControl()">Agregar empleo</button>
+
+        <mat-form-field  class="register-full-width">
+            <mat-label class="small-label">Ubicacion para trabajar</mat-label>
+            <mat-select formControlName="ubicacionTrabajo">
+                    <mat-option *ngFor="let mun of allMunicipalities" value={{mun.municipality_name}}>
+                        {{mun.municipality_name}}
+                    </mat-option>
+            </mat-select>
+            <input matInput #input   >
+        </mat-form-field> 
+
             <div>
               <button mat-button class="save-button" matStepperPrevious>Regresar</button>
               <button mat-button class="save-button" (click)="save()">Guardar</button>

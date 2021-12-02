@@ -56,48 +56,48 @@ export class RegisterProComponent implements OnInit {
 
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
-				// // validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoPaterno: new FormControl('', {
-				// // validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoMaterno: new FormControl('', {
-				// // validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			fechaNacimiento: new FormControl('', {
-				// validators: [ Validators.required ]
+				validators: [ Validators.required ]
 			}),
 
 			numeroCelular: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
+				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
 			})
 		});
 
 		this.secondFormNewProfesional = this.formBuilder.group({
 			calle: new FormControl('', {
-				// validators: [ Validators.required ]
+				validators: [ Validators.required ]
 			}),
 
 			numExterior: new FormControl('', {
-				// validators: [ Validators.required, Validators.maxLength(6) ]
+				validators: [ Validators.required, Validators.maxLength(6) ]
 			}),
 
 			numInterior: new FormControl('', {
-				// validators: [ Validators.maxLength(6) ]
+				validators: [ Validators.maxLength(6) ]
 			}),
 
 			colonia: new FormControl('', {
-				// // validators: [ Validators.required, Validators.maxLength(30) ]
+				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			codigoPostal: new FormControl('', {
-				// validators: [ Validators.required ]
+				validators: [ Validators.required ]
 			}),
 			municipio: new FormControl('', {
-				// validators: [ Validators.required ]
+				validators: [ Validators.required ]
 			})
 		});
 
@@ -107,13 +107,10 @@ export class RegisterProComponent implements OnInit {
 					oficio_name: new FormControl('', Validators.required),
 					oficio_descripcion: new FormControl('', Validators.required)
 				})
-			])
-			/* 			oficio: this.formBuilder.array([
-				this.formBuilder.group({
-					oficio_name: [ 'user1', Validators.required ],
-					oficio_descripcion: [ '', Validators.required ]
-				})
-			]) */
+			]), 
+			ubicacionTrabajo: new FormControl('', {
+				validators: [ Validators.required ]
+			}) 
 		});
 	}
 
@@ -149,7 +146,7 @@ export class RegisterProComponent implements OnInit {
 			oficiosArray[j]["fotos"] = this.photoEvidences[j]
 		}
 
-		profesional = concatJSON(profesional, { oficios: oficiosArray });
+		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
 		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageUrl });
 
 		this.firebaseService
@@ -199,7 +196,6 @@ export class RegisterProComponent implements OnInit {
 		observable.subscribe(url => {
 			this.profileImageUrl = url
 			this.showProfilePicturePreview = "visible"
-			console.log(url)
 		})
 	}
 
@@ -216,6 +212,5 @@ export class RegisterProComponent implements OnInit {
 		}
 
 		this.isPhotoEvidencesLoading[index] = false
-		console.log(this.photoEvidences)
 	}
 }
