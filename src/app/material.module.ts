@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
 	imports: [
@@ -55,7 +56,8 @@ import { MatChipsModule } from '@angular/material/chips';
 		MatSelectModule,
 		MatStepperModule,
 		MatExpansionModule,
-		MatChipsModule
+		MatChipsModule, 
+		MatProgressSpinnerModule
 	]
 })
 export class MaterialModule {}
