@@ -30,7 +30,10 @@ export class RegisterProComponent implements OnInit {
 	selectedMun: string;
 
 	profileImageUrl: string
-	showProfilePicturePreview: boolean
+	showProfilePicturePreview: string
+
+	photoEvidences: [string[]]
+	isPhotoEvidencesLoading: boolean[]
 
 	constructor(
 		private firebaseService: FirebaseService,
@@ -43,7 +46,9 @@ export class RegisterProComponent implements OnInit {
 		this.maxDate = new Date();
 		this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
 		this.selectedMun = ""
-		this.showProfilePicturePreview = false
+		this.showProfilePicturePreview = "hidden"
+		this.photoEvidences = [[]]
+		this.isPhotoEvidencesLoading = [false]
 
 		this.addressService.getMunicipalities(14).subscribe((mun) => {
 			this.allMunicipalities = mun;
@@ -51,48 +56,48 @@ export class RegisterProComponent implements OnInit {
 
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// // validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoPaterno: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// // validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			apellidoMaterno: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// // validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			fechaNacimiento: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			}),
 
 			numeroCelular: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
+				// validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
 			})
 		});
 
 		this.secondFormNewProfesional = this.formBuilder.group({
 			calle: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			}),
 
 			numExterior: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(6) ]
+				// validators: [ Validators.required, Validators.maxLength(6) ]
 			}),
 
 			numInterior: new FormControl('', {
-				validators: [ Validators.maxLength(6) ]
+				// validators: [ Validators.maxLength(6) ]
 			}),
 
 			colonia: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// // validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			codigoPostal: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			}),
 			municipio: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			})
 		});
 
@@ -115,6 +120,8 @@ export class RegisterProComponent implements OnInit {
 	removeFormControl(i) {
 		let usersArray = this.thirdFormNewProfesional.controls.oficios as FormArray;
 		usersArray.removeAt(i);
+		this.photoEvidences.splice(i, 1)
+		this.isPhotoEvidencesLoading.splice(i, 1)
 	}
 
 	addFormControl() {
@@ -127,6 +134,8 @@ export class RegisterProComponent implements OnInit {
 		});
 
 		usersArray.insert(arraylen, newUsergroup);
+		this.photoEvidences.push([])
+		this.isPhotoEvidencesLoading.push(false)
 	}
 
 	get oficios(): FormArray {
@@ -135,7 +144,12 @@ export class RegisterProComponent implements OnInit {
 
 	save() {
 		var profesional = concatJSON(this.firstFormNewProfesional.value, this.secondFormNewProfesional.value);
-		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
+		var oficiosArray = this.thirdFormNewProfesional.value.oficios;
+		for (var j = 0; j < oficiosArray.length; j++) {
+			oficiosArray[j]["fotos"] = this.photoEvidences[j]
+		}
+
+		profesional = concatJSON(profesional, { oficios: oficiosArray });
 		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageUrl });
 
 		this.firebaseService
@@ -180,12 +194,28 @@ export class RegisterProComponent implements OnInit {
 	}
 
 	async uploadImage(event) {
-		console.log("Uploading image")
-		const observable = await this.firebaseService.uploadImage(event)
+		this.showProfilePicturePreview = "loading"
+		const observable = await this.firebaseService.uploadImage(event.target.files[0])
 		observable.subscribe(url => {
 			this.profileImageUrl = url
-			this.showProfilePicturePreview = true
+			this.showProfilePicturePreview = "visible"
 			console.log(url)
 		})
+	}
+
+	async uploadPhotoEvidence(event, index) {
+		// Clear array
+		this.photoEvidences[index].splice(0, this.photoEvidences[index].length)
+		this.isPhotoEvidencesLoading[index] = true
+
+		for (var i = 0; i < event.target.files.length; i++) {
+			var auxObservable = await this.firebaseService.uploadImage(event.target.files[i])
+			auxObservable.subscribe(url => {
+				this.photoEvidences[index].push(url)
+			})	
+		}
+
+		this.isPhotoEvidencesLoading[index] = false
+		console.log(this.photoEvidences)
 	}
 }

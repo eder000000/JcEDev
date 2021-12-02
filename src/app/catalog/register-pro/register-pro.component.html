@@ -51,10 +51,13 @@
             </mat-form-field>
             
             <mat-label>Foto de Perfil</mat-label>
-            <input type="file" placeholder="Basic Input" accept=".png, .jpg" (change)="uploadImage($event)"/>
-            <div *ngIf="showProfilePicturePreview">
+            <input mat-button type="file" placeholder="Basic Input" accept=".png, .jpg, .jfif" (change)="uploadImage($event)"/>
+            <div *ngIf="showProfilePicturePreview === 'visible';else loadingProfilePic">
                 <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Photo of a Shiba Inu">
             </div>
+            <ng-template #loadingProfilePic>
+                <mat-spinner *ngIf="showProfilePicturePreview === 'loading'"></mat-spinner>
+            </ng-template>
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Numero celular</mat-label>
@@ -67,7 +70,6 @@
               </div>
         </form>
     	</mat-step>
-
 
     	<mat-step [stepControl]="secondFormNewProfesional">
     	<form [formGroup]="secondFormNewProfesional"
@@ -141,6 +143,11 @@
                         <mat-label class="small-label">Descripcion</mat-label>
                         <input type="text" matInput #input formControlName="oficio_descripcion">
                     </mat-form-field>
+                    <mat-label>Fotos de Trabajos</mat-label>
+                    <input mat-button type="file" placeholder="Basic Input" multiple="true" accept=".png, .jpg, .jfif" (change)="uploadPhotoEvidence($event, i)"/>
+                    <div style="margin-bottom: 30;" *ngIf="isPhotoEvidencesLoading[i]">
+                        <mat-spinner></mat-spinner>
+                    </div>
                     <mat-card-actions align="end">
                         <label>
                             <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
