@@ -23,7 +23,7 @@
                         <mat-panel-description>
                             <a class="details-button" 
                             mat-raised-button align="end" 
-                            routerLink="/selectedProviderComponent"> Ver {{panelOpenState[p] ? 'menos' : 'mas'}}</a>
+                            > Ver {{panelOpenState[p] ? 'menos' : 'mas'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div>
@@ -44,8 +44,14 @@
                     <div>
                         <p class="label-card">Imagenes de trabajos: </p> 
                     </div>
-                    <div class="myGallery">
-                        <img *ngFor="let foto of pro.oficios[selectedJob[p]].fotos" src={{foto}}/>   
+                    <div class="gallery-container">
+                        <div class="gallery-viewport">
+                            <ul class="gallery-list">
+                                <li *ngFor="let foto of pro.oficios[selectedJob[p]].fotos" class="gallery-item">
+                                    <img style="width: 100%;" src={{foto}}/>
+                                </li>
+                            </ul>
+                        </div>   
                     </div>
                     
                 </mat-expansion-panel>
