@@ -5,5 +5,5 @@ export interface Address {
     municipalityId : number;
     neighborhoodId : number;
     stateId : number;
-    zipCode : string;
+    zipCode : number;
 }
