@@ -6,13 +6,14 @@
                 <mat-card-title>{{pro.nombres}} {{pro.apellidoPaterno}} {{pro.apellidoMaterno}}</mat-card-title>
                 <mat-card-subtitle>
                     <div class="profesionals-list" > 
-                        <button 
+                        <button
                             *ngFor="let oficio of pro.oficios; let i=index" 
                             class="oficios-button"
                             (click)="updateJobInfo(p, i)" 
-                            [value]="i" 
-                            [checked]=true>
-                        {{oficio.oficio_name}}</button>
+                           
+                            >
+                        {{oficio.oficio_name}}
+                    </button>
                     </div>
                 </mat-card-subtitle>
             </mat-card-header>

@@ -37,6 +37,7 @@ body {
 .mat-card-title {
   font-size: calc(0.7em + 1.5vw);
   max-width: 100%;
+  line-height: 1.2
 }
 
 .oficios {
@@ -100,12 +101,13 @@ button.oficios-button {
   cursor: pointer;
 }
 
+button.oficios-button:focus,
 button.oficios-button:hover,
-button.oficios-button:focus {
+button.oficios-button:visited {
   background-color: #f3a167;
   color: #f8f5f2;
-
 }
+
 
 
 
