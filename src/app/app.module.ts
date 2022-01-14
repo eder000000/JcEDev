@@ -28,6 +28,8 @@ import { AuthService } from './auth/auth.service';
 import { OficiosComponent } from './job/oficios/oficios.component';
 import { FirebaseService } from './firebase/firebase.service';
 import { HerokuAddressService } from './heroku-address/heroku-address.service';
+import { UserTableComponent } from './user-table/user-table.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
 	declarations: [
@@ -43,7 +45,8 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 		SidenavListComponent,
 		FooterComponent,
 		ContentComponent,
-		OficiosComponent
+		OficiosComponent,
+		UserTableComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -55,7 +58,8 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 		AngularFireDatabaseModule,
 		AngularFireStorageModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
-		HttpClientModule
+		HttpClientModule,
+		MatTableModule
 	],
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
