@@ -1,0 +1,18 @@
+<table mat-table class="mat-elevation-z8">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>Symbol</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=" let elements of dataSource">
+            <td>{{ elements.position }}</td>
+            <td>{{ elements.name }}</td>
+            <td>{{ elements.weight }}</td>
+            <td>{{ elements.symbol }}</td>
+        </tr>
+    </tbody>
+</table>

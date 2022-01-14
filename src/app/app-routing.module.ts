@@ -7,6 +7,7 @@ import { ListProComponent } from './catalog/list-pro/list-pro.component';
 import { ProDetailsComponent } from './catalog/pro-details/pro-details.component';
 import { RegisterProComponent } from './catalog/register-pro/register-pro.component';
 import { HomeComponent } from './home/home.component';
+import { UserTableComponent } from './user-table/user-table.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
 	{ path: 'catalog', component: CatalogComponent },
 	{ path: 'register', component: RegisterProComponent },
 	{ path: 'listado', component: ListProComponent },
-	{ path: 'detalle', component: ProDetailsComponent }
+	{ path: 'detalle', component: ProDetailsComponent },
+	{ path: 'user', component: UserTableComponent }
 ];
 
 @NgModule({
