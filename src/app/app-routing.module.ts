@@ -18,7 +18,7 @@ const routes: Routes = [
 	{ path: 'register', component: RegisterProComponent },
 	{ path: 'listado', component: ListProComponent },
 	{ path: 'detalle', component: ProDetailsComponent },
-	{ path: 'user', component: UserTableComponent }
+	{ path: 'users', component: UserTableComponent }
 ];
 
 @NgModule({
