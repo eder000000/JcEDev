@@ -5,16 +5,21 @@ h1 {
 
 table {
     width: 75%;
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 table th {
-    text-align: center; 
+    text-align: center;
 }
 
-.mat-icon {
+h1 {
+    margin: 20px;
+    text-align: center;
+}
+
+mat-icon {
+    margin: 5px;
     color: black;
-    padding: 5px;
 }
