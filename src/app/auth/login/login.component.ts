@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+import { RemoteDbService } from 'src/app/remote-db/remote-db.service';
 import { AuthService } from '../auth.service';
 
 
@@ -11,12 +12,15 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit{
   loginForm : FormGroup;
   
-  constructor(private authService: AuthService){}
+  constructor(
+    private authService: AuthService,
+    private remoteDbService: RemoteDbService  
+  ){}
 
   ngOnInit(){
     this.loginForm = new FormGroup({
       email: new FormControl('', {
-        validators: [Validators.required, Validators.email]
+        validators: [Validators.required]
       }),
       password: new FormControl('', {
         validators: [Validators.required]
@@ -24,11 +28,18 @@ export class LoginComponent implements OnInit{
     });
   }
 
-  onSubmit(form: NgForm){
+  onSubmit(){
     this.authService.login({
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     });
-  }
 
+    this.remoteDbService.login(
+      this.loginForm.value.email, 
+      this.loginForm.value.password
+    ).subscribe(token => {
+      console.log(token)
+      this.remoteDbService.setToken(token.token)
+    })
+  }
 }
