@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { stringify } from 'querystring';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
-import * as internal from 'stream';
 import { Colony } from '../remote-models/colony-model';
 import { CountryCode } from '../remote-models/country-code-model';
 import { Media } from '../remote-models/media-model';
@@ -71,13 +69,14 @@ export class RemoteDbService {
    * GET /colonies/filter
    */
   getFilteredColonies(id_zip_code?: number, id_municipality?: number): Observable<Colony[]> {
+    var params:{id_zip_code?:string, id_municipality?:string} = {}
+    if (id_zip_code) params.id_zip_code = id_zip_code.toString()
+    if (id_municipality) params.id_municipality = id_municipality.toString()
+
     return this.httpClient.get<Colony[]>(
       this.endpoint + '/colonies/filter' , {
         'headers': this.headers,
-        'params': {
-          id_zip_code: id_zip_code.toString() || '',
-          id_municipality: id_municipality.toString() || ''
-        }
+        'params': params
       }
     ).pipe(retry(1))
   }
@@ -130,10 +129,13 @@ export class RemoteDbService {
    * GET /municipalities/filter
    */
   getFilteredMunicipalities(id_state_code?: number): Observable<Municipality[]> {
+    var params:{id_state_code?:string} = {}
+    if (id_state_code) params.id_state_code = id_state_code.toString()
+
     return this.httpClient.get<Municipality[]>(
       this.endpoint + '/municipalities/filter' , {
         'headers': this.headers,
-        'params': { id_state_code: id_state_code.toString() || '' }
+        'params': params
       }
     ).pipe(retry(1))
   }
@@ -165,7 +167,7 @@ export class RemoteDbService {
    */
   getRoleById(user_role_id: number): Observable<UserRole> {
     return this.httpClient.get<UserRole>(
-      this.endpoint + '/countries/' + user_role_id, {
+      this.endpoint + '/roles/' + user_role_id, {
         'headers': this.headers
       }
     ).pipe(retry(1))
@@ -208,10 +210,13 @@ export class RemoteDbService {
    * GET /states/filter
    */
   getFilteredStates(id_country_code?: number): Observable<StateCode[]> {
+    var params:{id_country_code?:string} = {}
+    if (id_country_code) params.id_country_code = id_country_code.toString()
+
     return this.httpClient.get<StateCode[]>(
       this.endpoint + '/states/filter' , {
         'headers': this.headers,
-        'params': { id_country_code: id_country_code.toString() || '' }
+        'params': params
       }
     ).pipe(retry(1))
   }
@@ -286,14 +291,15 @@ export class RemoteDbService {
    * GET /users/filter
    */
   getFilteredUsers(user_role_id?: number, status_id?: number, skills_id?: number): Observable<UserModel[]> {
+    var params:{user_role_id?:string, status_id?:string, skills_id?:string} = {}
+    if (user_role_id) params.user_role_id = user_role_id.toString()
+    if (status_id) params.status_id = status_id.toString()
+    if (skills_id) params.skills_id = skills_id.toString()
+    
     return this.httpClient.get<UserModel[]>(
       this.endpoint + '/users/filter' , {
         'headers': this.headers,
-        'params': { 
-          user_role_id: user_role_id.toString() || '',
-          status_id: status_id.toString() || '',
-          skills_id: skills_id.toString() || ''
-        }
+        'params': params
       }
     ).pipe(retry(1))
   }
