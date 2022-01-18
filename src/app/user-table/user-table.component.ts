@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription, of } from 'rxjs';
 import { RemoteDbService } from '../remote-db/remote-db.service';
 import { UserModel } from '../remote-models/user-model';
@@ -50,51 +50,53 @@ export class UserTableComponent implements OnInit{
   statusSubscription: Subscription; 
   dataSource: MatTableDataSource<any>;
   userData: UserModel[]; 
-  users: User[]; 
+  users: User[];
+  
+  @ViewChild('table') table: MatTable<User>;
 
-  constructor(private remoteDbService: RemoteDbService) {}
+  constructor(private remoteDbService: RemoteDbService) {
+    this.users = []
+  }
 
   ngOnInit(): void {
     this.getData();
-    this.formatUsers();
-    this.dataSource = new MatTableDataSource(this.users);
   }
 
   getData(): void {
-    this.userSubscription = this.remoteDbService.getUsers().subscribe(data => this.userData=data);
+    this.userSubscription = this.remoteDbService.getUsers().subscribe(data => {
+      this.userData=data
+      this.formatUsers();
+    });
   }
 
   //Get roles from database
   formatUsers(): void {
     // This for "merges" the data of "user, roles and status"
     for (let data of this.userData) {
-      let user: User = {
-        first_name: data.user_model_first_name,
-        last_name: data.user_model_last_name,
-        role: this.getUserRole(data),
-        status: this.getUserStatus(data) 
-      };
-      this.users.push(user);
+      this.remoteDbService.getRoleById(data.user_role_id)
+      .subscribe(userRole => {
+        this.remoteDbService.getStatusesById(data.user_status_id)
+        .subscribe(userStatus => {
+          let user: User = {
+            first_name: data.user_model_first_name,
+            last_name: data.user_model_last_name,
+            role: userRole.user_role_name,
+            status: userStatus.status_name
+          };
+          this.users.push(user);
+
+          if (data === this.userData[this.userData.length-1]){
+            this.table.dataSource = this.users
+            this.table.renderRows()
+          }
+        })
+      })
     }
   }
 
-  //Get roles from database
-  getUserRole(user: UserModel): string {
-    let role: UserRole;
-    this.roleSubscription = this.remoteDbService.getRoleById(user.user_role_id).subscribe(data => role = data);
-    return role.user_role_name;
-  }
-
-  //Get status from database
-  getUserStatus(user: UserModel): string {
-    let status: Status;
-    this.statusSubscription = this.remoteDbService.getStatusesById(user.user_status_id).subscribe(data => status = data);
-    return status.status_name;
-  }
-
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.statusSubscription.unsubscribe();
-    this.roleSubscription.unsubscribe();
+    // this.userSubscription.unsubscribe();
+    // this.statusSubscription.unsubscribe();
+    // this.roleSubscription.unsubscribe();
   }
 }
