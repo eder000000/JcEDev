@@ -8,7 +8,6 @@ import { Status } from '../remote-models/status-model';
 
 import { MediaObserver } from '@angular/flex-layout';
 
-
 // This interface will be used for print in "user-table" html.
 interface User {
   first_name: string;

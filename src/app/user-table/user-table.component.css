@@ -32,8 +32,26 @@ table th {
     background-color: #f8f5f2;
 }
 
+:host ::ng-deep .mat-card-header-text {
+    margin-left: 0 !important;
+}
+
+.mat-card-subtitle {
+    margin-bottom: 3px;
+}
+
+.mat-card-content {
+    margin-bottom: 3px;
+}
+
+.mat-card-actions caption {
+    color: #0000008A;
+    font-size: 12px;
+    margin-left: 15%;
+    margin-bottom: 0;
+}
+
 .mat-card:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: 0.5s;
 }
-
