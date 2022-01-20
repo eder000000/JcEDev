@@ -6,6 +6,8 @@ import { UserModel } from '../remote-models/user-model';
 import { UserRole } from '../remote-models/user-role-model';
 import { Status } from '../remote-models/status-model';
 
+import { MediaObserver } from '@angular/flex-layout';
+
 
 // This interface will be used for print in "user-table" html.
 interface User {
@@ -45,58 +47,72 @@ const USERS: User[] = [
 
 export class UserTableComponent implements OnInit{
   displayedColumns: string[] = ['last_name', 'first_name', 'role', 'status', 'actions'];
-  userSubscription: Subscription; 
-  roleSubscription: Subscription; 
-  statusSubscription: Subscription; 
-  dataSource: MatTableDataSource<any>;
-  userData: UserModel[]; 
-  users: User[];
+  // userSubscription: Subscription; 
+  // roleSubscription: Subscription; 
+  // statusSubscription: Subscription; 
+  // dataSource: MatTableDataSource<any>;
+  // userData: UserModel[]; 
+  // users: User[];
   
-  @ViewChild('table') table: MatTable<User>;
+  // @ViewChild('table') table: MatTable<User>;
 
-  constructor(private remoteDbService: RemoteDbService) {
-    this.users = []
-  }
+  // constructor(private remoteDbService: RemoteDbService, public mediaObserve: MediaObserver) {
+  //   this.users = []
+  // }
+
+  // ngOnInit(): void {
+  //   this.getData();
+  // }
+
+  // getData(): void {
+  //   this.userSubscription = this.remoteDbService.getUsers().subscribe(data => {
+  //     this.userData=data;
+  //     this.formatUsers();
+  //   });
+  // }
+
+  // //Get roles from database
+  // formatUsers(): void {
+  //   // This for "merges" the data of "user, roles and status"
+  //   for (let data of this.userData) {
+  //     this.remoteDbService.getRoleById(data.user_role_id)
+  //     .subscribe(userRole => {
+  //       this.remoteDbService.getStatusesById(data.user_status_id)
+  //       .subscribe(userStatus => {
+  //         let user: User = {
+  //           first_name: data.user_model_first_name,
+  //           last_name: data.user_model_last_name,
+  //           role: userRole.user_role_name,
+  //           status: userStatus.status_name
+  //         };
+  //         this.users.push(user);
+
+  //         if (data === this.userData[this.userData.length-1]){
+  //           this.table.dataSource = this.users
+  //           this.table.renderRows()
+  //         }
+  //       })
+  //     })
+  //   }
+  // }
+
+  // ngOnDestroy(): void {
+  //   // this.userSubscription.unsubscribe();
+  //   // this.statusSubscription.unsubscribe();
+  //   // this.roleSubscription.unsubscribe();
+  // }
+
+  //Remover cuando se haga commit *******
+  dataSource = new MatTableDataSource(USERS); //Remover cuando se haga commit
+  userData = USERS;
+
+  constructor(public mediaObserve: MediaObserver) { }
 
   ngOnInit(): void {
-    this.getData();
-  }
 
-  getData(): void {
-    this.userSubscription = this.remoteDbService.getUsers().subscribe(data => {
-      this.userData=data
-      this.formatUsers();
-    });
+    this.displayedColumns;
+    this.dataSource;
+    this.userData;
   }
-
-  //Get roles from database
-  formatUsers(): void {
-    // This for "merges" the data of "user, roles and status"
-    for (let data of this.userData) {
-      this.remoteDbService.getRoleById(data.user_role_id)
-      .subscribe(userRole => {
-        this.remoteDbService.getStatusesById(data.user_status_id)
-        .subscribe(userStatus => {
-          let user: User = {
-            first_name: data.user_model_first_name,
-            last_name: data.user_model_last_name,
-            role: userRole.user_role_name,
-            status: userStatus.status_name
-          };
-          this.users.push(user);
-
-          if (data === this.userData[this.userData.length-1]){
-            this.table.dataSource = this.users
-            this.table.renderRows()
-          }
-        })
-      })
-    }
-  }
-
-  ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
-    // this.statusSubscription.unsubscribe();
-    // this.roleSubscription.unsubscribe();
-  }
+    //Remover cuando se haga commit *******
 }

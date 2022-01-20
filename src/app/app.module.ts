@@ -31,6 +31,8 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule } from '@angular/material/table';
 
+import { MatCardModule } from '@angular/material/card';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -59,7 +61,8 @@ import { MatTableModule } from '@angular/material/table';
 		AngularFireStorageModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		HttpClientModule,
-		MatTableModule
+		MatTableModule,
+		MatCardModule
 	],
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
