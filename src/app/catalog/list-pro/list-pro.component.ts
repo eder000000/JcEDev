@@ -32,5 +32,6 @@ export class ListProComponent implements OnInit {
 
   updateJobInfo(proIndex, jobIndex) { 
     this.selectedJob[proIndex] = jobIndex
+    
   }
 }
