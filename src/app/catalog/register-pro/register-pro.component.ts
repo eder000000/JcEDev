@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/firebase/firebase.service';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { Profesional } from 'src/app/user/profesional-data-model';
 
 import { concatJSON } from '../../../utils/json-utils';
 import { HerokuAddressService } from 'src/app/heroku-address/heroku-address.service';
-import { Municipality } from 'src/app/address/municipality-model';
-import { Colony } from 'src/app/address/address-model';
-import { ZipCode } from 'src/app/address/zip-code-model';
+
+// import { Municipality } from 'src/app/address/municipality-model';
+// import { Colony } from 'src/app/address/address-model';
+// import { ZipCode } from 'src/app/address/zip-code-model';
+import { Municipality } from 'src/app/remote-models/municipality-model';
+import { Colony } from 'src/app/remote-models/colony-model';
+import { ZipCode } from 'src/app/remote-models/zip-code-model';
+
+import { RemoteDbService } from 'src/app/remote-db/remote-db.service';
 
 @Component({
 	selector: 'app-register-pro',
@@ -39,7 +44,8 @@ export class RegisterProComponent implements OnInit {
 		private firebaseService: FirebaseService,
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private addressService: HerokuAddressService
+		private addressService: HerokuAddressService, 
+		private remoteDbService: RemoteDbService
 	) {}
 
 	ngOnInit() {
@@ -50,9 +56,15 @@ export class RegisterProComponent implements OnInit {
 		this.photoEvidences = [[]]
 		this.isPhotoEvidencesLoading = [false]
 
-		this.addressService.getMunicipalities(14).subscribe((mun) => {
-			this.allMunicipalities = mun;
-		});
+		// this.addressService.getMunicipalities(14).subscribe((mun) => {
+		// 	this.allMunicipalities = mun;
+		// });
+
+		// JAL_CODE = 14
+		this.remoteDbService.getFilteredMunicipalities(14)
+			.subscribe((mun) => {
+				this.allMunicipalities = mun
+			})
 
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
@@ -160,34 +172,55 @@ export class RegisterProComponent implements OnInit {
 	}
 
 	renderColonies(value) {
-		this.addressService.getColonies(value).subscribe((col) => {
+		// this.addressService.getColonies(value).subscribe((col) => {
+		// 	this.allColonies = col;
+		// 	this.secondFormNewProfesional.controls.codigoPostal.setValue('');
+		// });
+
+		this.remoteDbService.getFilteredColonies(undefined, value).subscribe((col) => {
 			this.allColonies = col;
 			this.secondFormNewProfesional.controls.codigoPostal.setValue('');
-		});
+		})
 	}
 
 	renderZip(value) {
 		this.allColonies.forEach((colony) => {
 			if (colony.id_colony_code === parseInt(value)) {
-				this.secondFormNewProfesional.controls.codigoPostal.setValue(colony.zip_code);
+				this.remoteDbService.getZipCodesById(colony.id_zip_code).subscribe((zip) => 
+					this.secondFormNewProfesional.controls.codigoPostal.setValue(zip.zip_code)
+				)
 			}
 		});
 	}
 
 	renderAddress(value) {
-		this.addressService.getColoniesFromZip(value).subscribe((col) => {
+		// this.addressService.getColoniesFromZip(value).subscribe((col) => {
+		// 	if (col.length === 0) {
+		// 		alert('Invalid zip code!');
+		// 		this.secondFormNewProfesional.controls.codigoPostal.setValue('');
+		// 	} else {
+		// 		this.allColonies = col;
+		// 		this.allMunicipalities.forEach((mun) => {
+		// 			if (mun.municipality_name === col[0].municipality_name) {
+		// 				this.secondFormNewProfesional.controls.municipio.setValue(mun.id_municipality + '');
+		// 			}
+		// 		});
+		// 	}
+		// });
+
+		this.remoteDbService.getFilteredColonies(value).subscribe((col) => {
 			if (col.length === 0) {
 				alert('Invalid zip code!');
 				this.secondFormNewProfesional.controls.codigoPostal.setValue('');
 			} else {
 				this.allColonies = col;
 				this.allMunicipalities.forEach((mun) => {
-					if (mun.municipality_name === col[0].municipality_name) {
-						this.secondFormNewProfesional.controls.municipio.setValue(mun.id_municipality + '');
+					if (mun.id_municipality === col[0].id_municipality) {
+						this.secondFormNewProfesional.controls.municipio.setValue(mun.id_municipality.toString());
 					}
 				});
 			}
-		});
+		})
 	}
 
 	async uploadImage(event) {

@@ -18,6 +18,13 @@ export class HerokuAddressService {
 		})
 	};
 
+	/**
+	 * GET, 
+	 * POST, 
+	 * PUT, 
+	 * DELETE
+	 */
+
 	getColonies(id_mun: number): Observable<Colony[]> {
 		return this.httpClient.get<Colony[]>(this.endpoint + '/municipalities/' + id_mun + '/colonies').pipe(retry(1));
 	}
