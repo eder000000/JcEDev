@@ -6,6 +6,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
+import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -48,6 +49,7 @@ import { MatCardModule } from '@angular/material/card';
 		ContentComponent,
 		OficiosComponent,
 		UserTableComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		BrowserModule,
@@ -62,7 +64,7 @@ import { MatCardModule } from '@angular/material/card';
 		HttpClientModule,
 		MatTableModule,
 		MatCardModule
-	],
+	], 
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
 })

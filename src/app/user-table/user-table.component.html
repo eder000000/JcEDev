@@ -37,7 +37,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<div fxHide.gt-xs *ngFor="let data of userData">
+<div fxHide.gt-xs *ngFor="let data of users">
     <mat-card class="hover-shadow">
         <mat-card-header>
             <mat-card-title>{{ data.last_name }}, {{ data.first_name }}</mat-card-title>
