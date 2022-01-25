@@ -8,17 +8,26 @@ import { ProDetailsComponent } from './catalog/pro-details/pro-details.component
 import { RegisterProComponent } from './catalog/register-pro/register-pro.component';
 import { HomeComponent } from './home/home.component';
 import { UserTableComponent } from './user-table/user-table.component';
+import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
 	{ path: 'home', component: HomeComponent },
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'login', component: LoginComponent },
-	{ path: 'catalog', component: CatalogComponent },
+	
+	{ path: 'listado/:id', component: ListProComponent,
+		children: [
+			{ path: '', redirectTo: 'listado', pathMatch: 'full' },
+			{ path: 'detalle', component: ProDetailsComponent }
+		]
+	},
+
+	//Admin
 	{ path: 'register', component: RegisterProComponent },
-	{ path: 'listado', component: ListProComponent },
-	{ path: 'detalle', component: ProDetailsComponent },
-	{ path: 'users', component: UserTableComponent }
+	{ path: 'users', component: UserTableComponent },
+
+	{ path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

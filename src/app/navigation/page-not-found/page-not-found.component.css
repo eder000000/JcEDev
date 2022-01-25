@@ -1,0 +1,13 @@
+.center {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+}
+
+.mat-icon {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    font-size: 100px;
+}

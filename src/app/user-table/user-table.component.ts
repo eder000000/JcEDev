@@ -6,6 +6,7 @@ import { UserModel } from '../remote-models/user-model';
 import { UserRole } from '../remote-models/user-role-model';
 import { Status } from '../remote-models/status-model';
 
+import { MediaObserver } from '@angular/flex-layout';
 
 // This interface will be used for print in "user-table" html.
 interface User {
@@ -54,7 +55,7 @@ export class UserTableComponent implements OnInit{
   
   @ViewChild('table') table: MatTable<User>;
 
-  constructor(private remoteDbService: RemoteDbService) {
+  constructor(private remoteDbService: RemoteDbService, public mediaObserve: MediaObserver) {
     this.users = []
   }
 
@@ -64,7 +65,7 @@ export class UserTableComponent implements OnInit{
 
   getData(): void {
     this.userSubscription = this.remoteDbService.getUsers().subscribe(data => {
-      this.userData=data
+      this.userData=data;
       this.formatUsers();
     });
   }
@@ -99,4 +100,5 @@ export class UserTableComponent implements OnInit{
     // this.statusSubscription.unsubscribe();
     // this.roleSubscription.unsubscribe();
   }
+
 }

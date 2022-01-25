@@ -6,6 +6,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
+import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -30,6 +31,7 @@ import { FirebaseService } from './firebase/firebase.service';
 import { HerokuAddressService } from './heroku-address/heroku-address.service';
 import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [
@@ -47,6 +49,7 @@ import { MatTableModule } from '@angular/material/table';
 		ContentComponent,
 		OficiosComponent,
 		UserTableComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		BrowserModule,
@@ -59,8 +62,9 @@ import { MatTableModule } from '@angular/material/table';
 		AngularFireStorageModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		HttpClientModule,
-		MatTableModule
-	],
+		MatTableModule,
+		MatCardModule
+	], 
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
 })
