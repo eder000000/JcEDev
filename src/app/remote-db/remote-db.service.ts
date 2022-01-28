@@ -347,4 +347,37 @@ export class RemoteDbService {
       }
     ).pipe(retry(1))
   }
+
+  /**
+   * PUT /users
+   */
+  putUserData(data: UserModel): Observable<any> {
+    return this.httpClient.put<UserModel>(
+      this.endpoint + '/users', data, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * DELETE /users/:id
+   */
+  deleteUser(user_model_id: number): Observable<any> {
+    return this.httpClient.delete<UserModel>(
+      this.endpoint + '/users/' + user_model_id, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * POST /users
+   */
+   postUserData(data: UserModel): Observable<any> {
+    return this.httpClient.post<UserModel>(
+      this.endpoint + '/users', data, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
 }

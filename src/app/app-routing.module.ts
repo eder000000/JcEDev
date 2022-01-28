@@ -9,6 +9,7 @@ import { RegisterProComponent } from './catalog/register-pro/register-pro.compon
 import { HomeComponent } from './home/home.component';
 import { UserTableComponent } from './user-table/user-table.component';
 import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
+import { RemoteDbService } from './remote-db/remote-db.service';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -16,16 +17,15 @@ const routes: Routes = [
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'login', component: LoginComponent },
 	
-	{ path: 'listado/:id', component: ListProComponent,
-		children: [
-			{ path: '', redirectTo: 'listado', pathMatch: 'full' },
-			{ path: 'detalle', component: ProDetailsComponent }
-		]
-	},
+	{ path: 'listado', component: ListProComponent },
 
 	//Admin
 	{ path: 'register', component: RegisterProComponent },
+
+	//Tabla usuarios
 	{ path: 'users', component: UserTableComponent },
+	{ path: 'editUser/:id', component: ProDetailsComponent}, //Cambiar a componente de editar cuando se implemente
+	{ path: 'viewUser/:id', component: ProDetailsComponent},
 
 	{ path: '**', component: PageNotFoundComponent }
 ];

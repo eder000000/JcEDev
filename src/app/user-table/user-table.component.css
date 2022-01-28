@@ -11,6 +11,16 @@ table {
     margin-bottom: 20px;
 }
 
+button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    padding: 0;
+}
+
 table th {
     text-align: center; 
 }
