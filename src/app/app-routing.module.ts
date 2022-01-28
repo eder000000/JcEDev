@@ -15,13 +15,7 @@ const routes: Routes = [
 	{ path: 'home', component: HomeComponent },
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'login', component: LoginComponent },
-	
-	{ path: 'listado/:id', component: ListProComponent,
-		children: [
-			{ path: '', redirectTo: 'listado', pathMatch: 'full' },
-			{ path: 'detalle', component: ProDetailsComponent }
-		]
-	},
+	{ path: 'listado', component: ListProComponent },
 
 	//Admin
 	{ path: 'register', component: RegisterProComponent },
