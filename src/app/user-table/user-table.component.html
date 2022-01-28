@@ -26,9 +26,9 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let element">
-            <a href="" matTooltip="Editar"><mat-icon>edit</mat-icon></a>
-            <a href="" matTooltip="Eliminar"><mat-icon>restore_from_trash</mat-icon></a>
-            <a href="" matTooltip="Ver"><mat-icon>description</mat-icon></a>
+            <button (click)="editUser(element.id_user)" matTooltip="Editar"><mat-icon>edit</mat-icon></button>
+            <button (click)="deleteUser(element.id_user)" matTooltip="Eliminar"><mat-icon>restore_from_trash</mat-icon></button>
+            <a [routerLink]="['viewUser/', element.id_user]"><mat-icon>description</mat-icon></a>
         </td>
     </ng-container>
 
@@ -49,9 +49,15 @@
         </mat-card-content>
         <mat-card-actions>
             <caption>Acciones:</caption>
-                <mat-icon matTooltip="Editar" (click)="editUser(data.id_user)">edit</mat-icon>
-                <mat-icon matTooltip="Eliminar" (click)="deleteUser(data.id_user)">restore_from_trash</mat-icon>
-                <mat-icon matTooltip="Ver" [routerLink]="['/viewUser/'+data.id_user]">description</mat-icon>
+                <button (click)="editUser(data.id_user)">
+                    <mat-icon matTooltip="Editar">edit</mat-icon>
+                </button>
+                <button (click)="deleteUser(data.id_user)">
+                    <mat-icon matTooltip="Eliminar">restore_from_trash</mat-icon>
+                </button>
+                <a routerLink="['viewUser/', element.id_user]">
+                    <mat-icon matTooltip="Ver">description</mat-icon>
+                </a> 
         </mat-card-actions>
     </mat-card>
 </div>

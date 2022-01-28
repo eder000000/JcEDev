@@ -86,7 +86,7 @@ export class UserTableComponent implements OnInit{
         this.remoteDbService.getStatusesById(data.user_status_id)
         .subscribe(userStatus => {
           let user: User = {
-            id_user: data.user_model_address_id,
+            id_user: data.user_model_id,            
             first_name: data.user_model_first_name,
             last_name: data.user_model_last_name,
             role: userRole.user_role_name,
@@ -96,6 +96,7 @@ export class UserTableComponent implements OnInit{
 
           if (data === this.userData[this.userData.length-1]){
             this.table.dataSource = this.users
+            console.log(this.users);
             this.table.renderRows()
           }
         })
@@ -117,6 +118,7 @@ export class UserTableComponent implements OnInit{
   deleteUser(id: number) {
     this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
       alert('Usuario eliminado correctamente');
+      this.users = [];
       this.getData();
     });
   }
