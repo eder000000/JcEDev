@@ -7,9 +7,11 @@ import { UserRole } from '../remote-models/user-role-model';
 import { Status } from '../remote-models/status-model';
 
 import { MediaObserver } from '@angular/flex-layout';
+import { Router } from '@angular/router';
 
 // This interface will be used for print in "user-table" html.
 interface User {
+  id_user: number,
   first_name: string;
   last_name: string;
   role: string;
@@ -19,18 +21,21 @@ interface User {
 // Data harcodeada
 const USERS: User[] = [
   {
+    id_user: 1,
     first_name: "Juan Pedro",
     last_name: "Salas Ríos",
     role: "Profesional",
     status: "Activo"
   },
   {
+    id_user: 2,
     first_name: "Ana María",
     last_name: "González Torres",
     role: "Administrador",
     status: "Activo"
   },
   {
+    id_user: 3,
     first_name: "José Armando",
     last_name: "Silas Armas",
     role: "Usuario",
@@ -55,7 +60,9 @@ export class UserTableComponent implements OnInit{
   
   @ViewChild('table') table: MatTable<User>;
 
-  constructor(private remoteDbService: RemoteDbService, public mediaObserve: MediaObserver) {
+  constructor(private remoteDbService: RemoteDbService, 
+              public mediaObserve: MediaObserver,
+              private router: Router) {
     this.users = []
   }
 
@@ -79,6 +86,7 @@ export class UserTableComponent implements OnInit{
         this.remoteDbService.getStatusesById(data.user_status_id)
         .subscribe(userStatus => {
           let user: User = {
+            id_user: data.user_model_address_id,
             first_name: data.user_model_first_name,
             last_name: data.user_model_last_name,
             role: userRole.user_role_name,
@@ -95,6 +103,24 @@ export class UserTableComponent implements OnInit{
     }
   }
 
+  //Edit User
+  editUser(id: number){
+    this.router.navigate(['/editUser/'+id]);
+  } //This function redirects directly to the edition interface
+    /*
+      Note: Theoretically first the data should be rendered in a form so the user could edit it and then
+      be sent to the service remote-db.service.ts (method PUT for updating the user)
+
+    */
+   
+  //Delete User
+  deleteUser(id: number) {
+    this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
+      alert('Usuario eliminado correctamente');
+      this.getData();
+    });
+  }
+  
   ngOnDestroy(): void {
     // this.userSubscription.unsubscribe();
     // this.statusSubscription.unsubscribe();

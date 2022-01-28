@@ -49,15 +49,9 @@
         </mat-card-content>
         <mat-card-actions>
             <caption>Acciones:</caption>
-            <a href="">
-                <mat-icon matTooltip="Editar">edit</mat-icon>
-            </a>
-            <a href="">
-                <mat-icon matTooltip="Eliminar">restore_from_trash</mat-icon>
-            </a>
-            <a href="">
-                <mat-icon matTooltip="Ver">description</mat-icon>
-            </a>
+                <mat-icon matTooltip="Editar" (click)="editUser(data.id_user)">edit</mat-icon>
+                <mat-icon matTooltip="Eliminar" (click)="deleteUser(data.id_user)">restore_from_trash</mat-icon>
+                <mat-icon matTooltip="Ver" [routerLink]="['/viewUser/'+data.id_user]">description</mat-icon>
         </mat-card-actions>
     </mat-card>
 </div>
