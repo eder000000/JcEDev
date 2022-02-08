@@ -8,7 +8,7 @@
                     <div class="profesionals-list" > 
                         <button 
                             *ngFor="let oficio of pro.oficios; let i=index" 
-                            class="oficios-button"
+                            [ngClass]="selectedJob[p] == i ? 'oficios-button-selected' : 'oficios-button'"
                             (click)="updateJobInfo(p, i)"
                         >
                         {{oficio.oficio_name}}</button>
@@ -23,7 +23,7 @@
                         <mat-panel-description>
                             <a class="details-button" 
                             mat-raised-button align="end" 
-                            > Ver {{panelOpenState[p] ? 'menos' : 'mas'}}</a>
+                            > Ver {{panelOpenState[p] ? 'menos' : 'más'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div>
