@@ -41,7 +41,9 @@ export class ListProComponent implements OnInit {
       }
       if (this.allPros) {
         this.allPros.forEach(pro => {
-          this.selectedJob.push(0)
+          if (this.requestedJob) this.selectedJob.push(pro.oficios.findIndex(
+            oficio => oficio.oficio_name == this.requestedJob));
+          else this.selectedJob.push(0);
           this.panelOpenState.push(false)
           pro.oficios.forEach(oficio => {
             if (!this.registeredProfessions.includes(oficio.oficio_name)) {
@@ -55,5 +57,9 @@ export class ListProComponent implements OnInit {
 
   updateJobInfo(proIndex, jobIndex) { 
     this.selectedJob[proIndex] = jobIndex
+  }
+
+  filterProsByProfession (profession : string) : Profesional[] {
+    return this.allPros.filter(pro => pro.oficios.some(oficio => oficio.oficio_name == profession));
   }
 }

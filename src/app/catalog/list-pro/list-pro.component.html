@@ -1,5 +1,7 @@
 <section class="profesionals-list">
-        <div *ngFor="let pro of allPros; let p = index">
+    <div *ngFor="let prof of registeredProfessions">
+        <h1>{{prof}}</h1>
+        <div *ngFor="let pro of filterProsByProfession(prof); let p = index">
         <mat-card class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
                <img mat-card-avatar src={{pro.fotoPerfil}}/>
@@ -60,4 +62,5 @@
               </mat-card-content>
         </mat-card>
         </div>
+    </div>
 </section>
