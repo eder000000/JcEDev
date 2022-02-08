@@ -59,7 +59,8 @@ export class ListProComponent implements OnInit {
     this.selectedJob[proIndex] = jobIndex
   }
 
-  filterProsByProfession (profession : string) : Profesional[] {
-    return this.allPros.filter(pro => pro.oficios.some(oficio => oficio.oficio_name == profession));
+  filterProByProfession(prof : string, pro : Profesional) : boolean {
+    return pro.oficios.some(oficio => oficio.oficio_name == prof);
   }
+  
 }
