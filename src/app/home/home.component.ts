@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -11,7 +12,7 @@ export class HomeComponent implements OnInit {
 	imageSuscription = './assets/img/undraw_coffee_break_h3uu_thumbnails.png';
 	textSuscriptionCard = 'Soy un profesional, ¿Cómo puedo suscribirme?'; 
 
-	constructor() {}
+	constructor(public router: Router) {}
 
 	ngOnInit(): void {}
 }
