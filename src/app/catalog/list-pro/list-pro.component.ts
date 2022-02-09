@@ -13,11 +13,12 @@ export class ListProComponent implements OnInit {
 	panelOpenState: boolean[];
   registeredProfessions: string[];
   allPros: Profesional[];
-  obsPerson: Observable<Profesional[]>
+  prosShown: boolean[];
+  obsPerson: Observable<Profesional[]>;
   requestedJob: string;
-  selectedJob: number[] 
+  selectedJob: number[];
 
-  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute) { }
+  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -28,8 +29,9 @@ export class ListProComponent implements OnInit {
     this.registeredProfessions = []
     this.allPros = []
     this.firebaseService.getAll().subscribe(pros => {
-      if (!this.requestedJob) this.allPros = pros;
-      else {
+      if (!this.requestedJob) { 
+        this.allPros = pros;
+      } else {
         pros.forEach(pro => {
           pro.oficios.forEach(oficio => {
             if (oficio.oficio_name == this.requestedJob) {
@@ -39,19 +41,20 @@ export class ListProComponent implements OnInit {
           })
         })
       }
+      this.prosShown = Array(this.allPros.length).fill(false);
       if (this.allPros) {
         this.allPros.forEach(pro => {
           if (this.requestedJob) this.selectedJob.push(pro.oficios.findIndex(
             oficio => oficio.oficio_name == this.requestedJob));
           else this.selectedJob.push(0);
-          this.panelOpenState.push(false)
-          pro.oficios.forEach(oficio => {
-            if (!this.registeredProfessions.includes(oficio.oficio_name)) {
-              this.registeredProfessions.push(oficio.oficio_name);
-            }
-          })
+          this.panelOpenState.push(false);
+          pro.oficios.sort();
+          if (!this.registeredProfessions.includes(pro.oficios[0].oficio_name)) {
+              this.registeredProfessions.push(pro.oficios[0].oficio_name);
+          }
         })
       }
+      this.registeredProfessions.sort();
     })
   }
 
