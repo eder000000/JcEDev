@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FirebaseService } from 'src/app/firebase/firebase.service';
@@ -18,7 +18,7 @@ export class ListProComponent implements OnInit {
   requestedJob: string;
   selectedJob: number[];
 
-  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute) {}
+  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute, private cd : ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -32,6 +32,7 @@ export class ListProComponent implements OnInit {
       if (!this.requestedJob) { 
         this.allPros = pros;
       } else {
+        this.registeredProfessions.push(this.requestedJob);
         pros.forEach(pro => {
           pro.oficios.forEach(oficio => {
             if (oficio.oficio_name == this.requestedJob) {
@@ -44,14 +45,17 @@ export class ListProComponent implements OnInit {
       this.prosShown = Array(this.allPros.length).fill(false);
       if (this.allPros) {
         this.allPros.forEach(pro => {
-          if (this.requestedJob) this.selectedJob.push(pro.oficios.findIndex(
+          if (this.requestedJob) {
+            this.selectedJob.push(pro.oficios.findIndex(
             oficio => oficio.oficio_name == this.requestedJob));
-          else this.selectedJob.push(0);
-          this.panelOpenState.push(false);
-          pro.oficios.sort();
-          if (!this.registeredProfessions.includes(pro.oficios[0].oficio_name)) {
-              this.registeredProfessions.push(pro.oficios[0].oficio_name);
+          } else {
+            this.selectedJob.push(0);
+            pro.oficios.sort();
+            if (!this.registeredProfessions.includes(pro.oficios[0].oficio_name)) {
+                this.registeredProfessions.push(pro.oficios[0].oficio_name);
+            }
           }
+          this.panelOpenState.push(false);
         })
       }
       this.registeredProfessions.sort();
@@ -62,8 +66,11 @@ export class ListProComponent implements OnInit {
     this.selectedJob[proIndex] = jobIndex
   }
 
-  filterProByProfession(prof : string, pro : Profesional) : boolean {
-    return pro.oficios.some(oficio => oficio.oficio_name == prof);
+  filterProByProfession(prof : string, pro : Profesional, ind : number) : boolean {
+    if (this.prosShown[ind]) return false;
+    this.prosShown[ind] = pro.oficios.some(oficio => oficio.oficio_name == prof) && !this.prosShown[ind];
+    if (ind == this.allPros.length-1) this.cd.detach();
+    return this.prosShown[ind];
   }
   
 }

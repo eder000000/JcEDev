@@ -2,7 +2,7 @@
     <div *ngFor="let prof of registeredProfessions">
         <h1>{{prof}}</h1>
         <div *ngFor="let pro of allPros; let p = index">
-        <mat-card *ngIf="filterProByProfession(prof, pro)" class="profesional-card mat-elevation-z4"> 
+        <mat-card *ngIf="filterProByProfession(prof, pro, p)" class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
                <img mat-card-avatar src={{pro.fotoPerfil}}/>
                 <mat-card-title>{{pro.nombres}} {{pro.apellidoPaterno}} {{pro.apellidoMaterno}}</mat-card-title>
