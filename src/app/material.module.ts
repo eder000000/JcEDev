@@ -57,7 +57,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatSelectModule,
 		MatStepperModule,
 		MatExpansionModule,
-		MatChipsModule, 
+		MatChipsModule,
 		MatProgressSpinnerModule,
 		MatTooltipModule
 	]

@@ -1,1 +1,210 @@
-<p>edit-pro works!</p>
+<section class="register-container" fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <mat-card  
+        fxLayout="column" 
+        fxLayoutAlign="center center" 
+        fxLayoutGap="10px">
+
+        <mat-vertical-stepper
+        class="class-b"
+        orientation="vertical" 
+        [linear]="isLinear"
+        #stepper
+        >
+
+        <mat-step [stepControl]="firstFormNewProfesional">
+        <ng-template matStepLabel>Información personal </ng-template>
+    
+        <form [formGroup]="firstFormNewProfesional"
+            class="register-form" 
+            fxLayout="column" 
+            fxLayoutAlign="center center" 
+            fxLayoutGap="10px">
+    
+        	<mat-form-field class="register-full-width">
+        		<mat-label class="small-label">Nombres</mat-label>
+        		<input matInput #input formControlName="nombres">
+        		<mat-error *ngIf="firstFormNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
+        	</mat-form-field>
+            
+        	<mat-form-field  class="register-full-width">
+        		<mat-label class="small-label">Appellido Paterno </mat-label>
+        		<input matInput #input formControlName="apellidoPaterno">
+        		<mat-error>El campo es requerido.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Appellido Materno </mat-label>
+                <input matInput #input formControlName="apellidoMaterno">
+                <mat-error>El campo es requerido.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field  class="register-full-width">
+                <input 
+                matInput 
+                placeholder="Fecha de nacimiento" 
+                [matDatepicker]="picker" 
+                [max]="maxDate" 
+                formControlName="fechaNacimiento">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>El campo es requerido.</mat-error>
+            </mat-form-field>
+            <div>
+            <mat-label>Seleccionar foto de perfil</mat-label>
+            <label class="input-file-label" for="profile"><mat-icon>add_a_photo</mat-icon></label>
+            </div>
+            <input class="input-file" id="profile" type="file" placeholder="Basic Input" accept=".png, .jpg, .jpeg, .jfif" (change)="uploadImage($event)"/>
+            <div *ngIf="showProfilePicturePreview === 'visible';else loadingProfilePic">
+                <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Profile Picture">
+            </div>
+            <ng-template #loadingProfilePic>
+                <mat-spinner *ngIf="showProfilePicturePreview === 'loading'"></mat-spinner>
+            </ng-template>
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Numero celular</mat-label>
+                <input matInput #input    formControlName="numeroCelular">
+                <mat-error>El campo es requerido.</mat-error>
+             </mat-form-field>
+
+             <div>
+                <button mat-button class="save-button" matStepperNext>Siguiente</button>
+              </div>
+        </form>
+    	</mat-step>
+
+    	<mat-step [stepControl]="secondFormNewProfesional">
+    	<form [formGroup]="secondFormNewProfesional"
+    		class="register-form" 
+    		fxLayout="column" 
+    		fxLayoutAlign="center center" 
+    		fxLayoutGap="10px">
+     	<ng-template matStepLabel>Direccion personal</ng-template>
+
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Codigo Postal</mat-label>
+                <input matInput #input     formControlName="codigoPostal" (focusout) = "renderAddress($event.srcElement.value)">
+            </mat-form-field>
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Municipio</mat-label>
+                <mat-select formControlName="municipio" (selectionChange) = "renderColonies($event.value)">
+                        <mat-option *ngFor="let mun of allMunicipalities" value={{mun.id_municipality}}>
+                            {{mun.municipality_name}}
+                        </mat-option>
+                </mat-select>
+                <input matInput #input   >
+            </mat-form-field> 
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Colonia</mat-label>
+                <mat-select formControlName="colonia" (selectionChange) = "renderZip($event.value)">
+                        <mat-option *ngFor="let col of allColonies" value={{col.id_colony_code}}>{{col.colony_name}}</mat-option>
+                </mat-select>
+                <input matInput #input>
+            </mat-form-field>
+
+            <mat-form-field  class="register-full-width">
+                <mat-label class="small-label">Calle</mat-label>
+                <input matInput #input formControlName="calle">
+            </mat-form-field>
+                
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Numero exterior</mat-label>
+                <input matInput #input formControlName="numExterior">
+            </mat-form-field>
+
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Numero interior</mat-label>
+                <input matInput #input     formControlName="numInterior">
+            </mat-form-field>
+
+            <div>
+				<button mat-button class="save-button" matStepperPrevious>Regresar</button>
+                <button mat-button class="save-button" matStepperNext>Siguiente</button>
+            </div>
+        </form>
+        </mat-step>
+
+        <mat-step [stepControl]="thirdFormNewProfesional">
+        <form [formGroup]="thirdFormNewProfesional"
+        	class="register-form" 
+        	fxLayout="column" 
+        	fxLayoutAlign="center center" 
+        	fxLayoutGap="10px">
+         <ng-template matStepLabel>Oficio</ng-template>
+         <ng-container formArrayName="oficios">
+         <div *ngFor="let _ of oficios.controls; let i=index">
+                <ng-container [formGroupName]="i">
+                    <mat-card class="profesional-card mat-elevation-z4">
+                    <mat-form-field  class="register-full-width">
+                        <mat-label class="small-label">Oficio</mat-label>
+                        <input type="text" matInput #input formControlName="oficio_name">
+                    </mat-form-field>
+                    <mat-form-field  class="register-full-width">
+                        <mat-label class="small-label">Descripción</mat-label>
+                        <input type="text" matInput #input formControlName="oficio_descripcion">
+                    </mat-form-field>
+                    <mat-label>Selecciona una o mas imágenes para mostrar tu trabajo.</mat-label><br>
+                    <label 
+                    class="input-file-label"
+                    [attr.for]="'images' + i"
+                    ><mat-icon>add_photo_alternate</mat-icon></label>
+                    <input 
+                    class="input-file" 
+                    type="file" 
+                    placeholder="Basic Input" 
+                    multiple="true" 
+                    accept=".png, .jpg, .jpeg, .jfif" 
+                    (change)="uploadPhotoEvidence($event, i)"
+                    [attr.id]="'images' + i"/>
+                    <div style="margin-bottom: 30;" *ngIf="isPhotoEvidencesLoading[i]">
+                        <mat-spinner></mat-spinner>
+                    </div>
+                    <mat-card-actions align="end">
+                 <!--  <label>
+                         <button class="details-button" (click)="removeFormControl(i)">Quitar empleo</button>
+                  </label>  -->
+                          
+                     <label>
+                            <button class="remove-button" (click)="removeFormControl(i)"><mat-icon>clear</mat-icon></button>
+                     </label> 
+                    </mat-card-actions>
+                
+                </mat-card>
+                </ng-container>
+            
+            </div>
+        </ng-container>
+     <button class="add-button" (click)="addFormControl()"> <mat-icon>add_circle_outline</mat-icon></button>
+       
+      
+       
+    
+
+        <mat-form-field  class="register-full-width">
+            <mat-label class="small-label">Ubicacion para trabajar</mat-label>
+            <mat-select formControlName="ubicacionTrabajo">
+                    <mat-option *ngFor="let mun of allMunicipalities" value={{mun.municipality_name}}>
+                        {{mun.municipality_name}}
+                    </mat-option>
+            </mat-select>
+            <input matInput #input   >
+        </mat-form-field> 
+
+            <div>
+              <button mat-button class="save-button" matStepperPrevious>Regresar</button>
+              <button mat-button class="save-button" (click)="save()">Guardar</button>
+            </div>
+			
+    	</form>
+		</mat-step>
+
+    	<mat-step>
+    	<ng-template matStepLabel> Registro Completado. </ng-template>
+    	</mat-step>
+
+		</mat-vertical-stepper>
+	</mat-card>
+</section>
+   
