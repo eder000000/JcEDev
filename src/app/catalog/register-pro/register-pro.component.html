@@ -81,10 +81,7 @@
     		fxLayoutGap="10px">
      	<ng-template matStepLabel>Direccion personal</ng-template>
 
-            <mat-form-field  class="register-small-width">
-                <mat-label class="small-label">Codigo Postal</mat-label>
-                <input matInput #input     formControlName="codigoPostal" (focusout) = "renderAddress($event.srcElement.value)">
-            </mat-form-field>
+           
 
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Municipio</mat-label>
@@ -117,6 +114,11 @@
             <mat-form-field  class="register-small-width">
                 <mat-label class="small-label">Numero interior</mat-label>
                 <input matInput #input     formControlName="numInterior">
+            </mat-form-field>
+
+            <mat-form-field  class="register-small-width">
+                <mat-label class="small-label">Codigo Postal</mat-label>
+                <input matInput #input     formControlName="codigoPostal" (focusout) = "renderAddress($event.srcElement.value)">
             </mat-form-field>
 
             <div>
