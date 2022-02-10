@@ -32,6 +32,7 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 
 @NgModule({
 	declarations: [
@@ -49,7 +50,8 @@ import { MatCardModule } from '@angular/material/card';
 		ContentComponent,
 		OficiosComponent,
 		UserTableComponent,
-		PageNotFoundComponent
+		PageNotFoundComponent,
+		EditProComponent
 	],
 	imports: [
 		BrowserModule,
@@ -64,7 +66,7 @@ import { MatCardModule } from '@angular/material/card';
 		HttpClientModule,
 		MatTableModule,
 		MatCardModule
-	], 
+	],
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
 })
