@@ -92,7 +92,11 @@ mat-card-actions {
   border-color: #ff8e3c;
   border-style: solid;
   border-radius: 10px;
+}
 
+.explore-button:hover {
+  background-color: #f3a167;
+  color: #f8f5f2;
 }
 
 .info-button {
