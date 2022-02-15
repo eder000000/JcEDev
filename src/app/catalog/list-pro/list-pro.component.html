@@ -8,7 +8,7 @@
                 <mat-card-title>{{pro.nombres}} {{pro.apellidoPaterno}} {{pro.apellidoMaterno}}</mat-card-title>
                 <mat-card-subtitle>
                     <div class="profesionals-list" > 
-                        <button 
+                        <button
                             *ngFor="let oficio of pro.oficios; let i=index" 
                             [ngClass]="selectedJob[p] == i ? 'oficios-button-selected' : 'oficios-button'"
                             (click)="updateJobInfo(p, i)"
@@ -28,15 +28,16 @@
                             > Ver {{panelOpenState[p] ? 'menos' : 'más'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <div>
+                <div>
+                        <div>
                         <p class="label-card">Area para trabajar:</p> 
                     </div>
-
                     <div class="location-list">
                         <p class="card-text">{{pro.ubicacionTrabajo}}</p>  
                     </div>
+                </div>
                     <div>
-                        <p class="label-card">Telefono de contacto: </p> 
+                        <p class="label-card">Teléfono de contacto: </p> 
                     </div>
 
                     <div class="location-list">
