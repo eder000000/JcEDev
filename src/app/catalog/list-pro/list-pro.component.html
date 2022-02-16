@@ -1,3 +1,36 @@
+<h1>Profesiones</h1>
+<!-- Searcher -->
+<mat-form-field class="chip-list" appearance="fill">
+    <mat-label>Buscar profesiones</mat-label>
+    <mat-chip-list #chipList aria-label="Busqueda de profesiones">
+        <mat-chip
+            *ngFor="let profesion of professions"
+            (removed)="remove(profesion)">
+            {{profesion}}
+        </mat-chip>
+        <input
+            placeholder="Buscar otro trabajo..."
+            #profesionInput
+            [formControl]="professionCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)"
+        >
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let profession of filteredProfessions | async" [value]="profession">
+            {{profession}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<div *ngIf="professions[0]!=undefined">
+    <button (click)="removeAll()" class="oficios-button">
+        Borrar busqueda
+    </button>
+</div>
+
+<!-- Profesions -->
 <section class="profesionals-list">
     <div *ngFor="let cardData of cardsData; let c = index">
         <h1>{{cardData.skill_name}}</h1>

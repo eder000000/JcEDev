@@ -1,8 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FirebaseService } from 'src/app/firebase/firebase.service';
 import { Profesional } from 'src/app/user/profesional-data-model';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {FormControl} from '@angular/forms';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {map, startWith} from 'rxjs/operators';
 
 interface CardData {
   skill_name?: string;
@@ -29,21 +34,88 @@ interface CardData {
 	templateUrl: './list-pro.component.html',
 	styleUrls: [ './list-pro.component.css' ]
 })
-export class ListProComponent implements OnInit {
+
+export class ListProComponent  implements OnInit {
+	panelOpenState: boolean[];
+  allPros: Profesional[];  
+  prosShown: boolean[]; //Avoids repetitions when it's printing in the html
+  obsPerson: Observable<Profesional[]>;
   requestedJob: string;
+  selectedJob: number[];
+  registeredProfessions: string[]; //Saves all the profesions
+
+  //New variable
+  separatorKeysCodes: number[] = [ENTER, COMMA]; //To say "ok" in the bar search 
+  professionCtrl = new FormControl();
+  filteredProfessions: Observable<string[]>;
+  professions: string[] = []; // Saves the profesions selected by the user
+
+  @ViewChild('profesionInput') profesionInput: ElementRef<HTMLInputElement>;
+
+  constructor(private firebaseService: FirebaseService, 
+              private route: ActivatedRoute) {
+  }
+
+  // Add data into "professions"
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (this.registeredProfessions.includes(value)) {
+      this.professions.push(value);
+    }
+
+    // Clear the input value
+    if(event.input){
+      event.input.value = '';    
+    }
+
+    this.professionCtrl.setValue(null);
+    this.buildCardsData(this.queryPros, this.professions);
+  }
+
+  // TODO: Delete a single element from list
+  // Remove data from "professions"
+  // Note: Nowadays It doesn't use
+  // remove(fruit: string): void {
+  //   const index = this.professions.indexOf(fruit);
+
+  //   if (index >= 0) {
+  //     this.professions.splice(index, 1);
+  //   }
+  //   this.prosShown = [];
+  // }
+
+  // Function that allows the user to choose a profession from the list of recommendations
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.professions.push(event.option.viewValue);
+
+    this.profesionInput.nativeElement.value = '';
+    this.professionCtrl.setValue(null);
+    
+    this.prosShown = [];
+    this.buildCardsData(this.queryPros, this.professions);
+  }
+
+  // FIXME: Change for a no window.reload solution
+  removeAll(){
+    window.location.reload();
+    this.professions = [];
+    this.prosShown = [];
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.registeredProfessions.filter(profesion => profesion.toLowerCase().includes(filterValue));
+  }
+
   cardsData: CardData[];
   queryPros: Profesional[];
-
-  constructor(
-    private firebaseService: FirebaseService, 
-    private route: ActivatedRoute, 
-    private cd : ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.requestedJob = params['oficio'];
     })
-
+    
     this.cardsData = [];
 
     this.firebaseService.getAll().subscribe(pros => {
@@ -51,7 +123,8 @@ export class ListProComponent implements OnInit {
       this.queryPros = pros;
 
       if (!this.requestedJob) { 
-        this.buildCardsData(pros);
+        var skills:string[] = this.getAllVisibleSkills(pros);
+        this.buildCardsData(pros, skills);
       } else {
         // Filter by selected job
         // TODO: Change query to use the filter service
@@ -59,7 +132,22 @@ export class ListProComponent implements OnInit {
           this.getProfessionalsByProfession(pros, this.requestedJob), 
           this.requestedJob
         );
+
+        this.sortCards();
       }
+
+      // Saves all the profession in the filteredProfession (For print in the recomendation list)
+      this.registeredProfessions = []
+      this.cardsData.forEach(cardData => {
+        this.registeredProfessions.push(cardData.skill_name);
+      }); 
+
+      this.filteredProfessions = this.professionCtrl.valueChanges.pipe(
+        startWith(null), 
+        map((profession: string | null) => 
+        (profession ? this._filter(profession) : this.registeredProfessions.slice())
+        )
+      );
     })
   }
 
@@ -69,8 +157,8 @@ export class ListProComponent implements OnInit {
       .selectedJob = jobIndex    
   }
 
-  buildCardsData(pros: Profesional[]) {
-    var skills:string[] = this.getAllVisibleSkills(pros);
+  buildCardsData(pros: Profesional[], skills:string[]) {
+    this.cardsData = [];
     skills.forEach(skill => {
       this.buildCardsDataWithFilter(
         this.getProfessionalsByProfession(pros, skill), 
