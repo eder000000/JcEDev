@@ -1,8 +1,8 @@
 <section class="profesionals-list">
-    <div *ngFor="let prof of registeredProfessions">
-        <h1>{{prof}}</h1>
-        <div *ngFor="let pro of allPros; let p = index">
-        <mat-card *ngIf="filterProByProfession(prof, pro, p)" class="profesional-card mat-elevation-z4"> 
+    <div *ngFor="let cardData of cardsData; let c = index">
+        <h1>{{cardData.skill_name}}</h1>
+        <div *ngFor="let pro of cardData.professionals; let p = index">
+        <mat-card class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
                <img mat-card-avatar src={{pro.fotoPerfil}}/>
                 <mat-card-title>{{pro.nombres}} {{pro.apellidoPaterno}} {{pro.apellidoMaterno}}</mat-card-title>
@@ -10,22 +10,22 @@
                     <div class="profesionals-list" > 
                         <button
                             *ngFor="let oficio of pro.oficios; let i=index" 
-                            [ngClass]="selectedJob[p] == i ? 'oficios-button-selected' : 'oficios-button'"
-                            (click)="updateJobInfo(p, i)"
+                            [ngClass]="pro.selectedJob == i ? 'oficios-button-selected' : 'oficios-button'"
+                            (click)="updateJobInfo(c, p, i)"
                         >
                         {{oficio.oficio_name}}</button>
                     </div>
                 </mat-card-subtitle>
             </mat-card-header>
               <mat-card-content >
-                <p>{{pro.oficios[selectedJob[p]].oficio_descripcion}}</p>
+                <p>{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
             <mat-accordion class="acordion">
-                <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState[p] = true" (closed)="panelOpenState[p] = false">
+                <mat-expansion-panel class="mat-elevation-z0" (opened)="pro.panelOpenState = true" (closed)="pro.panelOpenState = false">
                     <mat-expansion-panel-header>
                         <mat-panel-description>
                             <a class="details-button" 
                             mat-raised-button align="end" 
-                            > Ver {{panelOpenState[p] ? 'menos' : 'más'}}</a>
+                            > Ver {{pro.panelOpenState ? 'menos' : 'más'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                 <div>
@@ -50,7 +50,7 @@
                     <div class="gallery-container">
                         <div class="gallery-viewport">
                             <ul class="gallery-list">
-                                <li *ngFor="let foto of pro.oficios[selectedJob[p]].fotos" class="gallery-item">
+                                <li *ngFor="let foto of pro.oficios[pro.selectedJob].fotos" class="gallery-item">
                                     <img style="width: 100%;" src={{foto}}/>
                                 </li>
                             </ul>
