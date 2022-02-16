@@ -36,80 +36,22 @@ interface CardData {
 })
 
 export class ListProComponent  implements OnInit {
-	panelOpenState: boolean[];
+  cardsData: CardData[];
+  queryPros: Profesional[];
   allPros: Profesional[];  
-  prosShown: boolean[]; //Avoids repetitions when it's printing in the html
-  obsPerson: Observable<Profesional[]>;
   requestedJob: string;
-  selectedJob: number[];
-  registeredProfessions: string[]; //Saves all the profesions
 
-  //New variable
-  separatorKeysCodes: number[] = [ENTER, COMMA]; //To say "ok" in the bar search 
+  registeredProfessions: string[];
+  separatorKeysCodes: number[] = [ENTER, COMMA]; 
   professionCtrl = new FormControl();
   filteredProfessions: Observable<string[]>;
-  professions: string[] = []; // Saves the profesions selected by the user
+  professions: string[] = []; 
 
   @ViewChild('profesionInput') profesionInput: ElementRef<HTMLInputElement>;
 
   constructor(private firebaseService: FirebaseService, 
               private route: ActivatedRoute) {
   }
-
-  // Add data into "professions"
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    if (this.registeredProfessions.includes(value)) {
-      this.professions.push(value);
-    }
-
-    // Clear the input value
-    if(event.input){
-      event.input.value = '';    
-    }
-
-    this.professionCtrl.setValue(null);
-    this.buildCardsData(this.queryPros, this.professions);
-  }
-
-  // TODO: Delete a single element from list
-  // Remove data from "professions"
-  // Note: Nowadays It doesn't use
-  // remove(fruit: string): void {
-  //   const index = this.professions.indexOf(fruit);
-
-  //   if (index >= 0) {
-  //     this.professions.splice(index, 1);
-  //   }
-  //   this.prosShown = [];
-  // }
-
-  // Function that allows the user to choose a profession from the list of recommendations
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.professions.push(event.option.viewValue);
-
-    this.profesionInput.nativeElement.value = '';
-    this.professionCtrl.setValue(null);
-    
-    this.prosShown = [];
-    this.buildCardsData(this.queryPros, this.professions);
-  }
-
-  // FIXME: Change for a no window.reload solution
-  removeAll(){
-    window.location.reload();
-    this.professions = [];
-    this.prosShown = [];
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.registeredProfessions.filter(profesion => profesion.toLowerCase().includes(filterValue));
-  }
-
-  cardsData: CardData[];
-  queryPros: Profesional[];
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -149,6 +91,56 @@ export class ListProComponent  implements OnInit {
         )
       );
     })
+  }
+
+  // Add data into "professions"
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (this.registeredProfessions.includes(value)) {
+      this.professions.push(value);
+    }
+
+    // Clear the input value
+    if(event.input){
+      event.input.value = '';    
+    }
+
+    this.professionCtrl.setValue(null);
+    this.buildCardsData(this.queryPros, this.professions);
+  }
+
+  // TODO: Delete a single element from list
+  // Remove data from "professions"
+  // Note: Nowadays It doesn't use
+  // remove(fruit: string): void {
+  //   const index = this.professions.indexOf(fruit);
+
+  //   if (index >= 0) {
+  //     this.professions.splice(index, 1);
+  //   }
+  //   this.prosShown = [];
+  // }
+
+  // Function that allows the user to choose a profession from the list of recommendations
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.professions.push(event.option.viewValue);
+
+    this.profesionInput.nativeElement.value = '';
+    this.professionCtrl.setValue(null);
+    
+    this.buildCardsData(this.queryPros, this.professions);
+  }
+
+  // FIXME: Change for a no window.reload solution
+  removeAll(){
+    window.location.reload();
+    this.professions = [];
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.registeredProfessions.filter(profesion => profesion.toLowerCase().includes(filterValue));
   }
 
   updateJobInfo(skillIndex, proIndex, jobIndex) { 
