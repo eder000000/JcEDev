@@ -116,11 +116,12 @@ export class UserTableComponent implements OnInit{
    
   //Delete User
   deleteUser(id: number) {
-    this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
-      alert('Usuario eliminado correctamente');
-      this.users = [];
-      this.getData();
-    });
+    if (confirm("Esta seguro de eliminar a este usuario?"))
+      this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
+        alert('Usuario eliminado correctamente');
+        this.users = [];
+        this.getData();
+      });
   }
   
   ngOnDestroy(): void {

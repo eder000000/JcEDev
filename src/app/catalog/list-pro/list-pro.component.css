@@ -39,15 +39,10 @@ body {
 
 }
 
-.example-header-image {
-  background-image: url('https://rickandmortyapi.com/api/character/avatar/1.jpeg');
-  background-size: cover;
-  max-width: 100%;
-}
-
 .mat-card-title {
-  font-size: calc(0.7em + 0.7vw);
+  font-size: calc(0.7em + 1.5vw);
   max-width: 100%;
+  line-height: 1.2
 }
 
 .oficios {
@@ -57,6 +52,8 @@ body {
 
 .mat-card-avatar {
   border-radius: 10%;
+  height: calc(2.5em + 1.5vw);
+  width: calc(2.5em + 1.5vw);
   flex-shrink: 0;
 }
 
@@ -75,7 +72,7 @@ body {
 
 .card-text {
   color: #2a2a2a;
-  margin-right: 20px;
+  margin: 0 30px;
 }
 
 
@@ -109,6 +106,7 @@ button.oficios-button {
   cursor: pointer;
 }
 
+button.oficios-button:focus,
 button.oficios-button:hover,
 button.oficios-button-selected {
   background-color: #f3a167;
@@ -122,6 +120,7 @@ button.oficios-button-selected {
   border-style: solid;
   border-width: 1px;
 }
+
 
 
 
@@ -206,7 +205,8 @@ button.oficios-button-selected {
   font-family: "Fredoka One", serif;
   display: flex;
   align-items: center;
-  justify-content: center;;
+  justify-content: center;
+  ;
 }
 
 .menu-professions {

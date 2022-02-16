@@ -88,7 +88,6 @@ export class ListProComponent  implements OnInit {
   // Function that allows the user to choose a profession from the list of recommendations
   selected(event: MatAutocompleteSelectedEvent): void {
     this.professions.push(event.option.viewValue);
-    console.log(this.professions)
 
     this.profesionInput.nativeElement.value = '';
     this.professionCtrl.setValue(null);
@@ -116,6 +115,7 @@ export class ListProComponent  implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.requestedJob = params['oficio'];
     })
+    
     this.cardsData = [];
 
     this.firebaseService.getAll().subscribe(pros => {
@@ -132,6 +132,7 @@ export class ListProComponent  implements OnInit {
           this.getProfessionalsByProfession(pros, this.requestedJob), 
           this.requestedJob
         );
+
         this.sortCards();
       }
 
