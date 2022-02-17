@@ -19,7 +19,7 @@ import { ZipCode } from '../remote-models/zip-code-model';
   providedIn: 'root'
 })
 export class RemoteDbService {
-  endpoint:string = 'http://127.0.0.1:5000'
+  endpoint:string = 'https://jce-flask-02.herokuapp.com'
   headers:{}
   token:string
 
