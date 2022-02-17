@@ -41,11 +41,12 @@ export class ListProComponent  implements OnInit {
   allPros: Profesional[];  
   requestedJob: string;
 
-  registeredProfessions: string[];
+  availableProfessions: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA]; 
   professionCtrl = new FormControl();
   filteredProfessions: Observable<string[]>;
   professions: string[] = []; 
+  allProfessions: string[] = [];
 
   @ViewChild('profesionInput') profesionInput: ElementRef<HTMLInputElement>;
 
@@ -64,30 +65,44 @@ export class ListProComponent  implements OnInit {
       // No Requested Job
       this.queryPros = pros;
 
+      pros.forEach(pro => {
+        pro.oficios.forEach(oficio => {
+          if (!this.allProfessions.includes(oficio.oficio_name)) {
+            this.allProfessions.push(oficio.oficio_name)
+          }
+        });
+      });
+
+      // Saves all the profession in the filteredProfession (For print in the recomendation list)
+      this.availableProfessions = []
+      this.allProfessions.forEach(profession => {
+        this.availableProfessions.push(profession);
+      }); 
+      this.availableProfessions.sort();
+
       if (!this.requestedJob) { 
-        var skills:string[] = this.getAllVisibleSkills(pros);
-        this.buildCardsData(pros, skills);
+        this.buildCardsData(
+          pros, 
+          this.getAllVisibleSkills(pros)
+        );
       } else {
-        // Filter by selected job
-        // TODO: Change query to use the filter service
         this.buildCardsDataWithFilter(
           this.getProfessionalsByProfession(pros, this.requestedJob), 
           this.requestedJob
         );
 
+        this.availableProfessions = this.availableProfessions.filter(prof => {
+          return prof !== this.requestedJob; 
+        });
+
+        this.professions.push(this.requestedJob);
         this.sortCards();
       }
-
-      // Saves all the profession in the filteredProfession (For print in the recomendation list)
-      this.registeredProfessions = []
-      this.cardsData.forEach(cardData => {
-        this.registeredProfessions.push(cardData.skill_name);
-      }); 
 
       this.filteredProfessions = this.professionCtrl.valueChanges.pipe(
         startWith(null), 
         map((profession: string | null) => 
-        (profession ? this._filter(profession) : this.registeredProfessions.slice())
+        (profession ? this._filter(profession) : this.availableProfessions.slice())
         )
       );
     })
@@ -97,8 +112,12 @@ export class ListProComponent  implements OnInit {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    if (this.registeredProfessions.includes(value)) {
+    if (this.availableProfessions.includes(value)) {
       this.professions.push(value);
+      this.availableProfessions = this.availableProfessions.filter(prof => {
+        return !this.professions.includes(prof);
+      })
+      this.availableProfessions.sort();
     }
 
     // Clear the input value
@@ -114,7 +133,10 @@ export class ListProComponent  implements OnInit {
     const index = this.professions.indexOf(profession);
 
     if (index >= 0) {
-      this.professions.splice(index, 1);
+      this.availableProfessions.push(
+        this.professions.splice(index, 1)[0]
+      )
+      this.availableProfessions.sort();
     }
 
     if (this.professions.length > 0){
@@ -130,6 +152,10 @@ export class ListProComponent  implements OnInit {
   // Function that allows the user to choose a profession from the list of recommendations
   selected(event: MatAutocompleteSelectedEvent): void {
     this.professions.push(event.option.viewValue);
+    this.availableProfessions = this.availableProfessions.filter(prof => {
+      return !this.professions.includes(prof);
+    })
+    this.availableProfessions.sort();
 
     this.profesionInput.nativeElement.value = '';
     this.professionCtrl.setValue(null);
@@ -139,6 +165,12 @@ export class ListProComponent  implements OnInit {
 
   removeAll(){
     this.professions = [];
+    this.availableProfessions = [];
+    this.allProfessions.forEach(prof => {
+      this.availableProfessions.push(prof);
+    });
+    this.availableProfessions.sort();
+
     this.buildCardsData(
       this.queryPros, 
       this.getAllVisibleSkills(this.queryPros)
@@ -147,7 +179,7 @@ export class ListProComponent  implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.registeredProfessions.filter(profesion => profesion.toLowerCase().includes(filterValue));
+    return this.availableProfessions.filter(profesion => profesion.toLowerCase().includes(filterValue));
   }
 
   updateJobInfo(skillIndex, proIndex, jobIndex) { 
@@ -179,6 +211,10 @@ export class ListProComponent  implements OnInit {
       })
     });
     return skills;
+  }
+
+  loadChipListOptions() {
+    
   }
 
   sortCards() {
@@ -272,12 +308,10 @@ export class ListProComponent  implements OnInit {
     
     pros.forEach(pro => {
       var defaultSelectedJob:number =  0;
-      if (this.requestedJob) {
-        for (var k = 0; k < pro.oficios.length; k++) {
-          if (pro.oficios[k].oficio_name === this.requestedJob) {
-            defaultSelectedJob = k;
-            break;
-          }
+      for (var k = 0; k < pro.oficios.length; k++) {
+        if (pro.oficios[k].oficio_name === filter) {
+          defaultSelectedJob = k;
+          break;
         }
       }
 

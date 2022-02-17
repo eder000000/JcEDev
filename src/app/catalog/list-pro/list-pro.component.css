@@ -222,6 +222,7 @@ button.oficios-button-selected {
 .button-remove-chip-list {
   padding: 0;
   border-color: transparent;
+  background-color: transparent;
 }
 
 .remove-icon-chip-list {
