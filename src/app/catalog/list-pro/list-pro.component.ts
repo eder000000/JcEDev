@@ -110,17 +110,22 @@ export class ListProComponent  implements OnInit {
     this.buildCardsData(this.queryPros, this.professions);
   }
 
-  // TODO: Delete a single element from list
-  // Remove data from "professions"
-  // Note: Nowadays It doesn't use
-  // remove(fruit: string): void {
-  //   const index = this.professions.indexOf(fruit);
+  remove(profession: string): void {
+    const index = this.professions.indexOf(profession);
 
-  //   if (index >= 0) {
-  //     this.professions.splice(index, 1);
-  //   }
-  //   this.prosShown = [];
-  // }
+    if (index >= 0) {
+      this.professions.splice(index, 1);
+    }
+
+    if (this.professions.length > 0){
+      this.buildCardsData(this.queryPros, this.professions);
+    } else {
+      this.buildCardsData(
+        this.queryPros, 
+        this.getAllVisibleSkills(this.queryPros)
+      )
+    }
+  }
 
   // Function that allows the user to choose a profession from the list of recommendations
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -132,10 +137,12 @@ export class ListProComponent  implements OnInit {
     this.buildCardsData(this.queryPros, this.professions);
   }
 
-  // FIXME: Change for a no window.reload solution
   removeAll(){
-    window.location.reload();
     this.professions = [];
+    this.buildCardsData(
+      this.queryPros, 
+      this.getAllVisibleSkills(this.queryPros)
+    )
   }
 
   private _filter(value: string): string[] {

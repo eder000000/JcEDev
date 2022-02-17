@@ -219,6 +219,17 @@ button.oficios-button-selected {
   width: 100%;
 }
 
+.button-remove-chip-list {
+  padding: 0;
+  border-color: transparent;
+}
+
+.remove-icon-chip-list {
+  position: absolute;
+  right: 5px;
+  top: 12.5%;
+}
+
 .button-delete-barSearch{
   background-color: white;
   border-color: #ff8e3c;

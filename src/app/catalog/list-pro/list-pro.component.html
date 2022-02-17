@@ -1,12 +1,14 @@
-<h1>Profesiones</h1>
 <!-- Searcher -->
 <mat-form-field class="chip-list" appearance="fill">
-    <mat-label>Buscar profesiones</mat-label>
-    <mat-chip-list #chipList aria-label="Busqueda de profesiones">
+    <mat-label>Filtrar por trabajo</mat-label>
+    <mat-chip-list #chipList aria-label="Filtrar por trabajo">
         <mat-chip
             *ngFor="let profesion of professions"
             (removed)="remove(profesion)">
             {{profesion}}
+            <button matChipRemove class="button-remove-chip-list">
+                <mat-icon class="remove-icon-chip-list">cancel</mat-icon>
+            </button>
         </mat-chip>
         <input
             placeholder="Buscar otro trabajo..."
