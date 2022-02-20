@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { Colony } from '../remote-models/colony-model';
 import { CountryCode } from '../remote-models/country-code-model';
 import { Media } from '../remote-models/media-model';
 import { Municipality } from '../remote-models/municipality-model';
+import { Org } from '../remote-models/org-model';
 import { Skills } from '../remote-models/skills-model';
 import { StateCode } from '../remote-models/state-code-model';
 import { Status } from '../remote-models/status-model';
@@ -30,29 +31,7 @@ export class RemoteDbService {
     }
   }
 
-  /**
-   * POST /login
-   */
-  login(username:string, password:string): Observable<any> {
-    return this.httpClient.post<any>(
-      this.endpoint + '/login', {
-        'user_auth_name': username, 
-        'user_auth_password': password
-      }
-    )
-  }
-
-  /**
-   * Set token in headers after login
-   * @param token Given token after login
-   */
-  setToken(token:string): void {
-    this.headers = {
-      'Content-Type': 'application/json', 
-      'Access-Control-Allow-Origin': "*", 
-      'x-access-token': token
-    }
-  }
+  //CATALOG
 
   /**
    * GET /colonies
@@ -145,7 +124,29 @@ export class RemoteDbService {
    */
   getMunicipalityById(id_municipality: number): Observable<Municipality> {
     return this.httpClient.get<Municipality>(
-      this.endpoint + '/countries/' + id_municipality, {
+      this.endpoint + '/municipalities/' + id_municipality, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1))
+  }
+
+  /**
+   * GET /orgs
+   */
+  getOrgs(): Observable<Org[]> {
+    return this.httpClient.get<Org[]>(
+      this.endpoint + '/orgs', {
+        'headers': this.headers
+      }
+    ).pipe(retry(1))
+  }
+
+  /**
+   * GET /orgs:id
+   */
+  getOrgById(id_org: number): Observable<Org> {
+    return this.httpClient.get<Org>(
+      this.endpoint + '/countries/' + id_org, {
         'headers': this.headers
       }
     ).pipe(retry(1))
@@ -276,6 +277,106 @@ export class RemoteDbService {
     ).pipe(retry(1))
   }
 
+  //HASH
+  
+  /**
+   * GET /hasher/:param
+   */
+  getUserAuth(param:string) : Observable<UserAuth> {
+    return this.httpClient.get<UserAuth>(
+      this.endpoint + '/hasher/' + param, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1))
+  }
+
+  //AUTHENTICATION
+
+  /**
+   * POST /login
+   */
+   login(username:string, password:string): Observable<any> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/login', {
+        'user_auth_name': username, 
+        'user_auth_password': password
+      }, {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
+   * POST /logout
+   */
+   logout(userAuth:UserAuth): Observable<any> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/logout', JSON.stringify(userAuth), {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
+   * Set token in headers after login
+   * @param token Given token after login
+   */
+  setToken(token:string): void {
+    this.headers = {
+      'Content-Type': 'application/json', 
+      'Access-Control-Allow-Origin': "*", 
+      'x-access-token': token
+    }
+  }
+  
+  //MEDIA
+
+  /**
+   * POST /media
+   */
+   postMedia(media: Media): Observable<any> {
+    return this.httpClient.post<Media>(
+      this.endpoint + '/media', media, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * PUT /media
+   */
+   putMedia(media: Media): Observable<any> {
+    return this.httpClient.put<Media>(
+      this.endpoint + '/media', media, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * DELETE /media/:id
+   */
+   deleteMedia(media_id: number): Observable<any> {
+    return this.httpClient.delete<Media>(
+      this.endpoint + '/media/' + media_id, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * GET /media/:id
+   */
+   getMediaById(media_id: number): Observable<Media> {
+    return this.httpClient.get<Media>(
+      this.endpoint + '/media/' + media_id, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1))
+  }
+
+  //USERS
+
   /**
    * GET /users
    */
@@ -288,13 +389,48 @@ export class RemoteDbService {
   }
 
   /**
+   * POST /users
+   */
+   postUserData(data: UserModel): Observable<any> {
+    return this.httpClient.post<UserModel>(
+      this.endpoint + '/users', data, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * PUT /users
+   */
+   putUserData(data: UserModel): Observable<any> {
+    return this.httpClient.put<UserModel>(
+      this.endpoint + '/users', data, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * POST /users/address
+   */
+   postUserAddress(address: UserAddress): Observable<any> {
+    return this.httpClient.post<UserAddress>(
+      this.endpoint + '/users/address', address, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
    * GET /users/filter
    */
-  getFilteredUsers(user_role_id?: number, status_id?: number, skills_id?: number): Observable<UserModel[]> {
-    var params:{user_role_id?:string, status_id?:string, skills_id?:string} = {}
-    if (user_role_id) params.user_role_id = user_role_id.toString()
-    if (status_id) params.status_id = status_id.toString()
-    if (skills_id) params.skills_id = skills_id.toString()
+  getFilteredUsers(user_role_id?: number, status_id?: number, skills_id?: number[]): Observable<UserModel[]> {
+    var params : HttpParams = new HttpParams();
+    if (user_role_id) params.append('user_role_id',user_role_id[i].toString());
+    if (status_id) params.append('status_id',status_id.toString());
+    for (var i=0; i<skills_id.length; i++) {
+      params.append('skills_id',skills_id[i].toString());
+    }
     
     return this.httpClient.get<UserModel[]>(
       this.endpoint + '/users/filter' , {
@@ -302,6 +438,17 @@ export class RemoteDbService {
         'params': params
       }
     ).pipe(retry(1))
+  }
+
+  /**
+   * DELETE /users/:id
+   */
+  deleteUser(user_model_id: number): Observable<any> {
+    return this.httpClient.delete<UserModel>(
+      this.endpoint + '/users/' + user_model_id, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
   }
 
   /**
@@ -316,6 +463,17 @@ export class RemoteDbService {
   }
 
   /**
+   * DELETE /users/:id/address
+   */
+   deleteUserAddress(user_model_id: number): Observable<any> {
+    return this.httpClient.delete<UserAddress>(
+      this.endpoint + '/users/' + user_model_id + '/address', {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
    * GET /users/:id/address
    */
   getUserAddressById(user_model_id: number): Observable<UserAddress> {
@@ -324,6 +482,17 @@ export class RemoteDbService {
         'headers': this.headers
       }
     ).pipe(retry(1))
+  }
+
+  /**
+   * PUT /users/:id/address
+   */
+   putUserAddress(address: UserAddress, user_model_id: number): Observable<any> {
+    return this.httpClient.put<UserAddress>(
+      this.endpoint + '/users/' + user_model_id + '/address', address, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
   }
 
   /**
@@ -346,38 +515,5 @@ export class RemoteDbService {
         'headers': this.headers
       }
     ).pipe(retry(1))
-  }
-
-  /**
-   * PUT /users
-   */
-  putUserData(data: UserModel): Observable<any> {
-    return this.httpClient.put<UserModel>(
-      this.endpoint + '/users', data, {
-        'headers': this.headers
-      }
-    ).pipe(retry(1));
-  }
-
-  /**
-   * DELETE /users/:id
-   */
-  deleteUser(user_model_id: number): Observable<any> {
-    return this.httpClient.delete<UserModel>(
-      this.endpoint + '/users/' + user_model_id, {
-        'headers': this.headers
-      }
-    ).pipe(retry(1));
-  }
-
-  /**
-   * POST /users
-   */
-   postUserData(data: UserModel): Observable<any> {
-    return this.httpClient.post<UserModel>(
-      this.endpoint + '/users', data, {
-        'headers': this.headers
-      }
-    ).pipe(retry(1));
   }
 }
