@@ -6,6 +6,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
+import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -28,6 +29,10 @@ import { AuthService } from './auth/auth.service';
 import { OficiosComponent } from './job/oficios/oficios.component';
 import { FirebaseService } from './firebase/firebase.service';
 import { HerokuAddressService } from './heroku-address/heroku-address.service';
+import { UserTableComponent } from './user-table/user-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
 	declarations: [
@@ -43,7 +48,9 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 		SidenavListComponent,
 		FooterComponent,
 		ContentComponent,
-		OficiosComponent
+		OficiosComponent,
+		UserTableComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		BrowserModule,
@@ -55,9 +62,11 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 		AngularFireDatabaseModule,
 		AngularFireStorageModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
-		HttpClientModule
-	],
-	providers: [ AuthService ],
+		HttpClientModule,
+		MatTableModule,
+		MatCardModule
+	], 
+	providers: [ AuthService, AuthGuard ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}

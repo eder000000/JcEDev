@@ -16,8 +16,12 @@
         <mat-icon class="icon">explore</mat-icon>
         <span class="label">Registrar profesional</span>
     </a>
+    <a mat-list-item routerLink="/users" (click)="onClose()" *ngIf="isAuth">
+        <mat-icon class="icon">explore</mat-icon>
+        <span class="label">Administrar</span>
+    </a>
     <a mat-list-item routerLink="/user" (click)="onClose()" *ngIf="isAuth">
         <mat-icon class="icon">assignment_ind</mat-icon>
-        <span class="label">Salir</span>
+        <span class="label" (click)="onLogout()">Salir</span>
     </a>
 </mat-nav-list>

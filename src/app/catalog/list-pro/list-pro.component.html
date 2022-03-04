@@ -1,40 +1,78 @@
+<!-- Searcher -->
+<mat-form-field class="chip-list" appearance="fill">
+    <mat-label>Filtrar por trabajo</mat-label>
+    <mat-chip-list #chipList aria-label="Filtrar por trabajo">
+        <mat-chip
+            *ngFor="let profesion of professions"
+            (removed)="remove(profesion)">
+            {{profesion}}
+            <button matChipRemove class="button-remove-chip-list">
+                <mat-icon class="remove-icon-chip-list">cancel</mat-icon>
+            </button>
+        </mat-chip>
+        <input
+            placeholder="Buscar otro trabajo..."
+            #profesionInput
+            [formControl]="professionCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)"
+        >
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let profession of filteredProfessions | async" [value]="profession">
+            {{profession}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<div *ngIf="professions[0]!=undefined">
+    <button (click)="removeAll()" class="oficios-button">
+        Borrar busqueda
+    </button>
+</div>
+
+<!-- Profesions -->
 <section class="profesionals-list">
-        <div *ngFor="let pro of allPros; let p = index">
+    <div *ngFor="let cardData of cardsData; let c = index">
+        <h1>{{cardData.skill_name}}</h1>
+        <div *ngFor="let pro of cardData.professionals; let p = index">
         <mat-card class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
                <img mat-card-avatar src={{pro.fotoPerfil}}/>
                 <mat-card-title>{{pro.nombres}} {{pro.apellidoPaterno}} {{pro.apellidoMaterno}}</mat-card-title>
                 <mat-card-subtitle>
                     <div class="profesionals-list" > 
-                        <button 
+                        <button
                             *ngFor="let oficio of pro.oficios; let i=index" 
-                            class="oficios-button"
-                            (click)="updateJobInfo(p, i)"
+                            [ngClass]="pro.selectedJob == i ? 'oficios-button-selected' : 'oficios-button'"
+                            (click)="updateJobInfo(c, p, i)"
                         >
                         {{oficio.oficio_name}}</button>
                     </div>
                 </mat-card-subtitle>
             </mat-card-header>
               <mat-card-content >
-                <p>{{pro.oficios[selectedJob[p]].oficio_descripcion}}</p>
+                <p>{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
             <mat-accordion class="acordion">
-                <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState[p] = true" (closed)="panelOpenState[p] = false">
+                <mat-expansion-panel class="mat-elevation-z0" (opened)="pro.panelOpenState = true" (closed)="pro.panelOpenState = false">
                     <mat-expansion-panel-header>
                         <mat-panel-description>
                             <a class="details-button" 
                             mat-raised-button align="end" 
-                            > Ver {{panelOpenState[p] ? 'menos' : 'mas'}}</a>
+                            > Ver {{pro.panelOpenState ? 'menos' : 'más'}}</a>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <div>
+                <div>
+                        <div>
                         <p class="label-card">Area para trabajar:</p> 
                     </div>
-
                     <div class="location-list">
                         <p class="card-text">{{pro.ubicacionTrabajo}}</p>  
                     </div>
+                </div>
                     <div>
-                        <p class="label-card">Telefono de contacto: </p> 
+                        <p class="label-card">Teléfono de contacto: </p> 
                     </div>
 
                     <div class="location-list">
@@ -47,7 +85,7 @@
                     <div class="gallery-container">
                         <div class="gallery-viewport">
                             <ul class="gallery-list">
-                                <li *ngFor="let foto of pro.oficios[selectedJob[p]].fotos" class="gallery-item">
+                                <li *ngFor="let foto of pro.oficios[pro.selectedJob].fotos" class="gallery-item">
                                     <img style="width: 100%;" src={{foto}}/>
                                 </li>
                             </ul>
@@ -60,4 +98,5 @@
               </mat-card-content>
         </mat-card>
         </div>
+    </div>
 </section>

@@ -1,0 +1,63 @@
+<div>
+    <h1>Administrar</h1>
+</div>
+<table fxHide.lt-sm mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">    
+    <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef> Apellido </th>
+        <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Rol </th>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Estatus </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+            <button (click)="editUser(element.id_user)" matTooltip="Editar"><mat-icon>edit</mat-icon></button>
+            <button (click)="deleteUser(element.id_user)" matTooltip="Eliminar"><mat-icon>restore_from_trash</mat-icon></button>
+            <a [routerLink]="['viewUser/', element.id_user]"><mat-icon>description</mat-icon></a>
+        </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div fxHide.gt-xs *ngFor="let data of users">
+    <mat-card class="hover-shadow">
+        <mat-card-header>
+            <mat-card-title>{{ data.last_name }}, {{ data.first_name }}</mat-card-title>
+            <mat-card-subtitle>Rol: {{ data.role }}</mat-card-subtitle>
+        </mat-card-header>
+        <hr>
+        <mat-card-content>
+            <p>Estatus: {{ data.status }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <caption>Acciones:</caption>
+                <button (click)="editUser(data.id_user)">
+                    <mat-icon matTooltip="Editar">edit</mat-icon>
+                </button>
+                <button (click)="deleteUser(data.id_user)">
+                    <mat-icon matTooltip="Eliminar">restore_from_trash</mat-icon>
+                </button>
+                <a routerLink="['viewUser/', element.id_user]">
+                    <mat-icon matTooltip="Ver">description</mat-icon>
+                </a> 
+        </mat-card-actions>
+    </mat-card>
+</div>

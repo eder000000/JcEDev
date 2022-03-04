@@ -49,10 +49,11 @@
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error>El campo es requerido.</mat-error>
             </mat-form-field>
-            
-            <mat-label>Foto de Perfil</mat-label>
-            <label class="input-file-label" for="profile">Upload Photo</label>
-            <input class="input-file" id="profile" type="file" placeholder="Basic Input" accept=".png, .jpg, .jfif" (change)="uploadImage($event)"/>
+            <div>
+            <mat-label>Seleccionar foto de perfil</mat-label>
+            <label class="input-file-label" for="profile"><mat-icon>add_a_photo</mat-icon></label>
+            </div>
+            <input class="input-file" id="profile" type="file" placeholder="Basic Input" accept=".png, .jpg, .jpeg, .jfif" (change)="uploadImage($event)"/>
             <div *ngIf="showProfilePicturePreview === 'visible';else loadingProfilePic">
                 <img width="150" style="margin-top: 30;" src={{profileImageUrl}} alt="Profile Picture">
             </div>
@@ -141,20 +142,20 @@
                         <input type="text" matInput #input formControlName="oficio_name">
                     </mat-form-field>
                     <mat-form-field  class="register-full-width">
-                        <mat-label class="small-label">Descripcion</mat-label>
+                        <mat-label class="small-label">Descripción</mat-label>
                         <input type="text" matInput #input formControlName="oficio_descripcion">
                     </mat-form-field>
-                    <mat-label>Fotos de Trabajos</mat-label><br>
+                    <mat-label>Selecciona una o mas imágenes para mostrar tu trabajo.</mat-label><br>
                     <label 
                     class="input-file-label"
                     [attr.for]="'images' + i"
-                    >Upload Photos</label>
+                    ><mat-icon>add_photo_alternate</mat-icon></label>
                     <input 
                     class="input-file" 
                     type="file" 
                     placeholder="Basic Input" 
                     multiple="true" 
-                    accept=".png, .jpg, .jfif" 
+                    accept=".png, .jpg, .jpeg, .jfif" 
                     (change)="uploadPhotoEvidence($event, i)"
                     [attr.id]="'images' + i"/>
                     <div style="margin-bottom: 30;" *ngIf="isPhotoEvidencesLoading[i]">

@@ -16,7 +16,8 @@
                 <li *ngIf="!isAuth"><a routerLink="/login">Ingresar</a></li>
                 <li *ngIf="isAuth"><a routerLink="/">Explorar</a></li>
                 <li *ngIf="isAuth"><a routerLink="/register">Registrar profesional</a></li>
-                <li *ngIf="isAuth"><a routerLink="/">Salir</a></li>
+                <li *ngIf="isAuth"><a routerLink="/users">Tabla de usuarios</a></li>
+                <li *ngIf="isAuth"><a routerLink="/" (click)="onLogout()">Salir</a></li>
             </ul>
     </div>
 </mat-toolbar>

@@ -95,3 +95,18 @@ mat-card {
   font-size: 14px;
   color: #b8b8b8;
 }
+
+.mat-label {
+  text-align: center;
+}
+
+.input-file-label {
+  background-color: #ff8e3c;
+  color: white;
+  line-height: 24px;
+  border: 0;
+  border-radius: 10px;
+  margin: 5px 15px;
+  padding: 5px 10px 2px 5px;
+
+}

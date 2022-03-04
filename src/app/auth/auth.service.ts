@@ -1,49 +1,63 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { RemoteDbService } from '../remote-db/remote-db.service';
 
-import { AuthData } from './auth-data.model';
-import { User } from './user.module';
+interface Session {
+    token:string, 
+    user_auth_id:number,
+    user_model_id:number
+}
 
 @Injectable()
-export class AuthService {
-	authChange = new Subject<boolean>();
-	private user: User;
+export class AuthService{
+    authChange = new Subject<boolean>();
 
-	constructor(private router: Router) {}
+    private session:Session = null;
 
-	registerUser(authData: AuthData) {
-		this.user = {
-			email: authData.email,
-			userId: Math.round(Math.random() * 10000).toString()
-		};
-		this.authSuccesfully();
-	}
+    constructor(
+        private router: Router, 
+        private remoteDbService: RemoteDbService){}
 
-	login(authData: AuthData) {
-		this.user = {
-			email: authData.email,
-			userId: Math.round(Math.random() * 10000).toString()
-		};
-		this.authSuccesfully();
-	}
+    // TODO: SignUp Functions
+    // registerUser(authData: AuthData){
+    //     this.user = {
+    //         email: authData.email,
+    //         userId: Math.round(Math.random() * 10000).toString()
+    //     };
+    //     this.authSuccesfully();
+    // }
 
-	logout() {
-		this.user = null;
-		this.authChange.next(false);
-		this.router.navigate([ '/login' ]);
-	}
+    login(session:Session){
+        this.session = session;
+        this.remoteDbService.setToken(session.token);
+        this.authSuccesfully();
+    }
 
-	getUser() {
-		return { ...this.user };
-	}
+    logout(){
+        this.session = null;
+        this.authChange.next(false);
+        this.router.navigate(['/login']);
+    }
 
-	isAuth() {
-		return this.user != null;
-	}
+    getSession(){
+        return { ...this.session};
+    }
 
-	private authSuccesfully() {
-		this.authChange.next(true);
-		this.router.navigate([ '/home' ]);
-	}
+    getToken(){
+        return this.session.token;
+    }
+
+    getUserModelObservable(){
+        return this.remoteDbService.getUsersById(this.session.user_model_id);
+    }
+
+    isAuth(){
+        return this.session != null;
+    }
+
+    private authSuccesfully(){
+        this.authChange.next(true);
+        this.router.navigate(['/home']);
+    }
 }
