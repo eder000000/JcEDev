@@ -12,6 +12,7 @@ import { HerokuAddressService } from 'src/app/heroku-address/heroku-address.serv
 import { Municipality } from 'src/app/remote-models/municipality-model';
 import { Colony } from 'src/app/remote-models/colony-model';
 import { ZipCode } from 'src/app/remote-models/zip-code-model';
+import { UserModel } from 'src/app/remote-models/user-model';
 
 import { RemoteDbService } from 'src/app/remote-db/remote-db.service';
 
@@ -161,16 +162,19 @@ export class RegisterProComponent implements OnInit {
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
 		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageUrl });
 
-		this.firebaseService
-			.post(profesional)
-			.then(() => {
-				this.router.navigate([ '/listado' ]);
-			})
-			.catch((e) => {
-				console.log('Firebase Error: ', e);
-			});
+		console.log(profesional)
+
+		// this.firebaseService
+		// 	.post(profesional)
+		// 	.then(() => {
+		// 		this.router.navigate([ '/listado' ]);
+		// 	})
+		// 	.catch((e) => {
+		// 		console.log('Firebase Error: ', e);
+		// 	});
 	}
 
+	// TODO: Here must be some error with zip code
 	renderColonies(value) {
 		// this.addressService.getColonies(value).subscribe((col) => {
 		// 	this.allColonies = col;
@@ -245,5 +249,39 @@ export class RegisterProComponent implements OnInit {
 		}
 
 		this.isPhotoEvidencesLoading[index] = false
+	}
+
+	buildUserModel(data:any):UserModel { 
+		const buildDateFormat = (date:Date):string  => {
+			var dd = String(date.getDate()).padStart(2, '0');
+			var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var yyyy = date.getFullYear();
+			return yyyy+'-'+mm+'-'+dd
+		}
+		
+		// TODO: Things with user_addressid and user_media_id
+		// TODO: Things with user_auth id and org id from auth service
+		return {
+			user_model_id: 0, 
+			user_status_id: 3, 
+			user_role_id: 5, 
+			user_model_first_name: data.primerNombre, 
+			user_model_last_name: data.apellidos, 
+			user_model_surname: data.segundoNombre,
+			user_model_birthday: buildDateFormat(data.fechaNacimiento), 
+			user_model_phone_number: data.numeroCelular, 
+			user_model_address_id: 0, 
+			user_model_registry_date: buildDateFormat(new Date()), 
+			user_model_updated_date: buildDateFormat(new Date()), 
+			user_model_media_id: 0, 
+			user_model_org: 0, 
+			user_model_creator_id: 0, 
+			user_model_professions: [
+				
+			], 
+			user_model_working_areas: [
+				
+			]
+		}
 	}
 }
