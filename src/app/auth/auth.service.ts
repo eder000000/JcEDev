@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
-
+import { Subject } from 'rxjs';
 import { RemoteDbService } from '../remote-db/remote-db.service';
 
 interface Session {
