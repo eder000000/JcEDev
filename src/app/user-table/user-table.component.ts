@@ -92,13 +92,11 @@ export class UserTableComponent implements OnInit{
             role: userRole.user_role_name,
             status: userStatus.status_name
           };
+          
+          // FIXME: Multi rendering calls
           this.users.push(user);
-
-          if (data === this.userData[this.userData.length-1]){
-            this.table.dataSource = this.users
-            console.log(this.users);
-            this.table.renderRows()
-          }
+          this.table.dataSource = this.users
+          this.table.renderRows()
         })
       })
     }
