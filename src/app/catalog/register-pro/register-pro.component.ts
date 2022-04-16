@@ -12,8 +12,11 @@ import { HerokuAddressService } from 'src/app/heroku-address/heroku-address.serv
 import { Municipality } from 'src/app/remote-models/municipality-model';
 import { Colony } from 'src/app/remote-models/colony-model';
 import { ZipCode } from 'src/app/remote-models/zip-code-model';
-
 import { RemoteDbService } from 'src/app/remote-db/remote-db.service';
+import { Skills } from 'src/app/remote-models/skills-model';
+import { Media } from 'src/app/remote-models/media-model';
+import { UserModel } from 'src/app/remote-models/user-model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
 	selector: 'app-register-pro',
@@ -33,19 +36,24 @@ export class RegisterProComponent implements OnInit {
 	allMunicipalities: Municipality[];
 	allColonies: Colony[];
 	selectedMun: string;
+	allSkills: Skills[]; 
 
+	profileImageId: number
 	profileImageUrl: string
 	showProfilePicturePreview: string
 
-	photoEvidences: [string[]]
+	photoEvidences: [number[]]
 	isPhotoEvidencesLoading: boolean[]
+
+	userID:string
 
 	constructor(
 		private firebaseService: FirebaseService,
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private addressService: HerokuAddressService, 
-		private remoteDbService: RemoteDbService
+		private remoteDbService: RemoteDbService, 
+		private authService: AuthService
 	) {}
 
 	ngOnInit() {
@@ -55,6 +63,12 @@ export class RegisterProComponent implements OnInit {
 		this.showProfilePicturePreview = "hidden"
 		this.photoEvidences = [[]]
 		this.isPhotoEvidencesLoading = [false]
+		this.profileImageId = 0;
+		this.profileImageUrl = '';
+		this.userID = 'xxxxxx'.replace(/[x]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		 });
 
 		// this.addressService.getMunicipalities(14).subscribe((mun) => {
 		// 	this.allMunicipalities = mun;
@@ -66,16 +80,20 @@ export class RegisterProComponent implements OnInit {
 				this.allMunicipalities = mun
 			})
 
+		// Load skills
+		this.remoteDbService.getSkills()
+			.subscribe((skills) => {
+				this.allSkills = skills;	
+			})
+
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
 				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
-			apellidoPaterno: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
-			}),
+			segundoNombre: new FormControl(''),
 
-			apellidoMaterno: new FormControl('', {
+			apellidos: new FormControl('', {
 				validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
@@ -116,10 +134,10 @@ export class RegisterProComponent implements OnInit {
 		this.thirdFormNewProfesional = this.formBuilder.group({
 			oficios: new FormArray([
 				new FormGroup({
-					oficio_name: new FormControl('', Validators.required),
-					oficio_descripcion: new FormControl('', Validators.required)
+					oficio_select: new FormControl('', Validators.required)
 				})
 			]), 
+
 			ubicacionTrabajo: new FormControl('', {
 				validators: [ Validators.required ]
 			}) 
@@ -129,6 +147,13 @@ export class RegisterProComponent implements OnInit {
 	removeFormControl(i) {
 		let usersArray = this.thirdFormNewProfesional.controls.oficios as FormArray;
 		usersArray.removeAt(i);
+		
+		this.photoEvidences[i].forEach(id => {
+			this.remoteDbService.deleteMedia(id).subscribe(() => {
+				console.log(`Media ${id} has been delated`)
+			});
+		})
+
 		this.photoEvidences.splice(i, 1)
 		this.isPhotoEvidencesLoading.splice(i, 1)
 	}
@@ -138,8 +163,7 @@ export class RegisterProComponent implements OnInit {
 		let arraylen = usersArray.length;
 
 		let newUsergroup: FormGroup = this.formBuilder.group({
-			oficio_name: [ '', Validators.required ],
-			oficio_descripcion: [ '', Validators.required ]
+			oficio_select: new FormControl('', Validators.required)
 		});
 
 		usersArray.insert(arraylen, newUsergroup);
@@ -159,24 +183,65 @@ export class RegisterProComponent implements OnInit {
 		}
 
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
-		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageUrl });
+		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageId });
 
-		this.firebaseService
-			.post(profesional)
-			.then(() => {
-				this.router.navigate([ '/listado' ]);
-			})
-			.catch((e) => {
-				console.log('Firebase Error: ', e);
-			});
+		console.log(profesional);
+		var user:UserModel = this.buildUserModel(profesional);
+		console.log(user);
+
+		// this.firebaseService
+		// 	.post(profesional)
+		// 	.then(() => {
+		// 		this.router.navigate([ '/listado' ]);
+		// 	})
+		// 	.catch((e) => {
+		// 		console.log('Firebase Error: ', e);
+		// 	});
+	}
+
+	buildUserModel(profesional): UserModel {
+		// TODO: POST Address before posting user model to get address id
+		// TODO: Get Org id from user_model in session
+
+		
+
+		return {
+			"user_model_address_id": 1,
+			"user_model_birthday": profesional.fechaNacimiento.toISOString(),
+			"user_model_creator_id": this.authService.getSession().user_auth_id,
+			"user_model_first_name": profesional.nombres,
+			"user_model_id": 1,
+			"user_model_last_name": profesional.apellidos,
+			"user_model_media_id": this.profileImageId,
+			"user_model_org": 1,
+			"user_model_phone_number": profesional.numeroCelular,
+			"user_model_professions": [
+			  {
+				"profession_evidences": [
+				  {
+					"evidence_id": 1,
+					"evidence_media": 1
+				  }
+				],
+				"profession_id": 1,
+				"profession_skill": 1
+			  }
+			],
+			"user_model_registry_date": (new Date()).toISOString(),
+			"user_model_surname": profesional.segundoNombre,
+			"user_model_updated_date": (new Date()).toISOString(),
+			"user_model_working_areas": [
+			  {
+				"working_area_id": 1,
+				"working_area_municipality": 1
+			  }
+			],
+			"user_role_id": 5,
+			"user_status_id": 1
+		}
 	}
 
 	renderColonies(value) {
-		// this.addressService.getColonies(value).subscribe((col) => {
-		// 	this.allColonies = col;
-		// 	this.secondFormNewProfesional.controls.codigoPostal.setValue('');
-		// });
-
 		this.remoteDbService.getFilteredColonies(undefined, value).subscribe((col) => {
 			this.allColonies = col;
 			this.secondFormNewProfesional.controls.codigoPostal.setValue('');
@@ -194,56 +259,111 @@ export class RegisterProComponent implements OnInit {
 	}
 
 	renderAddress(value) {
-		// this.addressService.getColoniesFromZip(value).subscribe((col) => {
-		// 	if (col.length === 0) {
-		// 		alert('Invalid zip code!');
-		// 		this.secondFormNewProfesional.controls.codigoPostal.setValue('');
-		// 	} else {
-		// 		this.allColonies = col;
-		// 		this.allMunicipalities.forEach((mun) => {
-		// 			if (mun.municipality_name === col[0].municipality_name) {
-		// 				this.secondFormNewProfesional.controls.municipio.setValue(mun.id_municipality + '');
-		// 			}
-		// 		});
-		// 	}
-		// });
+		this.remoteDbService.getZipCodes().subscribe((zips) => {
+			var zip_id:number = 0;
+			zips.every(zip => {
+				if (zip.zip_code === value) {
+					zip_id = zip.id_zip_code;
+					return false;
+				}
+				return true;
+			})
 
-		this.remoteDbService.getFilteredColonies(value).subscribe((col) => {
-			if (col.length === 0) {
-				alert('Invalid zip code!');
+			if (zip_id === 0) {
+				alert("Invalid Zip Code!")
 				this.secondFormNewProfesional.controls.codigoPostal.setValue('');
-			} else {
+				return;
+			}
+
+			this.remoteDbService.getFilteredColonies(zip_id).subscribe((col) => {
 				this.allColonies = col;
 				this.allMunicipalities.forEach((mun) => {
 					if (mun.id_municipality === col[0].id_municipality) {
 						this.secondFormNewProfesional.controls.municipio.setValue(mun.id_municipality.toString());
 					}
 				});
-			}
+			})
 		})
 	}
 
 	async uploadImage(event) {
+		// const observable = await this.firebaseService.uploadImage(event.target.files[0])
+		// observable.subscribe(url => {
+		// 	this.profileImageUrl = url
+		// 	this.showProfilePicturePreview = "visible"
+		// })
+
 		this.showProfilePicturePreview = "loading"
-		const observable = await this.firebaseService.uploadImage(event.target.files[0])
-		observable.subscribe(url => {
-			this.profileImageUrl = url
-			this.showProfilePicturePreview = "visible"
-		})
+		if (this.profileImageId != 0) {
+			this.remoteDbService.deleteMedia(this.profileImageId).subscribe(() => {
+				console.log("Old profile picture has been removed");
+				this.readImages(event.target.files, 0, new FileReader(), undefined);
+			})
+		} else {
+			this.readImages(event.target.files, 0, new FileReader(), undefined);
+		}
 	}
 
 	async uploadPhotoEvidence(event, index) {
 		// Clear array
 		this.photoEvidences[index].splice(0, this.photoEvidences[index].length)
 		this.isPhotoEvidencesLoading[index] = true
-
-		for (var i = 0; i < event.target.files.length; i++) {
-			var auxObservable = await this.firebaseService.uploadImage(event.target.files[i])
-			auxObservable.subscribe(url => {
-				this.photoEvidences[index].push(url)
-			})	
-		}
-
-		this.isPhotoEvidencesLoading[index] = false
+		await this.readImages(event.target.files, 0, new FileReader(), index)
 	}
+
+	async readImages(imageArray, index, reader, skillIndex) {
+		reader.onloadend = () => {
+			// POST IMAGE
+			var loadedDate = new Date()
+			var loadedString = `${loadedDate.getDate()}${loadedDate.getMonth()}${loadedDate.getFullYear()}${loadedDate.getMilliseconds()}`
+			var media_data = '';
+			var media_title = `${this.userID}_${loadedString}`;
+			if (reader.result.includes('jpeg')) {
+				media_data = reader.result.split('data:image/jpeg;base64,')[1]; 
+				media_title += '.jpeg';
+			} else if (reader.result.includes('png')) {
+				media_data = reader.result.split('data:image/png;base64,')[1];
+				media_title += '.png';
+			}
+
+			var newMedia:Media = {
+				media_id: 0, 
+				media_link: '', 
+				media_size: 0, 
+				media_description: `User ${this.userID} Image Uploaded on ${loadedString}`, 
+				media_title: media_title, 
+				media_data: media_data, 
+				media_status_id: 1, 
+				media_content_updated_date: `${loadedDate}`, 
+				media_content_upload_date: `${loadedDate}`
+			}
+
+			this.remoteDbService.postMedia(newMedia).subscribe(media => {
+				console.log(media);
+
+				// Skill Evidence Media
+				if (skillIndex != undefined) {
+					this.photoEvidences[skillIndex].push(media.media_id);	
+					if (index < imageArray.length-1) {
+						this.readImages(imageArray, index+1, reader, skillIndex);
+					} else {
+						this.isPhotoEvidencesLoading[skillIndex] = false
+						console.log('Links: ', this.photoEvidences[skillIndex]);
+					}
+
+				// Profile Picture Media
+				} else {
+					this.showProfilePicturePreview = "visible"
+					this.profileImageId = media.media_id;
+					this.profileImageUrl = `https://jce-flask-02.herokuapp.com/media/${media.media_id}/content`
+				}
+			})
+		}
+		
+		reader.readAsDataURL(imageArray[index])
+	}
+
+	/**
+	
+	*/
 }

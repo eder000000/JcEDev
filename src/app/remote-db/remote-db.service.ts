@@ -380,4 +380,39 @@ export class RemoteDbService {
       }
     ).pipe(retry(1));
   }
+
+  //MEDIA
+
+  /**
+   * POST /media
+   */
+   postMedia(media: Media): Observable<any> {
+    return this.httpClient.post<Media>(
+      this.endpoint + '/media', media, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * PUT /media
+   */
+   putMedia(media: Media): Observable<any> {
+    return this.httpClient.put<Media>(
+      this.endpoint + '/media', media, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
+
+  /**
+   * DELETE /media/:id
+   */
+   deleteMedia(media_id: number): Observable<any> {
+    return this.httpClient.delete<Media>(
+      this.endpoint + '/media/' + media_id, {
+        'headers': this.headers
+      }
+    ).pipe(retry(1));
+  }
 }
