@@ -58,7 +58,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 		MatSelectModule,
 		MatStepperModule,
 		MatExpansionModule,
-		MatChipsModule, 
+		MatChipsModule,
 		MatProgressSpinnerModule,
 		MatTooltipModule,
 		MatAutocompleteModule

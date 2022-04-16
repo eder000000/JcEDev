@@ -5,10 +5,6 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 
 import { concatJSON } from '../../../utils/json-utils';
 import { HerokuAddressService } from 'src/app/heroku-address/heroku-address.service';
-
-// import { Municipality } from 'src/app/address/municipality-model';
-// import { Colony } from 'src/app/address/address-model';
-// import { ZipCode } from 'src/app/address/zip-code-model';
 import { Municipality } from 'src/app/remote-models/municipality-model';
 import { Colony } from 'src/app/remote-models/colony-model';
 import { ZipCode } from 'src/app/remote-models/zip-code-model';
@@ -16,11 +12,11 @@ import { ZipCode } from 'src/app/remote-models/zip-code-model';
 import { RemoteDbService } from 'src/app/remote-db/remote-db.service';
 
 @Component({
-	selector: 'app-register-pro',
-	templateUrl: './register-pro.component.html',
-	styleUrls: [ './register-pro.component.css' ]
+	selector: 'app-edit-pro',
+	templateUrl: './edit-pro.component.html',
+	styleUrls: [ './edit-pro.component.css' ]
 })
-export class RegisterProComponent implements OnInit {
+export class EditProComponent implements OnInit {
 	isLinear = true;
 	formNewProfesional: FormGroup;
 	selected: any;
@@ -107,7 +103,6 @@ export class RegisterProComponent implements OnInit {
 			codigoPostal: new FormControl('', {
 				validators: [ Validators.required ]
 			}),
-
 			municipio: new FormControl('', {
 				validators: [ Validators.required ]
 			})
