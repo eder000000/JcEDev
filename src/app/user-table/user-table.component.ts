@@ -67,6 +67,7 @@ export class UserTableComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    console.log("Comenzando ejecución")
     this.getData();
   }
 
@@ -75,6 +76,7 @@ export class UserTableComponent implements OnInit{
       this.userData=data;
       this.formatUsers();
     });
+    console.log(this.userData)
   }
 
   //Get roles from database
@@ -92,13 +94,11 @@ export class UserTableComponent implements OnInit{
             role: userRole.user_role_name,
             status: userStatus.status_name
           };
+          
+          // FIXME: Multi rendering calls
           this.users.push(user);
-
-          if (data === this.userData[this.userData.length-1]){
-            this.table.dataSource = this.users
-            console.log(this.users);
-            this.table.renderRows()
-          }
+          this.table.dataSource = this.users
+          this.table.renderRows()
         })
       })
     }
@@ -113,14 +113,15 @@ export class UserTableComponent implements OnInit{
       be sent to the service remote-db.service.ts (method PUT for updating the user)
 
     */
-   
+  
   //Delete User
   deleteUser(id: number) {
-    this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
-      alert('Usuario eliminado correctamente');
-      this.users = [];
-      this.getData();
-    });
+    if (confirm("¿Está seguro de que desea eliminar a este usuario?"))
+      this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
+        alert('Usuario eliminado correctamente');
+        this.users = [];
+        this.getData();
+      });
   }
   
   ngOnDestroy(): void {

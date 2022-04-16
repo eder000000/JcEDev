@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit{
   loginForm : FormGroup;
   
@@ -29,17 +30,17 @@ export class LoginComponent implements OnInit{
   }
 
   onSubmit(){
-    this.authService.login({
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    });
-
     this.remoteDbService.login(
       this.loginForm.value.email, 
       this.loginForm.value.password
-    ).subscribe(token => {
-      console.log(token)
-      this.remoteDbService.setToken(token.token)
+    ).subscribe(session => {
+      this.authService.login({
+        token: session.token, 
+        user_model_id: session.user_model_id, 
+        user_auth_id: session.user_auth_id
+      })
+    }, error => {
+      alert("Username or password error");
     })
   }
 }

@@ -4,7 +4,7 @@ export class Profesional {
     apellidoMaterno: string;
     fechaNacimiento: Date;
     numeroCelular: number;
-    fotoPerfil: String;
+    fotoPerfil: string;
     calle: string;
     numExterior: number;
     numInterior: number;

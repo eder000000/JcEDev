@@ -14,6 +14,11 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
+  width: 100%;
+}
+
+.profesionals-list-titles{
+  text-align: center;
 }
 
 .profesional-card {
@@ -103,9 +108,17 @@ button.oficios-button {
 
 button.oficios-button:focus,
 button.oficios-button:hover,
-button.oficios-button:visited {
+button.oficios-button-selected {
   background-color: #f3a167;
   color: #f8f5f2;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  border-color: #ff8e3c;
+  border-style: solid;
+  border-width: 1px;
 }
 
 
@@ -194,4 +207,39 @@ button.oficios-button:visited {
   align-items: center;
   justify-content: center;
   ;
+}
+
+.menu-professions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.chip-list{
+  width: 100%;
+}
+
+.button-remove-chip-list {
+  padding: 0;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.remove-icon-chip-list {
+  position: absolute;
+  right: 5px;
+  top: 12.5%;
+}
+
+.button-delete-barSearch{
+  background-color: white;
+  border-color: #ff8e3c;
+  border-style: solid;
+  border-width: 1px;
+  color: #2a2a2a;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 12px;
+  cursor: pointer;  
 }

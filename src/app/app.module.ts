@@ -32,6 +32,7 @@ import { HerokuAddressService } from './heroku-address/heroku-address.service';
 import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
 	declarations: [
@@ -65,7 +66,7 @@ import { MatCardModule } from '@angular/material/card';
 		MatTableModule,
 		MatCardModule
 	], 
-	providers: [ AuthService ],
+	providers: [ AuthService, AuthGuard ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}
