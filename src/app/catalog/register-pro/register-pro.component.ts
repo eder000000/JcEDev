@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FirebaseService } from 'src/app/firebase/firebase.service';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 
 import { concatJSON } from '../../../utils/json-utils';
@@ -17,6 +16,7 @@ import { Skills } from 'src/app/remote-models/skills-model';
 import { Media } from 'src/app/remote-models/media-model';
 import { UserModel } from 'src/app/remote-models/user-model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { UserAddress } from 'src/app/remote-models/user-address-model';
 
 @Component({
 	selector: 'app-register-pro',
@@ -41,6 +41,7 @@ export class RegisterProComponent implements OnInit {
 	profileImageId: number
 	profileImageUrl: string
 	showProfilePicturePreview: string
+	zipCodeId: number
 
 	photoEvidences: [number[]]
 	isPhotoEvidencesLoading: boolean[]
@@ -48,10 +49,8 @@ export class RegisterProComponent implements OnInit {
 	userID:string
 
 	constructor(
-		private firebaseService: FirebaseService,
 		private formBuilder: FormBuilder,
-		private router: Router,
-		private addressService: HerokuAddressService, 
+		private router: Router, 
 		private remoteDbService: RemoteDbService, 
 		private authService: AuthService
 	) {}
@@ -185,9 +184,83 @@ export class RegisterProComponent implements OnInit {
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
 		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageId });
 
-		console.log(profesional);
-		var user:UserModel = this.buildUserModel(profesional);
-		console.log(user);
+		console.log('Profesional Object', profesional);
+		
+		// Build UserAddress from professional object
+		// FIXME: Interior number defaulted as 0 (it's needed for the backend) 
+
+		var newUserAddress:UserAddress = {
+			id_user_address: 1, 
+			street_name: profesional.calle, 
+			main_number: parseInt(profesional.numExterior), 
+			interior_number: parseInt(profesional.numInterior) | 0, 
+			id_colony_code: parseInt(profesional.colonia), 
+			id_zip_code: this.zipCodeId, 
+			id_state_code: 14, 
+			id_municipality: parseInt(profesional.municipio), 
+			id_country_code: 52, 
+			date_added: (new Date()).toISOString(), 
+			last_update_date: (new Date()).toISOString()
+		}
+
+		console.log('[Before Post] New User Address Object', newUserAddress)
+		this.remoteDbService.postUserAddress(newUserAddress).subscribe(
+			user_address => {
+				console.log('[After Post] New User Address Object', user_address)
+
+				// FIXME: At this moment, all orgs are from JcE (BE)
+				// FIXME: Build working areas (from array)
+
+				var newUserModelProfessions = [];
+				profesional.oficios.forEach(oficio => {
+					var newOficioEvidence = [];
+					oficio.fotos.forEach(foto => {
+						newOficioEvidence.push({
+							"evidence_id": 1, 
+							"evidence_media": foto
+						})
+					})
+					newUserModelProfessions.push({
+						"profession_evidences": newOficioEvidence, 
+						"profession_id": 1, 
+						"profession_skill": parseInt(oficio.oficio_select)
+					})
+				})
+
+				var newUserModelWorkingAreas = [];
+				newUserModelWorkingAreas.push({
+					"working_area_id": 1,
+					"working_area_municipality": parseInt(profesional.ubicacionTrabajo)
+				})
+
+				var newUserModel:UserModel = {
+					"user_model_address_id": user_address.id_user_address,
+					"user_model_birthday": profesional.fechaNacimiento.toISOString(),
+					"user_model_creator_id": this.authService.getSession().user_auth_id,
+					"user_model_first_name": profesional.nombres,
+					"user_model_id": 1,
+					"user_model_last_name": profesional.apellidos,
+					"user_model_media_id": this.profileImageId,
+					"user_model_org": 2,
+					"user_model_phone_number": profesional.numeroCelular,
+					"user_model_professions": newUserModelProfessions,
+					"user_model_registry_date": (new Date()).toISOString(),
+					"user_model_surname": profesional.segundoNombre,
+					"user_model_updated_date": (new Date()).toISOString(),
+					"user_model_working_areas": newUserModelWorkingAreas,
+					"user_role_id": 5,
+					"user_status_id": 1
+				}	
+
+				console.log('[Before Post] New User Model Object', newUserModel)
+				this.remoteDbService.postUserData(newUserModel).subscribe(
+					result => {
+						this.router.navigate([ '/listado' ]);
+					} 
+				)
+			}
+		)
+		
 
 		// this.firebaseService
 		// 	.post(profesional)
@@ -197,48 +270,6 @@ export class RegisterProComponent implements OnInit {
 		// 	.catch((e) => {
 		// 		console.log('Firebase Error: ', e);
 		// 	});
-	}
-
-	buildUserModel(profesional): UserModel {
-		// TODO: POST Address before posting user model to get address id
-		// TODO: Get Org id from user_model in session
-
-		
-
-		return {
-			"user_model_address_id": 1,
-			"user_model_birthday": profesional.fechaNacimiento.toISOString(),
-			"user_model_creator_id": this.authService.getSession().user_auth_id,
-			"user_model_first_name": profesional.nombres,
-			"user_model_id": 1,
-			"user_model_last_name": profesional.apellidos,
-			"user_model_media_id": this.profileImageId,
-			"user_model_org": 1,
-			"user_model_phone_number": profesional.numeroCelular,
-			"user_model_professions": [
-			  {
-				"profession_evidences": [
-				  {
-					"evidence_id": 1,
-					"evidence_media": 1
-				  }
-				],
-				"profession_id": 1,
-				"profession_skill": 1
-			  }
-			],
-			"user_model_registry_date": (new Date()).toISOString(),
-			"user_model_surname": profesional.segundoNombre,
-			"user_model_updated_date": (new Date()).toISOString(),
-			"user_model_working_areas": [
-			  {
-				"working_area_id": 1,
-				"working_area_municipality": 1
-			  }
-			],
-			"user_role_id": 5,
-			"user_status_id": 1
-		}
 	}
 
 	renderColonies(value) {
@@ -253,7 +284,10 @@ export class RegisterProComponent implements OnInit {
 			if (colony.id_colony_code === parseInt(value)) {
 				this.remoteDbService
 					.getZipCodesById(colony.id_zip_code)
-					.subscribe((zip) => this.secondFormNewProfesional.controls.codigoPostal.setValue(zip.zip_code));
+					.subscribe((zip) => {
+						this.secondFormNewProfesional.controls.codigoPostal.setValue(zip.zip_code)
+						this.zipCodeId = zip.id_zip_code
+					})
 			}
 		});
 	}
@@ -275,6 +309,7 @@ export class RegisterProComponent implements OnInit {
 				return;
 			}
 
+			this.zipCodeId = zip_id
 			this.remoteDbService.getFilteredColonies(zip_id).subscribe((col) => {
 				this.allColonies = col;
 				this.allMunicipalities.forEach((mun) => {
@@ -362,8 +397,4 @@ export class RegisterProComponent implements OnInit {
 		
 		reader.readAsDataURL(imageArray[index])
 	}
-
-	/**
-	
-	*/
 }

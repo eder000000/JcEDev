@@ -66,12 +66,15 @@ export class ListProComponent  implements OnInit {
     
     this.cardsData = [];
     //Get all the users
-    this.remoteDbService.getUsers().subscribe(pros => {
+    this.remoteDbService.getPublicUsersInfo().subscribe(pros => {
       // No Requested Job
       this.queryPros = pros;
+
+
       // Saves all unique idSkills in an array "this.allProfessionIds" and saves 
       //the key to use the media map "this.proAndSkillToMedia"  
       pros.forEach(pro => {
+        console.log("Professional Object", pro);
 
         // This part prevents profession without registered professionals from appearing in the recomendation list 
         pro.user_model_professions.forEach(oficio => {
@@ -79,53 +82,73 @@ export class ListProComponent  implements OnInit {
           if (!this.allProfessionIds.includes(oficio.profession_skill)) {
             this.allProfessionIds.push(oficio.profession_skill)
           }
+
+          console.log("Oficio Object", oficio);
+          this.proAndSkillToMedia.set(id, []);
           
           oficio.profession_evidences.forEach(ev => {
+            this.proAndSkillToMedia.set(id, [])
             this.remoteDbService.getMediaById(ev.evidence_media).subscribe(m => {
-              this.proAndSkillToMedia[id].push(m); 
+              console.log("Media Object", m);
+              this.proAndSkillToMedia.get(id).push(m.media_link); 
             })
           })
         });
+
+        console.log("Professions Ids", this.allProfessionIds)
         
         // Save the professionals' media for a set profession in the map with a unique id
-        this.remoteDbService.getUserMediaById(pro.user_model_id).subscribe(media =>
-          this.proIdToMedia.set(pro.user_model_id,media.media_data)
-        );
+        this.remoteDbService.getUserMediaById(pro.user_model_id).subscribe(media => {
+          this.proIdToMedia.set(pro.user_model_id, media.media_link)
+          console.log("Profile Picture Object", media);
+        });
         
       });
 
-      // Request the name of each skill and add it to the array
-      this.allProfessionIds.forEach(id => {
-        this.remoteDbService.getSkillsById(id).subscribe(skill => {
+      // // Request the name of each skill and add it to the array
+      // this.allProfessionIds.forEach(id => {
+      //   this.remoteDbService.getSkillsById(id).subscribe(skill => {
+      //     this.allProfessions.push(skill.skills_name)
+      //     this.profIdtoName.set(id, skill.skills_name)
+      //     this.profIdtoDesc.set(id, skill.skills_description)
+      //   })
+      // });
+
+      this.remoteDbService.getSkills().subscribe(skills => {
+        skills.forEach(skill => {
           this.allProfessions.push(skill.skills_name)
-          this.profIdtoName.set(id, skill.skills_name)
-          this.profIdtoDesc.set(id, skill.skills_description)
+          this.profIdtoName.set(skill.skills_id, skill.skills_name)
+          this.profIdtoDesc.set(skill.skills_id, skill.skills_description)
         })
-      });
-      
-      // Saves all the profession in the filteredProfession (For print in the recomendation list)
-      this.availableProfessions = []
-      this.allProfessions.forEach(profession => {
-        this.availableProfessions.push(profession);
-      }); 
-      this.availableProfessions.sort();
 
-      
-      if (!this.requestedJob) { 
-        this.buildCardsData(pros, this.getAllVisibleSkills(pros));
-      } else {
-        this.buildCardsDataWithFilter(
-          this.getProfessionalsByProfession(pros, this.requestedJob), 
-          this.requestedJob
-        );
+        console.log('Prof Id to Name Map', this.profIdtoName);
 
-        this.availableProfessions = this.availableProfessions.filter(prof => {
-          return prof !== this.requestedJob; 
-        });
+        // Saves all the profession in the filteredProfession (For print in the recomendation list)
+        this.availableProfessions = []
+        this.allProfessions.forEach(profession => {
+          this.availableProfessions.push(profession);
+        }); 
+        this.availableProfessions.sort();
 
-        this.professions.push(this.requestedJob);
-        this.sortCards();
-      }
+        if (!this.requestedJob) { 
+          console.log('Pros List', pros)
+          console.log('Get All Visible Skills Output', this.getAllVisibleSkills(pros))
+
+          this.buildCardsData(pros, this.getAllVisibleSkills(pros));
+        } else {
+          this.buildCardsDataWithFilter(
+            this.getProfessionalsByProfession(pros, this.requestedJob), 
+            this.requestedJob
+          );
+  
+          this.availableProfessions = this.availableProfessions.filter(prof => {
+            return prof !== this.requestedJob; 
+          });
+  
+          this.professions.push(this.requestedJob);
+          this.sortCards();
+        }
+      })
 
       this.filteredProfessions = this.professionCtrl.valueChanges.pipe(
         startWith(null), 
@@ -134,7 +157,6 @@ export class ListProComponent  implements OnInit {
         )
       );
     })
-
    }
 
   // CHIPLIST ***************************************************************************
@@ -369,7 +391,7 @@ export class ListProComponent  implements OnInit {
     });
 
     skillIds.forEach(id => {
-      skills.push(this.profIdtoName[id]);
+      skills.push(this.profIdtoName.get(id));
     });
     return skills;
   }

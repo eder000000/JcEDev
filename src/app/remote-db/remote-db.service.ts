@@ -7,6 +7,7 @@ import { CountryCode } from '../remote-models/country-code-model';
 import { Media } from '../remote-models/media-model';
 import { Municipality } from '../remote-models/municipality-model';
 import { Org } from '../remote-models/org-model';
+import { PublicUserModel } from '../remote-models/public-user-model';
 import { Skills } from '../remote-models/skills-model';
 import { StateCode } from '../remote-models/state-code-model';
 import { Status } from '../remote-models/status-model';
@@ -187,10 +188,11 @@ export class RemoteDbService {
 
   /**
    * GET /skills/:id
+   * TODO: Jalon de orejas porque decia countries
    */
   getSkillsById(skills_id: number): Observable<Skills> {
     return this.httpClient.get<Skills>(
-      this.endpoint + '/countries/' + skills_id, {
+      this.endpoint + '/skills/' + skills_id, {
         'headers': this.headers
       }
     ).pipe(retry(1))
@@ -517,38 +519,11 @@ export class RemoteDbService {
     ).pipe(retry(1))
   }
 
-  //MEDIA
-
-  /**
-   * POST /media
-   */
-   postMedia(media: Media): Observable<any> {
-    return this.httpClient.post<Media>(
-      this.endpoint + '/media', media, {
+  getPublicUsersInfo(): Observable<PublicUserModel[]> {
+    return this.httpClient.get<PublicUserModel[]>(
+      this.endpoint + '/users/public', {
         'headers': this.headers
       }
-    ).pipe(retry(1));
-  }
-
-  /**
-   * PUT /media
-   */
-   putMedia(media: Media): Observable<any> {
-    return this.httpClient.put<Media>(
-      this.endpoint + '/media', media, {
-        'headers': this.headers
-      }
-    ).pipe(retry(1));
-  }
-
-  /**
-   * DELETE /media/:id
-   */
-   deleteMedia(media_id: number): Observable<any> {
-    return this.httpClient.delete<Media>(
-      this.endpoint + '/media/' + media_id, {
-        'headers': this.headers
-      }
-    ).pipe(retry(1));
+    ).pipe(retry(1))
   }
 }
