@@ -67,6 +67,7 @@ export class UserTableComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    console.log("Comenzando ejecución")
     this.getData();
   }
 
@@ -75,6 +76,7 @@ export class UserTableComponent implements OnInit{
       this.userData=data;
       this.formatUsers();
     });
+    console.log(this.userData)
   }
 
   //Get roles from database
@@ -111,10 +113,10 @@ export class UserTableComponent implements OnInit{
       be sent to the service remote-db.service.ts (method PUT for updating the user)
 
     */
-   
+  
   //Delete User
   deleteUser(id: number) {
-    if (confirm("Esta seguro de eliminar a este usuario?"))
+    if (confirm("¿Está seguro de que desea eliminar a este usuario?"))
       this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
         alert('Usuario eliminado correctamente');
         this.users = [];
