@@ -171,7 +171,7 @@ export class ListProComponent  implements OnInit {
    }
 
   // CHIPLIST ***************************************************************************
-  // Add data into "professions" to prints in recommendation bar
+  // Add data into "professions" to print in recommendation bar
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -296,6 +296,7 @@ export class ListProComponent  implements OnInit {
       }) 
 
       cardData.professionals.forEach(pro => {
+        var selectedName : string = pro.oficios[pro.selectedJob].oficio_name;
         pro.oficios = pro.oficios.sort((a, b) => {
           if (a.oficio_name > b.oficio_name) {
             return 1;
@@ -305,6 +306,7 @@ export class ListProComponent  implements OnInit {
             return 0;
           }
         });
+        pro.selectedJob = pro.oficios.findIndex(oficio => oficio.oficio_name == selectedName);
       })
     });
   }
@@ -355,14 +357,17 @@ export class ListProComponent  implements OnInit {
   }
 
   buildCardsDataWithFilter(pros: UserModel[], filter:string) {
-    this.cardsData.push({ skill_name: filter });
-    var currentCard: CardData = this.cardsData[this.cardsData.length-1];
+    this.cardsData.push({ skill_name: filter }); //Se guarda las palabras claves de la busqueda
+    var currentCard: CardData = this.cardsData[this.cardsData.length-1]; //Guarda los profesionistas por profesiones 
 
-    currentCard.professionals = [];
-    
+    currentCard.professionals = []; // Se guardaran las cartas de los profesionales
+
     pros.forEach(pro => {
       var defaultSelectedJob:number =  0;
       var formattedProfessions = [];
+      
+      
+    
       for (var k = 0; k < pro.user_model_professions.length; k++) {
         if (this.profIdtoName.get(pro.user_model_professions[k].profession_skill) === filter) {
           defaultSelectedJob = k;

@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Subscription, of } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { RemoteDbService } from '../remote-db/remote-db.service';
 import { UserModel } from '../remote-models/user-model';
-import { UserRole } from '../remote-models/user-role-model';
-import { Status } from '../remote-models/status-model';
-
 import { MediaObserver } from '@angular/flex-layout';
 import { Router } from '@angular/router';
 
@@ -18,31 +15,6 @@ interface User {
   status: string;
 }
 
-// Data harcodeada
-const USERS: User[] = [
-  {
-    id_user: 1,
-    first_name: "Juan Pedro",
-    last_name: "Salas Ríos",
-    role: "Profesional",
-    status: "Activo"
-  },
-  {
-    id_user: 2,
-    first_name: "Ana María",
-    last_name: "González Torres",
-    role: "Administrador",
-    status: "Activo"
-  },
-  {
-    id_user: 3,
-    first_name: "José Armando",
-    last_name: "Silas Armas",
-    role: "Usuario",
-    status: "Inactivo"
-  }
-];
-
 @Component({
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
@@ -52,8 +24,8 @@ const USERS: User[] = [
 export class UserTableComponent implements OnInit{
   displayedColumns: string[] = ['last_name', 'first_name', 'role', 'status', 'actions'];
   userSubscription: Subscription; 
-  roleSubscription: Subscription; 
-  statusSubscription: Subscription; 
+  addressSubscription: Subscription; 
+  userMediaSubscription: Subscription; 
   dataSource: MatTableDataSource<any>;
   userData: UserModel[]; 
   users: User[];
@@ -114,20 +86,26 @@ export class UserTableComponent implements OnInit{
 
     */
   
+  // User deletion process:
+  // 1) Delete user address with ID
+  // 2) Delete user profile picture media
+  // 3) Delete user
   //Delete User
   deleteUser(id: number) {
-    if (confirm("¿Está seguro de que desea eliminar a este usuario?"))
-      this.userSubscription = this.remoteDbService.deleteUser(id).subscribe(data => {
-        alert('Usuario eliminado correctamente');
-        this.users = [];
-        this.getData();
-      });
+    if (confirm("¿Está seguro de que desea eliminar a este usuario?")) {
+      console.log("Borrando direccion")
+      this.remoteDbService.deleteUserAddress(id).subscribe( () => {
+        console.log("Borrando media")
+        console.log(this.userData.find(user => user.user_model_id == id).user_model_media_id)
+        this.remoteDbService.deleteMedia(this.userData.find(user => user.user_model_id == id).user_model_media_id).subscribe(()=>{
+          console.log("Borrando usuario")
+          this.remoteDbService.deleteUser(id).subscribe(() => {
+            alert('Usuario eliminado correctamente');
+            this.users = [];
+            this.getData();
+          });
+        })
+      })
+    }
   }
-  
-  ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
-    // this.statusSubscription.unsubscribe();
-    // this.roleSubscription.unsubscribe();
-  }
-
 }
