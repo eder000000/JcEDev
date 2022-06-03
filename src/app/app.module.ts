@@ -33,6 +33,8 @@ import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { AuthGuard } from './auth/auth.guard';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
 	declarations: [
@@ -50,7 +52,9 @@ import { AuthGuard } from './auth/auth.guard';
 		ContentComponent,
 		OficiosComponent,
 		UserTableComponent,
-		PageNotFoundComponent
+		PageNotFoundComponent,
+		PasswordRecoveryComponent,
+		PasswordResetComponent
 	],
 	imports: [
 		BrowserModule,

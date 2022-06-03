@@ -12,7 +12,7 @@
               name="email"
               required
               formControlName="email">
-              <mat-error>No debe ser nulo</mat-error>
+              <mat-error>No debe ser nulo.</mat-error>
       </mat-form-field>
       <mat-form-field  class="login-full-width" hintLabel="Debe contener al menos 4 caracteres.">
           <input 
@@ -25,8 +25,9 @@
               required
               formControlName="password">
               <mat-error>Debe contener al menos 4 caracteres.</mat-error>
-      </mat-form-field>
-      <mat-card-actions>
+            </mat-form-field>
+              <a routerLink="/recoverPassword">¿Has olvidado la contraseña?</a>
+            <mat-card-actions>
         <button class="login-button"
           type="submit" 
           mat-raised-button 
@@ -35,9 +36,6 @@
           Entrar
       </button>
       </mat-card-actions>
-      
   </form>
-
   </mat-card>
-  
 </section>
