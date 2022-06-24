@@ -294,7 +294,7 @@ export class ListProComponent  implements OnInit {
           return 0;
         }
       }) 
-
+      
       cardData.professionals.forEach(pro => {
         var selectedName : string = pro.oficios[pro.selectedJob].oficio_name;
         pro.oficios = pro.oficios.sort((a, b) => {
@@ -308,6 +308,19 @@ export class ListProComponent  implements OnInit {
         });
         pro.selectedJob = pro.oficios.findIndex(oficio => oficio.oficio_name == selectedName);
       })
+      
+      //El problema es que al reordenar los indices se desacomodan 
+      // cardData.professionals.forEach(pro => {
+      //   pro.oficios = pro.oficios.sort((a, b) => {
+      //     if (a.oficio_name > b.oficio_name) {
+      //       return 1;
+      //     } else if (a.oficio_name < b.oficio_name) {
+      //       return -1;
+      //     } else {
+      //       return 0;
+      //     }
+      //   });
+      // })
     });
   }
 
@@ -361,6 +374,19 @@ export class ListProComponent  implements OnInit {
     var currentCard: CardData = this.cardsData[this.cardsData.length-1]; //Guarda los profesionistas por profesiones 
 
     currentCard.professionals = []; // Se guardaran las cartas de los profesionales
+    //Guarda la lista de profesiones que se estan buscando, en caso de no haber parametros se traen todas
+    this.cardsData.push({ skill_name: filter }); 
+    console.log("Esto es: this.cardsData")
+    console.log(this.cardsData)
+    //Lista de profesionales por profesionales
+    var currentCard: CardData = this.cardsData[this.cardsData.length-1];
+    console.log("Esto es: currentCard")
+    console.log(currentCard)
+    
+    currentCard.professionals = []; //Aqui se guardaran las cartas ya creadas
+    
+    console.log("Esto es: pros")
+    console.log(pros)
 
     pros.forEach(pro => {
       var defaultSelectedJob:number =  0;

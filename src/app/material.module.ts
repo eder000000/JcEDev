@@ -19,6 +19,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	imports: [
@@ -39,6 +40,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 		MatStepperModule,
 		MatExpansionModule,
 		MatChipsModule,
+		MatDialogModule
 	],
 
 	exports: [

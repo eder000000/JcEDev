@@ -35,6 +35,9 @@ import { MatCardModule } from '@angular/material/card';
 import { AuthGuard } from './auth/auth.guard';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { UserTableDialogComponent } from './user-table/user-table-dialog/user-table-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -54,7 +57,8 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 		UserTableComponent,
 		PageNotFoundComponent,
 		PasswordRecoveryComponent,
-		PasswordResetComponent
+		PasswordResetComponent,
+		UserTableDialogComponent
 	],
 	imports: [
 		BrowserModule,
@@ -68,7 +72,9 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		HttpClientModule,
 		MatTableModule,
-		MatCardModule
+		MatCardModule,
+		MatDialogModule,
+		MatButtonModule
 	], 
 	providers: [ AuthService, AuthGuard ],
 	bootstrap: [ AppComponent ]
