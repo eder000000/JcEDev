@@ -21,7 +21,8 @@ import { ZipCode } from '../remote-models/zip-code-model';
   providedIn: 'root'
 })
 export class RemoteDbService {
-  endpoint:string = 'https://jce-flask-02.herokuapp.com'
+  // FIXME: Change endopint to original version in Heroku
+  endpoint:string = 'http://127.0.0.1:5000'
   headers:{}
   token:string
 
@@ -422,6 +423,17 @@ export class RemoteDbService {
       }
     ).pipe(retry(1));
   }
+
+  /**
+   * DELETE /users/address/user_address_id
+   */
+   deleteUserAddressById(user_address_id:number): Observable<any> {
+     return this.httpClient.delete(
+       this.endpoint + '/users/address/' + user_address_id.toString(), {
+        'headers': this.headers
+       }
+     )
+   }  
 
   /**
    * GET /users/filter

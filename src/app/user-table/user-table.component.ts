@@ -93,17 +93,33 @@ export class UserTableComponent implements OnInit{
   //Delete User
   deleteUser(id: number) {
     if (confirm("¿Está seguro de que desea eliminar a este usuario?")) {
-      console.log("Borrando direccion")
-      this.remoteDbService.deleteUserAddress(id).subscribe( () => {
-        console.log("Borrando media")
-        console.log(this.userData.find(user => user.user_model_id == id).user_model_media_id)
-        this.remoteDbService.deleteMedia(this.userData.find(user => user.user_model_id == id).user_model_media_id).subscribe(()=>{
-          console.log("Borrando usuario")
-          this.remoteDbService.deleteUser(id).subscribe(() => {
-            alert('Usuario eliminado correctamente');
-            this.users = [];
+      // console.log("Borrando direccion")
+      // this.remoteDbService.deleteUserAddress(id).subscribe( () => {
+      //   console.log("Borrando media")
+      //   console.log(this.userData.find(user => user.user_model_id == id).user_model_media_id)
+      //   this.remoteDbService.deleteMedia(this.userData.find(user => user.user_model_id == id).user_model_media_id).subscribe(()=>{
+      //     console.log("Borrando usuario")
+      //     this.remoteDbService.deleteUser(id).subscribe(() => {
+      //       alert('Usuario eliminado correctamente');
+      //       this.users = [];
+      //       this.getData();
+      //     });
+      //   })
+      // })
+
+      console.log("Borrando usuario")
+      this.remoteDbService.deleteUser(id).subscribe(() => {
+        console.log("Usuario borrado")
+        console.log("Borrando direccion")
+        this.remoteDbService.deleteUserAddressById(this.userData.find(user => user.user_model_id == id).user_model_address_id).subscribe(() => {
+          console.log("Direccion borrada")
+          console.log("Borrando foto de perfil")
+          this.remoteDbService.deleteMedia(this.userData.find(user => user.user_model_id == id).user_model_media_id).subscribe(() => {
+            console.log("Foto de perfil eliminada")
+            alert("Usuario eliminado correctamente")
+            this.users = []
             this.getData();
-          });
+          })
         })
       })
     }
