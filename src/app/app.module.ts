@@ -33,7 +33,9 @@ import { UserTableComponent } from './user-table/user-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { AuthGuard } from './auth/auth.guard';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { UserTableDialogComponent } from './user-table/user-table-dialog/user-table-dialog.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -50,7 +52,8 @@ import { AuthGuard } from './auth/auth.guard';
 		ContentComponent,
 		OficiosComponent,
 		UserTableComponent,
-		PageNotFoundComponent
+		PageNotFoundComponent,
+		UserTableDialogComponent
 	],
 	imports: [
 		BrowserModule,
@@ -64,7 +67,9 @@ import { AuthGuard } from './auth/auth.guard';
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		HttpClientModule,
 		MatTableModule,
-		MatCardModule
+		MatCardModule,
+		MatDialogModule,
+		MatButtonModule
 	], 
 	providers: [ AuthService, AuthGuard ],
 	bootstrap: [ AppComponent ]

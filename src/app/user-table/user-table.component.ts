@@ -1,13 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+
 import { RemoteDbService } from '../remote-db/remote-db.service';
 import { UserModel } from '../remote-models/user-model';
 import { UserRole } from '../remote-models/user-role-model';
 import { Status } from '../remote-models/status-model';
+import { UserTableDialogComponent } from './user-table-dialog/user-table-dialog.component'
 
 import { MediaObserver } from '@angular/flex-layout';
 import { Router } from '@angular/router';
+import { exit } from 'process';
+import { get } from 'https';
+import { ThrowStmt } from '@angular/compiler';
+import { ContentObserver } from '@angular/cdk/observers';
+import { resourceLimits } from 'worker_threads';
 
 // This interface will be used for print in "user-table" html.
 interface User {
@@ -18,35 +26,22 @@ interface User {
   status: string;
 }
 
-// Data harcodeada
-const USERS: User[] = [
-  {
-    id_user: 1,
-    first_name: "Juan Pedro",
-    last_name: "Salas Ríos",
-    role: "Profesional",
-    status: "Activo"
-  },
-  {
-    id_user: 2,
-    first_name: "Ana María",
-    last_name: "González Torres",
-    role: "Administrador",
-    status: "Activo"
-  },
-  {
-    id_user: 3,
-    first_name: "José Armando",
-    last_name: "Silas Armas",
-    role: "Usuario",
-    status: "Inactivo"
-  }
-];
+interface UsedAddress {
+  state_name: string,
+  colony_name: string,
+  municipality_name: string,
+  main_number: number,
+  interior_number: number
+  street_name: string
+}
+
+// userProfessions: Object;
+// userAreas: Object;
 
 @Component({
   selector: 'app-user-table',
-  templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.css']
+  styleUrls: ['./user-table.component.css'],
+  templateUrl: './user-table.component.html'
 })
 
 export class UserTableComponent implements OnInit{
@@ -57,14 +52,67 @@ export class UserTableComponent implements OnInit{
   dataSource: MatTableDataSource<any>;
   userData: UserModel[]; 
   users: User[];
-  
+  title: UserModel;
+
+
   @ViewChild('table') table: MatTable<User>;
 
   constructor(private remoteDbService: RemoteDbService, 
               public mediaObserve: MediaObserver,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
     this.users = []
   }
+  
+  //See more (see the complete information of the user)
+    openDialog(idUser: number): void {  
+    console.log("ESTO ES VER MAS")
+
+
+    this.remoteDbService.getUsersById(idUser).subscribe(userInfo => {
+      this.remoteDbService.getRoleById(userInfo.user_role_id)
+      .subscribe(userRole => {
+        this.remoteDbService.getStatusesById(userInfo.user_status_id)
+        .subscribe(userStatus => {  
+          let userInfoFormat: User = {
+            id_user: userInfo.user_model_id,            
+            first_name: userInfo.user_model_first_name,
+            last_name: userInfo.user_model_last_name,
+            role: userRole.user_role_name,
+            status: userStatus.status_name
+          };
+          this.remoteDbService.getUserAddressById(idUser).subscribe(userAdress => {
+            this.remoteDbService.getColonyById(userAdress.id_colony_code).subscribe(userColony => {
+              this.remoteDbService.getStatesById(userAdress.id_state_code).subscribe(userState => { 
+                this.remoteDbService.getMunicipalityById(userAdress.id_municipality).subscribe(userMunicipality => {
+                  let userAddressFormat: UsedAddress = {
+                    state_name: userState.state_name,
+                    colony_name: userColony.colony_name,
+                    municipality_name: userMunicipality.municipality_name,
+                    main_number: userAdress.main_number,
+                    interior_number: userAdress.interior_number,
+                    street_name: userAdress.street_name
+                  }
+                  
+                  
+                  
+                  this.dialog.open(UserTableDialogComponent,  {
+                    width: '500px',
+                    data: {
+                            userInformation: userInfoFormat,
+                            userAddressInformation: userAddressFormat,
+                            userProfessions: "Profesiones",
+                            userAreas: "Areas usuario"
+                          }
+                  });
+                })
+              })
+            })
+          })
+        })
+      })  
+    });
+  }     
 
   ngOnInit(): void {
     console.log("Comenzando ejecución")
@@ -76,7 +124,6 @@ export class UserTableComponent implements OnInit{
       this.userData=data;
       this.formatUsers();
     });
-    console.log(this.userData)
   }
 
   //Get roles from database
@@ -129,5 +176,6 @@ export class UserTableComponent implements OnInit{
     // this.statusSubscription.unsubscribe();
     // this.roleSubscription.unsubscribe();
   }
-
 }
+
+
