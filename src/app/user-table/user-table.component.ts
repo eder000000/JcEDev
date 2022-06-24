@@ -5,6 +5,7 @@ import { RemoteDbService } from '../remote-db/remote-db.service';
 import { UserModel } from '../remote-models/user-model';
 import { MediaObserver } from '@angular/flex-layout';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service'
 
 // This interface will be used for print in "user-table" html.
 interface User {
@@ -32,7 +33,8 @@ export class UserTableComponent implements OnInit{
   
   @ViewChild('table') table: MatTable<User>;
 
-  constructor(private remoteDbService: RemoteDbService, 
+  constructor(private remoteDbService: RemoteDbService,
+              private authService: AuthService, 
               public mediaObserve: MediaObserver,
               private router: Router) {
     this.users = []
@@ -45,10 +47,14 @@ export class UserTableComponent implements OnInit{
 
   getData(): void {
     this.userSubscription = this.remoteDbService.getUsers().subscribe(data => {
-      this.userData=data;
-      this.formatUsers();
+      this.userData = [];
+      data.forEach((proModel, index) => {
+        this.authService.getUserModelObservable().subscribe(userModel => {
+          if (proModel.user_model_org == userModel.user_model_org) this.userData.push(proModel);
+          if (index == data.length-1) this.formatUsers();
+        });
+      });
     });
-    console.log(this.userData)
   }
 
   //Get roles from database

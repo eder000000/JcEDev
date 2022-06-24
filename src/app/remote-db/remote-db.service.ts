@@ -16,6 +16,7 @@ import { UserAuth } from '../remote-models/user-auth-model';
 import { UserModel } from '../remote-models/user-model';
 import { UserRole } from '../remote-models/user-role-model';
 import { ZipCode } from '../remote-models/zip-code-model';
+import { Email } from '../remote-models/email-model';
 
 @Injectable({
   providedIn: 'root'
@@ -310,6 +311,19 @@ export class RemoteDbService {
   }
 
   /**
+   * POST /resetPassword
+   */
+   resetPassword(newPassword:string): Observable<any> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/resetPassword', {
+        'user_new_password': newPassword
+      }, {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
    * POST /logout
    */
    logout(userAuth:UserAuth): Observable<any> {
@@ -531,6 +545,9 @@ export class RemoteDbService {
     ).pipe(retry(1))
   }
 
+  /**
+   * GET /users/public
+   */
   getPublicUsersInfo(): Observable<PublicUserModel[]> {
     return this.httpClient.get<PublicUserModel[]>(
       this.endpoint + '/users/public', {
@@ -538,4 +555,20 @@ export class RemoteDbService {
       }
     ).pipe(retry(1))
   }
+
+  /**
+   * GET /emails/filter
+   */
+  getFilteredEmails(email: string): Observable<Email[]> {
+    var params : HttpParams = new HttpParams();
+    params.append('email', email);
+    
+    return this.httpClient.get<Email[]>(
+      this.endpoint + '/emails/filter' , {
+        'headers': this.headers,
+        'params': params
+      }
+    ).pipe(retry(1))
+  }
+  
 }
