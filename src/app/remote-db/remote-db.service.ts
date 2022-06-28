@@ -20,8 +20,10 @@ import { ZipCode } from '../remote-models/zip-code-model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RemoteDbService {
-  endpoint:string = 'https://jce-flask-02.herokuapp.com'
+  // FIXME: Endopint change for local testing
+  endpoint:string = 'http://127.0.0.1:5000'
   headers:{}
   token:string
 

@@ -23,6 +23,7 @@ interface CardData {
     panelOpenState?: boolean;
     ubicacionesTrabajo?: string;
     numeroCelular?: string;
+    descripcion?: string;
     oficios?: {
       oficio_name?: string;
       oficio_descripcion?: string,
@@ -401,7 +402,8 @@ export class ListProComponent  implements OnInit {
         selectedJob: defaultSelectedJob, 
         panelOpenState: false, 
         ubicacionesTrabajo: workingAreasString, 
-        numeroCelular: pro.user_model_phone_number, 
+        numeroCelular: pro.user_model_phone_number,
+        descripcion: pro.user_model_description, 
         oficios: formattedProfessions
       })
     });

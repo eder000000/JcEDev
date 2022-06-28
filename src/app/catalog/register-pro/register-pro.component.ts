@@ -295,6 +295,7 @@ export class RegisterProComponent implements OnInit {
 					"user_model_surname": profesional.segundoNombre,
 					"user_model_updated_date": (new Date()).toISOString(),
 					"user_model_working_areas": newUserModelWorkingAreas,
+					"user_model_description": profesional.general_description,
 					"user_role_id": 5,
 					"user_status_id": 1
 				}	

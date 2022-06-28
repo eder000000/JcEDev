@@ -16,6 +16,7 @@ export interface UserModel {
     user_model_media_id?:number, 
     user_model_org?:number, 
     user_model_creator_id?:number, 
+    user_model_description?:string,
     user_model_professions?:Profession[], 
     user_model_working_areas?:WorkingArea[]
 }
