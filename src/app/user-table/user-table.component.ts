@@ -16,6 +16,7 @@ import { get } from 'https';
 import { ThrowStmt } from '@angular/compiler';
 import { ContentObserver } from '@angular/cdk/observers';
 import { resourceLimits } from 'worker_threads';
+import { ScrollingVisibility } from '@angular/cdk/overlay';
 
 // This interface will be used for print in "user-table" html.
 interface User {
@@ -26,7 +27,17 @@ interface User {
   status: string;
 }
 
-interface UsedAddress {
+
+interface UserDetails {
+  id_user: number,
+  first_name: string;
+  last_name: string;
+  role: string;
+  status: string;
+  userSkills: Array<String>;
+  userWorkingAreas: Array<String>;
+}
+interface UserAddress {
   state_name: string,
   colony_name: string,
   municipality_name: string,
@@ -74,41 +85,56 @@ export class UserTableComponent implements OnInit{
       .subscribe(userRole => {
         this.remoteDbService.getStatusesById(userInfo.user_status_id)
         .subscribe(userStatus => {  
-          let userInfoFormat: User = {
-            id_user: userInfo.user_model_id,            
-            first_name: userInfo.user_model_first_name,
-            last_name: userInfo.user_model_last_name,
-            role: userRole.user_role_name,
-            status: userStatus.status_name
-          };
-          this.remoteDbService.getUserAddressById(idUser).subscribe(userAdress => {
-            this.remoteDbService.getColonyById(userAdress.id_colony_code).subscribe(userColony => {
-              this.remoteDbService.getStatesById(userAdress.id_state_code).subscribe(userState => { 
-                this.remoteDbService.getMunicipalityById(userAdress.id_municipality).subscribe(userMunicipality => {
-                  let userAddressFormat: UsedAddress = {
-                    state_name: userState.state_name,
-                    colony_name: userColony.colony_name,
-                    municipality_name: userMunicipality.municipality_name,
-                    main_number: userAdress.main_number,
-                    interior_number: userAdress.interior_number,
-                    street_name: userAdress.street_name
-                  }
-                  
-                  
-                  
-                  this.dialog.open(UserTableDialogComponent,  {
-                    width: '500px',
-                    data: {
-                            userInformation: userInfoFormat,
-                            userAddressInformation: userAddressFormat,
-                            userProfessions: "Profesiones",
-                            userAreas: "Areas usuario"
-                          }
-                  });
+          this.remoteDbService.getSkills().subscribe(allSkills => {
+            let userProfessionName = [];
+            userInfo.user_model_professions.forEach(actualSkillUser => {
+              allSkills.forEach(actualSkill => {
+                if(actualSkillUser.profession_skill == actualSkill.skills_id) userProfessionName.push(actualSkill.skills_name)
+              });
+            });
+            this.remoteDbService.getMunicipalities().subscribe(allMunicipalities => {
+              let userWorkingArea = [];
+              userInfo.user_model_working_areas.forEach(actualWorkingArea => {
+                allMunicipalities.forEach(actualMunicipality => {
+                  if(actualWorkingArea.working_area_id == actualMunicipality.id_municipality) userWorkingArea.push(actualMunicipality.municipality_name)
+                });
+              })
+              let userInfoFormat: UserDetails = {
+                id_user: userInfo.user_model_id,            
+                first_name: userInfo.user_model_first_name,
+                last_name: userInfo.user_model_last_name,
+                role: userRole.user_role_name,
+                status: userStatus.status_name,
+                userSkills: userProfessionName,
+                userWorkingAreas: userWorkingArea
+              };
+              this.remoteDbService.getUserAddressById(idUser).subscribe(userAdress => {
+                this.remoteDbService.getColonyById(userAdress.id_colony_code).subscribe(userColony => {
+                  this.remoteDbService.getStatesById(userAdress.id_state_code).subscribe(userState => { 
+                    this.remoteDbService.getMunicipalityById(userAdress.id_municipality).subscribe(userMunicipality => {
+                      let userAddressFormat: UserAddress = {
+                        state_name: userState.state_name,
+                        colony_name: userColony.colony_name,
+                        municipality_name: userMunicipality.municipality_name,
+                        main_number: userAdress.main_number,
+                        interior_number: userAdress.interior_number,
+                        street_name: userAdress.street_name
+                      }                  
+                      this.dialog.open(UserTableDialogComponent,  {
+                        width: '500px',
+                        data: {
+                                userInformation: userInfoFormat,
+                                userAddressInformation: userAddressFormat,
+                                userProfessions: "Profesiones",
+                                userAreas: "Areas usuario"
+                              }
+                      });
+                    })
+                  })
                 })
               })
+              });
             })
-          })
         })
       })  
     });
@@ -177,5 +203,3 @@ export class UserTableComponent implements OnInit{
     // this.roleSubscription.unsubscribe();
   }
 }
-
-

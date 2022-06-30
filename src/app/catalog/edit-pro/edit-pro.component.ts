@@ -75,75 +75,9 @@ export class EditProComponent implements OnInit {
 		private authService: AuthService,
 		private route: ActivatedRoute
 		// private _ngZone: NgZone		
-	) {
-		//Declarations for "Working Areas" chips
-		this.filteredWorkingAreas = this.workingAreasCtrl.valueChanges.pipe(
-			startWith(null),
-			map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allWorkingAreas.slice())),
-		  );
-	}
+	) {}
 
-	loadInfo(user, address, colony, zipCode, mun) {
-		console.log(user);
-
-		this.selectedMun = mun.municipality_name;
-
-		this.firstFormNewProfesional.setValue({
-			nombres: user.user_model_first_name,
-			segundoNombre: user.user_model_surname,
-			apellidos: user.user_model_last_name,
-			fechaNacimiento: user.user_model_birthday,
-			numeroCelular: user.user_model_phone_number, 
-		})
-
-		this.secondFormNewProfesional.setValue({
-			calle: address.street_name, 
-			numExterior: address.main_number, 
-			numInterior: address.interior_number, 
-			colonia: colony.id_colony_code, 
-			codigoPostal: zipCode.zip_code, 
-			municipio: mun.id_municipality
-		})
-
-		this.profileImageUrl = `http://127.0.0.1:5000/media/${user.user_model_media_id}/content`
-		this.showProfilePicturePreview = "visible"		
-	}
-
-	ngOnInit() {
-		this.maxDate = new Date();
-		this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
-		this.selectedMun = ""
-		this.showProfilePicturePreview = "hidden"
-		this.photoEvidences = [[]]
-		this.isPhotoEvidencesLoading = [false]
-		this.profileImageId = 0;
-		this.profileImageUrl = '';
-		this.userID = 'xxxxxx'.replace(/[x]/g, function(c) {
-			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-			return v.toString(16);
-		 });
-
-		// this.addressService.getMunicipalities(14).subscribe((mun) => {
-		// 	this.allMunicipalities = mun;
-		// });
-
-		// JAL_CODE = 14
-		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
-			this.allMunicipalities = mun;
-			
-			//For Working Area chiplist 
-			this.allMunicipalities.forEach(municipality => {
-				this.allWorkingAreas.push(municipality.municipality_name)
-			});
-		});
-		
-
-		// Load skills
-		this.remoteDbService.getSkills()
-			.subscribe((skills) => {
-				this.allSkills = skills;	
-		})
-
+	generateForm() {
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
 				// validators: [ Validators.required, Validators.maxLength(30) ]
@@ -202,21 +136,86 @@ export class EditProComponent implements OnInit {
 			// 	validators: [ Validators.required ]
 			// })
 		});
+	}
 
-		this.route.params.subscribe(params => {
-			this.remoteDbService.getUsersById(params.id).subscribe(user => {
-				this.remoteDbService.getUserAddressById(params.id).subscribe(address => {
-					this.remoteDbService.getColonyById(address.id_colony_code).subscribe(colony => {
-						this.remoteDbService.getZipCodesById(address.id_zip_code).subscribe(zipCode => {
-							this.remoteDbService.getMunicipalityById(address.id_municipality).subscribe(mun => {
-								this.loadInfo(user, address, colony, zipCode, mun);
-								this.isLoaded = true;
-							})							
+	loadInfo(user, address, colony, zipCode, mun) {
+		console.log(user);
+
+		this.selectedMun = mun.municipality_name;
+
+		this.firstFormNewProfesional.setValue({
+			nombres: user.user_model_first_name,
+			segundoNombre: user.user_model_surname,
+			apellidos: user.user_model_last_name,
+			fechaNacimiento: user.user_model_birthday,
+			numeroCelular: user.user_model_phone_number, 
+		})
+
+		// this.secondFormNewProfesional.setValue({
+		// 	calle: address.street_name, 
+		// 	numExterior: address.main_number, 
+		// 	numInterior: address.interior_number, 
+		// 	codigoPostal: zipCode.zip_code,
+		// 	colonia: 0, 
+		// 	municipio: 0
+		// })
+
+		this.profileImageUrl = `http://127.0.0.1:5000/media/${user.user_model_media_id}/content`
+		this.showProfilePicturePreview = "visible"		
+
+		
+		//Declarations for "Working Areas" chips
+		this.filteredWorkingAreas = this.workingAreasCtrl.valueChanges.pipe(
+			startWith(null),
+			map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allWorkingAreas.slice())),
+		);
+
+		console.log(this.secondFormNewProfesional.controls)
+	}
+
+	ngOnInit() {
+		this.maxDate = new Date();
+		this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
+		this.selectedMun = ""
+		this.showProfilePicturePreview = "hidden"
+		this.photoEvidences = [[]]
+		this.isPhotoEvidencesLoading = [false]
+		this.profileImageId = 0;
+		this.profileImageUrl = '';
+		this.userID = 'xxxxxx'.replace(/[x]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		 });
+
+		// JAL_CODE = 14
+		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
+			this.allMunicipalities = mun;
+			
+			//For Working Area chiplist 
+			this.allMunicipalities.forEach(municipality => {
+				this.allWorkingAreas.push(municipality.municipality_name)
+			});
+
+			this.route.params.subscribe(params => {
+				this.remoteDbService.getUsersById(params.id).subscribe(user => {
+					this.remoteDbService.getUserAddressById(params.id).subscribe(address => {
+						this.remoteDbService.getColonyById(address.id_colony_code).subscribe(colony => {
+							this.remoteDbService.getZipCodesById(address.id_zip_code).subscribe(zipCode => {
+								this.remoteDbService.getMunicipalityById(address.id_municipality).subscribe(mun => {
+									// Load skills
+									this.remoteDbService.getSkills().subscribe((skills) => {
+										this.allSkills = skills;
+										this.generateForm();
+										this.loadInfo(user, address, colony, zipCode, mun);
+										this.isLoaded = true;	
+									})
+								})							
+							})
 						})
 					})
 				})
 			})
-		})
+		});
 	}
 
 	removeFormControl(i) {

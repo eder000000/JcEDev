@@ -3,14 +3,16 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { title } from 'process';
 import { UserModel } from 'src/app/remote-models/user-model';
 
-interface User {
+interface UserDetails {
   id_user: number,
   first_name: string;
   last_name: string;
   role: string;
   status: string;
+  userSkills: Array<String>;
+  userWorkingAreas: Array<String>;
 }
-
+//Hola
 interface UsedAddress {
   state_name: string,
   colony_name: string,
@@ -21,7 +23,7 @@ interface UsedAddress {
 }
 
 export interface DialogData {
-  userInformation: User,
+  userInformation: UserDetails,
   userAddressInformation: UsedAddress,
   userProfessions: string,
   userAreas: string
@@ -36,10 +38,7 @@ export interface DialogData {
 export class UserTableDialogComponent implements OnInit{
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
   
-  ngOnInit(): void { 
-    console.log(this.data.userInformation)
-    console.log(this.data.userAddressInformation)
-  }
+  ngOnInit(): void { }
 }
 
 
