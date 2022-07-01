@@ -19,6 +19,7 @@ interface CardData {
     primerNombre?: string;
     segundoNombre?: string;
     apellidos?: string;
+    logo_org?: string;
     selectedJob?: number;
     panelOpenState?: boolean;
     ubicacionesTrabajo?: string;
@@ -32,6 +33,11 @@ interface CardData {
   }[]
 }
 
+interface IconOrganization {
+  user_model_org: number
+  url_logo: string 
+}
+
 @Component({
 	selector: 'app-list-pro',
 	templateUrl: './list-pro.component.html',
@@ -43,6 +49,7 @@ export class ListProComponent  implements OnInit {
   queryPros: UserModel[];
   allPros: UserModel[];  
   requestedJob: string;
+  iconOrganization: IconOrganization[];
 
   availableProfessions: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA]; 
@@ -56,6 +63,7 @@ export class ListProComponent  implements OnInit {
   proIdToMedia: Map<number, string> = new Map<number, string>();
   munIdToString: Map<number, string> = new Map<number, string>();
   proAndSkillToMedia: Map<string, string[]> = new Map<string, string[]>();
+  
 
   @ViewChild('profesionInput') profesionInput: ElementRef<HTMLInputElement>;
 
@@ -69,6 +77,17 @@ export class ListProComponent  implements OnInit {
     })
     
     this.cardsData = [];
+
+    this.iconOrganization = [
+      {
+        user_model_org: 1,
+        url_logo: "https://bamx.org.mx/wp-content/plugins/Agile/public/Logo/5e8827daba0aa_logo.png"  
+      },
+      {
+        user_model_org: 2,
+        url_logo: "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1490326916/pvgrurt1xq06ivqehv1w.png"
+      }
+    ]
     //Get all the users
     this.remoteDbService.getPublicUsersInfo().subscribe(pros => {
       // No Requested Job
@@ -273,6 +292,7 @@ export class ListProComponent  implements OnInit {
 
 
   sortCards() {
+
     this.cardsData = this.cardsData.sort((a, b) => {
       if (a.skill_name > b.skill_name) {
         return 1;
@@ -359,17 +379,17 @@ export class ListProComponent  implements OnInit {
   buildCardsDataWithFilter(pros: UserModel[], filter:string) {
     //Guarda la lista de profesiones que se estan buscando, en caso de no haber parametros se traen todas
     this.cardsData.push({ skill_name: filter }); 
-    console.log("Esto es: this.cardsData")
-    console.log(this.cardsData)
+    // console.log("Esto es: this.cardsData")
+    // console.log(this.cardsData)
     //Lista de profesionales por profesionales
     var currentCard: CardData = this.cardsData[this.cardsData.length-1];
-    console.log("Esto es: currentCard")
-    console.log(currentCard)
+    // console.log("Esto es: currentCard")
+    // console.log(currentCard)
     
     currentCard.professionals = []; //Aqui se guardaran las cartas ya creadas
     
-    console.log("Esto es: pros")
-    console.log(pros)
+    // console.log("Esto es: pros")
+    // console.log(pros)
 
     pros.forEach(pro => {
       var defaultSelectedJob:number =  0;
@@ -393,12 +413,17 @@ export class ListProComponent  implements OnInit {
         }
       })
 
+      var iconOrganizarion = '';
+      this.iconOrganization.forEach(actualOrganizarion => {
+        if(actualOrganizarion.user_model_org == pro.user_model_org) iconOrganizarion = actualOrganizarion.url_logo
+      })
       currentCard.professionals.push({
         id: this.queryPros.indexOf(pro),
         fotoPerfil: this.proIdToMedia.get(pro.user_model_id), 
         primerNombre: pro.user_model_first_name,
         segundoNombre: pro.user_model_surname,
         apellidos: pro.user_model_last_name,
+        logo_org: iconOrganizarion,
         selectedJob: defaultSelectedJob, 
         panelOpenState: false, 
         ubicacionesTrabajo: workingAreasString, 
