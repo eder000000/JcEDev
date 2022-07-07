@@ -81,11 +81,11 @@ export class ListProComponent  implements OnInit {
     this.iconOrganization = [
       {
         user_model_org: 1,
-        url_logo: "https://bamx.org.mx/wp-content/plugins/Agile/public/Logo/5e8827daba0aa_logo.png"  
+        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png"  
       },
       {
         user_model_org: 2,
-        url_logo: "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1490326916/pvgrurt1xq06ivqehv1w.png"
+        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png"
       }
     ]
     //Get all the users
