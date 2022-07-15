@@ -280,6 +280,8 @@ export class RegisterProComponent implements OnInit {
 					})
 				})
 
+				console.log(profesional)
+
 				var newUserModel:UserModel = {
 					"user_model_address_id": user_address.id_user_address,
 					"user_model_birthday": profesional.fechaNacimiento.toISOString(),

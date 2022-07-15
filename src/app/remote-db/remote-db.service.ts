@@ -492,6 +492,7 @@ export class RemoteDbService {
    * PUT /users/:id/address
    */
    putUserAddress(address: UserAddress, user_model_id: number): Observable<any> {
+    console.log(address);
     return this.httpClient.put<UserAddress>(
       this.endpoint + '/users/' + user_model_id + '/address', address, {
         'headers': this.headers

@@ -27,6 +27,8 @@ import { UserAddress } from 'src/app/remote-models/user-address-model';
 import { ContentObserver } from '@angular/cdk/observers';
 import { element } from 'protractor';
 import { isContinueStatement } from 'typescript';
+import { Profession } from 'src/app/remote-models/profession-model';
+import { WorkingArea } from 'src/app/remote-models/working-area-model';
 
 @Component({
 	selector: 'app-edit-pro',
@@ -58,6 +60,10 @@ export class EditProComponent implements OnInit {
 	isPhotoEvidencesLoading: boolean[]
 
 	userID:string
+	userModelId:string
+	userAddressId:number
+	userOldProfessions:Profession[]
+	userOldWorkingAreas:WorkingArea[]
 
 	//Declarations for "Working Areas" chips
 	//V1
@@ -151,19 +157,50 @@ export class EditProComponent implements OnInit {
 			numeroCelular: user.user_model_phone_number, 
 		})
 
-		// this.secondFormNewProfesional.setValue({
-		// 	calle: address.street_name, 
-		// 	numExterior: address.main_number, 
-		// 	numInterior: address.interior_number, 
-		// 	codigoPostal: zipCode.zip_code,
-		// 	colonia: 0, 
-		// 	municipio: 0
-		// })
+		this.secondFormNewProfesional.setValue({
+			calle: address.street_name, 
+			numExterior: address.main_number, 
+			numInterior: address.interior_number, 
+			codigoPostal: zipCode.zip_code,
+			colonia: colony.id_colony_code + "", 
+			municipio: mun.id_municipality + ""
+		})
+		
+		// Set professions and evidences
+		for (var i = 0; i < user.user_model_professions.length; i++){
+			this.addFormControl()
+			let _oficions_array = this.thirdFormNewProfesional.controls.oficios as FormArray
+			let _oficio = user.user_model_professions[i]
+			_oficions_array.at(i).setValue({
+				oficio_select: _oficio.profession_skill+""
+			})
+			// Set evidences
+			for (var j = 0; j < _oficio.profession_evidences.length; j++){
+				this.photoEvidences[i].push(_oficio.profession_evidences[j].evidence_media)
+			}
+		}
+
+		// Remove default skill_form
+		this.removeFormControl(user.user_model_professions.length);
+		
+		// Set working areas
+		for (var i = 0; i < user.user_model_working_areas.length; i++){
+			this.workingAreas.push(
+				this.allMunicipalities.find(
+					mun => mun.id_municipality === user.user_model_working_areas[i].working_area_municipality
+				).municipality_name
+			)
+		}
+
+		// Set general_description (if exists)
+		if (user.user_model_description) {
+			let _general_desc_form = this.thirdFormNewProfesional.controls.general_description as FormControl
+			_general_desc_form.setValue(user.user_model_description)
+		}
 
 		this.profileImageUrl = `http://127.0.0.1:5000/media/${user.user_model_media_id}/content`
 		this.showProfilePicturePreview = "visible"		
 
-		
 		//Declarations for "Working Areas" chips
 		this.filteredWorkingAreas = this.workingAreasCtrl.valueChanges.pipe(
 			startWith(null),
@@ -186,6 +223,10 @@ export class EditProComponent implements OnInit {
 			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
 		 });
+		 this.userModelId = "0";
+
+		// Generate form controllers
+		this.generateForm();
 
 		// JAL_CODE = 14
 		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
@@ -197,18 +238,29 @@ export class EditProComponent implements OnInit {
 			});
 
 			this.route.params.subscribe(params => {
+				this.userModelId = params.id;
+				console.log(this.userModelId)
 				this.remoteDbService.getUsersById(params.id).subscribe(user => {
+					this.profileImageId = user.user_model_media_id
+					this.userAddressId = user.user_model_address_id
+					this.userOldProfessions = user.user_model_professions
+					this.userOldWorkingAreas = user.user_model_working_areas
+
 					this.remoteDbService.getUserAddressById(params.id).subscribe(address => {
 						this.remoteDbService.getColonyById(address.id_colony_code).subscribe(colony => {
 							this.remoteDbService.getZipCodesById(address.id_zip_code).subscribe(zipCode => {
+								this.zipCodeId = zipCode.id_zip_code
 								this.remoteDbService.getMunicipalityById(address.id_municipality).subscribe(mun => {
-									// Load skills
-									this.remoteDbService.getSkills().subscribe((skills) => {
-										this.allSkills = skills;
-										this.generateForm();
-										this.loadInfo(user, address, colony, zipCode, mun);
-										this.isLoaded = true;	
-									})
+									// Load specific colonies for this mun
+									this.remoteDbService.getFilteredColonies(undefined, address.id_municipality).subscribe((col) => {
+										this.allColonies = col;
+										// Load skills
+										this.remoteDbService.getSkills().subscribe((skills) => {
+											this.allSkills = skills;
+											this.loadInfo(user, address, colony, zipCode, mun);
+											this.isLoaded = true;	
+										})
+									});
 								})							
 							})
 						})
@@ -269,7 +321,7 @@ export class EditProComponent implements OnInit {
 		// FIXME: Interior number defaulted as 0 (it's needed for the backend) 
 
 		var newUserAddress:UserAddress = {
-			id_user_address: 1, 
+			id_user_address: this.userAddressId, 
 			street_name: profesional.calle, 
 			main_number: parseInt(profesional.numExterior), 
 			interior_number: parseInt(profesional.numInterior) | 0, 
@@ -283,7 +335,7 @@ export class EditProComponent implements OnInit {
 		}
 
 		// console.log('[Before Post] New User Address Object', newUserAddress)
-		this.remoteDbService.postUserAddress(newUserAddress).subscribe(
+		this.remoteDbService.putUserAddress(newUserAddress, parseInt(this.userModelId)).subscribe(
 			user_address => {
 				// console.log('[After Post] New User Address Object', user_address)
 
@@ -320,21 +372,24 @@ export class EditProComponent implements OnInit {
 					})
 				})
 
+				console.log(profesional)
+				console.log("User Model Id: ", this.userModelId);
+
 				var newUserModel:UserModel = {
-					"user_model_address_id": user_address.id_user_address,
+					"user_model_address_id": newUserAddress.id_user_address,
 					"user_model_birthday": profesional.fechaNacimiento.toISOString(),
 					"user_model_creator_id": this.authService.getSession().user_auth_id,
 					"user_model_first_name": profesional.nombres,
-					"user_model_id": 1,
+					"user_model_id": parseInt(this.userModelId),
 					"user_model_last_name": profesional.apellidos,
 					"user_model_media_id": this.profileImageId,
 					"user_model_org": 2,
 					"user_model_phone_number": profesional.numeroCelular,
-					"user_model_professions": newUserModelProfessions,
+					"user_model_professions": this.userOldProfessions,
 					"user_model_registry_date": (new Date()).toISOString(),
 					"user_model_surname": profesional.segundoNombre,
 					"user_model_updated_date": (new Date()).toISOString(),
-					"user_model_working_areas": newUserModelWorkingAreas,
+					"user_model_working_areas": this.userOldWorkingAreas,
 					"user_model_description": profesional.general_description,
 					"user_role_id": 5,
 					"user_status_id": 1
@@ -343,7 +398,7 @@ export class EditProComponent implements OnInit {
 				console.log('[Before Post] New User Model Object', newUserModel)
 				console.log('Nuevo usuario agregado')
 				
-				this.remoteDbService.postUserData(newUserModel).subscribe(
+				this.remoteDbService.putUserData(newUserModel).subscribe(
 					result => {
 						this.router.navigate([ '/listado' ]);
 					} 
