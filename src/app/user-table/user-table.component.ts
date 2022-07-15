@@ -4,6 +4,8 @@ import { Subscription, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import { RemoteDbService } from '../remote-db/remote-db.service';
+import { AuthService } from '../auth/auth.service'
+//import { AuthService } from '../auth/auth.service';
 import { UserModel } from '../remote-models/user-model';
 import { UserRole } from '../remote-models/user-role-model';
 import { Status } from '../remote-models/status-model';
@@ -65,10 +67,10 @@ export class UserTableComponent implements OnInit{
   users: User[];
   title: UserModel;
 
-
   @ViewChild('table') table: MatTable<User>;
 
   constructor(private remoteDbService: RemoteDbService, 
+              private authService:  AuthService,
               public mediaObserve: MediaObserver,
               private router: Router,
               public dialog: MatDialog) {
@@ -140,41 +142,46 @@ export class UserTableComponent implements OnInit{
     });
   }     
 
-  ngOnInit(): void {
-    console.log("Comenzando ejecución")
+  ngOnInit(): void { 
     this.getData();
   }
 
+
   getData(): void {
-    this.userSubscription = this.remoteDbService.getUsers().subscribe(data => {
-      this.userData=data;
-      this.formatUsers();
+    this.userSubscription = this.remoteDbService.getUsers().subscribe(allProfesionals => {
+      this.authService.getUserModelObservable().subscribe(actualUserDataLogin => {
+        const data = [];
+        for (let profesional of allProfesionals){ if(profesional.user_model_org == actualUserDataLogin.user_model_org) data.push(profesional) }
+        this.userData = data;
+        this.formatUsers();
+      })
     });
   }
 
   //Get roles from database
   formatUsers(): void {
-    // This for "merges" the data of "user, roles and status"
-    for (let data of this.userData) {
-      this.remoteDbService.getRoleById(data.user_role_id)
-      .subscribe(userRole => {
-        this.remoteDbService.getStatusesById(data.user_status_id)
-        .subscribe(userStatus => {
-          let user: User = {
-            id_user: data.user_model_id,            
-            first_name: data.user_model_first_name,
-            last_name: data.user_model_last_name,
-            role: userRole.user_role_name,
-            status: userStatus.status_name
-          };
-          
-          // FIXME: Multi rendering calls
-          this.users.push(user);
-          this.table.dataSource = this.users
-          this.table.renderRows()
+      for (let data of this.userData) {
+        this.remoteDbService.getRoleById(data.user_role_id)
+        .subscribe(userRole => {
+          this.remoteDbService.getStatusesById(data.user_status_id)
+          .subscribe(userStatus => {
+            
+            let user: User = {
+              id_user: data.user_model_id,            
+              first_name: data.user_model_first_name,
+              last_name: data.user_model_last_name,
+              role: userRole.user_role_name,
+              status: userStatus.status_name
+            };
+            
+            // FIXME: Multi rendering calls
+            this.users.push(user);
+            this.table.dataSource = this.users
+            this.table.renderRows()
+          })
         })
-      })
-    }
+      }
+    // This for "merges" the data of "user, roles and status"
   }
 
   //Edit User
