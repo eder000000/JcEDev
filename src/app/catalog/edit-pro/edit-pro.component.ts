@@ -27,6 +27,8 @@ import { UserAddress } from 'src/app/remote-models/user-address-model';
 import { ContentObserver } from '@angular/cdk/observers';
 import { element } from 'protractor';
 import { isContinueStatement } from 'typescript';
+import { Profession } from 'src/app/remote-models/profession-model';
+import { WorkingArea } from 'src/app/remote-models/working-area-model';
 
 @Component({
 	selector: 'app-edit-pro',
@@ -60,6 +62,8 @@ export class EditProComponent implements OnInit {
 	userID:string
 	userModelId:string
 	userAddressId:number
+	userOldProfessions:Profession[]
+	userOldWorkingAreas:WorkingArea[]
 
 	//Declarations for "Working Areas" chips
 	//V1
@@ -239,6 +243,8 @@ export class EditProComponent implements OnInit {
 				this.remoteDbService.getUsersById(params.id).subscribe(user => {
 					this.profileImageId = user.user_model_media_id
 					this.userAddressId = user.user_model_address_id
+					this.userOldProfessions = user.user_model_professions
+					this.userOldWorkingAreas = user.user_model_working_areas
 
 					this.remoteDbService.getUserAddressById(params.id).subscribe(address => {
 						this.remoteDbService.getColonyById(address.id_colony_code).subscribe(colony => {
@@ -379,11 +385,11 @@ export class EditProComponent implements OnInit {
 					"user_model_media_id": this.profileImageId,
 					"user_model_org": 2,
 					"user_model_phone_number": profesional.numeroCelular,
-					"user_model_professions": newUserModelProfessions,
+					"user_model_professions": this.userOldProfessions,
 					"user_model_registry_date": (new Date()).toISOString(),
 					"user_model_surname": profesional.segundoNombre,
 					"user_model_updated_date": (new Date()).toISOString(),
-					"user_model_working_areas": newUserModelWorkingAreas,
+					"user_model_working_areas": this.userOldWorkingAreas,
 					"user_model_description": profesional.general_description,
 					"user_role_id": 5,
 					"user_status_id": 1
