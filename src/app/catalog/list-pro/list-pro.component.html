@@ -41,7 +41,9 @@
                 <img mat-card-avatar src={{pro.fotoPerfil}} alt="distintivo"/>
                 <mat-card-title>{{pro.primerNombre}} {{pro.segundoNombre}} {{pro.apellidos}}</mat-card-title>
                 <div *ngIf="pro.logo_org!=''">
-                    <img mat-card-avatar src={{pro.logo_org}}/>
+                    <a target="_blank" href="{{pro.org_link}}">
+                        <img mat-card-avatar src={{pro.logo_org}}/>
+                    </a>
                 </div>
                 <mat-card-subtitle>
                         <div class="profesionals-list"> 

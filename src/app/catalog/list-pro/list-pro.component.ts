@@ -20,6 +20,7 @@ interface CardData {
     segundoNombre?: string;
     apellidos?: string;
     logo_org?: string;
+    org_link?: string;
     selectedJob?: number;
     panelOpenState?: boolean;
     ubicacionesTrabajo?: string;
@@ -35,7 +36,8 @@ interface CardData {
 
 interface IconOrganization {
   user_model_org: number
-  url_logo: string 
+  url_logo: string
+  org_link: string 
 }
 
 @Component({
@@ -81,11 +83,13 @@ export class ListProComponent  implements OnInit {
     this.iconOrganization = [
       {
         user_model_org: 1,
-        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png"  
+        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png",
+        org_link: "https://bdalimentos.org/"  
       },
       {
-        user_model_org: 2,
-        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png"
+        user_model_org: 2, //Delete, this is the amdocs ID. At the moment there are only users belonging to amdocs... 
+        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png",
+        org_link: "https://bdalimentos.org/"
       }
     ]
     //Get all the users
@@ -414,8 +418,12 @@ export class ListProComponent  implements OnInit {
       })
 
       var iconOrganizarion = '';
+      var urlOrganizarion = '';
       this.iconOrganization.forEach(actualOrganizarion => {
-        if(actualOrganizarion.user_model_org == pro.user_model_org) iconOrganizarion = actualOrganizarion.url_logo
+        if(actualOrganizarion.user_model_org == pro.user_model_org){
+          iconOrganizarion = actualOrganizarion.url_logo
+          urlOrganizarion = actualOrganizarion.org_link
+        } 
       })
       currentCard.professionals.push({
         id: this.queryPros.indexOf(pro),
@@ -424,6 +432,7 @@ export class ListProComponent  implements OnInit {
         segundoNombre: pro.user_model_surname,
         apellidos: pro.user_model_last_name,
         logo_org: iconOrganizarion,
+        org_link: urlOrganizarion,
         selectedJob: defaultSelectedJob, 
         panelOpenState: false, 
         ubicacionesTrabajo: workingAreasString, 
