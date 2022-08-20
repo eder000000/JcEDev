@@ -1,0 +1,8 @@
+.grid-item {
+    padding: 10px;
+  }
+  
+  .grid-item:hover {
+    background-color: lightgray;
+    cursor: pointer;
+  }
