@@ -1,14 +1,20 @@
-mat-sidenav-container, mat-sidenav-content{ 
+.mat-sidenav-container, .mat-sidenav-content{ 
     height:100%;
+	background-color: #FCECC9;
 }
 
-mat-sidenav{
+.mat-sidenav{
     width: 250px;
 }
 
 .mat-nav-list {
+	background-color: #FCECC9;
+}
 
-	background-color: #eff0f3;
+.menu-label h2{
+	margin-left:15px;
+	font-size: 1.5em;
+	color: #000000;
 }
 
 a {
@@ -43,5 +49,20 @@ a:active {
 	line-height: 30px;
 	margin: 0;
 	width: 85%;
-	color: #ff8e3c;
+	color: black;
 }
+
+.explore-button {
+	background-color: #ff8e3c;
+	color: white;
+	font-weight: 400;
+	width: 120px;
+	height: 35px;
+	line-height: 24px;
+	border-color: #ff8e3c;
+	border-style: solid;
+	border-radius: 10px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	margin-left: 60px;
+  }

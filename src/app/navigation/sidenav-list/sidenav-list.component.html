@@ -1,5 +1,8 @@
 
 <mat-nav-list>
+    <div class="menu-label">
+        <h2>Menu</h2>
+    </div>
     <a mat-list-item routerLink="/login" (click)="onClose()" *ngIf="!isAuth">
         <mat-icon class="icon">input</mat-icon>
         <span class="label">Ingresar<a routerLink="login"></a></span>
@@ -20,6 +23,9 @@
         <mat-icon class="icon">explore</mat-icon>
         <span class="label">Administrar</span>
     </a>
+    
+    <button class="explore-button" mat-button routerLink="/listado">Busco trabajo</button>
+
     <a mat-list-item routerLink="/user" (click)="onClose()" *ngIf="isAuth">
         <mat-icon class="icon">assignment_ind</mat-icon>
         <span class="label" (click)="onLogout()">Salir</span>
