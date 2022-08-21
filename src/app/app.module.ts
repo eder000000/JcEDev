@@ -38,6 +38,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserTableDialogComponent } from './user-table/user-table-dialog/user-table-dialog.component';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 import { FooterMainComponent } from './navigation/footer-main/footer-main.component';
+import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component';
 
 @NgModule({
 	declarations: [
@@ -58,7 +59,8 @@ import { FooterMainComponent } from './navigation/footer-main/footer-main.compon
 		PageNotFoundComponent,
 		UserTableDialogComponent, 
 		EditProComponent,
-		FooterMainComponent 
+		FooterMainComponent,
+		FindAJobComponent  
 	],
 	imports: [
 		BrowserModule,
