@@ -39,6 +39,7 @@ import { UserTableDialogComponent } from './user-table/user-table-dialog/user-ta
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 import { FooterMainComponent } from './navigation/footer-main/footer-main.component';
 import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component';
+import { IntroComponent } from './navigation/intro/intro.component';
 
 @NgModule({
 	declarations: [
@@ -60,7 +61,8 @@ import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component'
 		UserTableDialogComponent, 
 		EditProComponent,
 		FooterMainComponent,
-		FindAJobComponent  
+		FindAJobComponent,
+		IntroComponent  
 	],
 	imports: [
 		BrowserModule,
