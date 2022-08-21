@@ -1,13 +1,13 @@
 .toolbar-theme {
-  background: #ff8e3c;
+  background: white;
   border: none;
-  color: #fff;
+  color: black;
   font-size: 37px;
 }
 
 a {
   text-decoration: none;
-  color: white;
+  color: black;
 
 }
 
@@ -18,12 +18,12 @@ a {
 .material-icons.color_white {
   background: transparent;
   border: none;
-  color: white;
+  color: black;
 }
 
 a:hover,
 a:active {
-  color: lightgray;
+  color: #ff8e3c;
 }
 
 .navigation-items {
