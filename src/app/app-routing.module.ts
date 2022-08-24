@@ -10,11 +10,13 @@ import { UserTableComponent } from './user-table/user-table.component';
 import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
 import { AuthGuard } from './auth/auth.guard';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
+import { PrivacyComponent } from './navigation/privacy/privacy.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
 	{ path: 'home', component: HomeComponent },
 	{ path: 'signup', component: SignupComponent },
+	{ path: 'privacidad', component: PrivacyComponent },
 	{ path: 'login', component: LoginComponent, canActivate:[AuthGuard]},
 	
 	{ path: 'listado', component: ListProComponent },

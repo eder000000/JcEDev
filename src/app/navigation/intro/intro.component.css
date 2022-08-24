@@ -1,7 +1,10 @@
 
+.container{
+  margin: 0px;
+}
+
 .card {
-    margin-bottom: 30px;
-    margin-bottom: 20px;
+    margin: 0 !important;
 }
 
 .card .mat-card-title {

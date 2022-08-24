@@ -40,6 +40,7 @@ import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 import { FooterMainComponent } from './navigation/footer-main/footer-main.component';
 import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component';
 import { IntroComponent } from './navigation/intro/intro.component';
+import { PrivacyComponent } from './navigation/privacy/privacy.component';
 
 @NgModule({
 	declarations: [
@@ -62,7 +63,8 @@ import { IntroComponent } from './navigation/intro/intro.component';
 		EditProComponent,
 		FooterMainComponent,
 		FindAJobComponent,
-		IntroComponent  
+		IntroComponent,
+		PrivacyComponent   
 	],
 	imports: [
 		BrowserModule,

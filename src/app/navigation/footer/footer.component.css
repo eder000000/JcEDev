@@ -5,7 +5,7 @@ body {
 
 a {
   text-decoration: none;
-  color: white;
+  color: #000;
 }
 
 .footer {
@@ -15,7 +15,7 @@ a {
 
 a:hover,
 a:active {
-  color: lightgray;
+  color: #e16162;
 }
 
 

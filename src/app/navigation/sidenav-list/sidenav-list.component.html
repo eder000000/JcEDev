@@ -23,11 +23,14 @@
         <mat-icon class="icon">explore</mat-icon>
         <span class="label">Administrar</span>
     </a>
-    
-    <button class="explore-button" mat-button routerLink="/listado">Busco trabajo</button>
 
     <a mat-list-item routerLink="/user" (click)="onClose()" *ngIf="isAuth">
         <mat-icon class="icon">assignment_ind</mat-icon>
         <span class="label" (click)="onLogout()">Salir</span>
     </a>
+    <a mat-list-item routerLink="/privacidad" (click)="onClose()" *ngIf="!isAuth">
+        <mat-icon class="icon">change_history</mat-icon>
+        <span class="label">Aviso de privacidad</span>
+    </a>
+    <button class="explore-button" mat-button routerLink="/listado">Busco trabajo</button>
 </mat-nav-list>
