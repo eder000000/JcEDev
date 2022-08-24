@@ -1,4 +1,6 @@
-<div class="center">
+
+<!--
+ <div class="center">
     <div>
         <mat-icon>warning</mat-icon>
     </div>
@@ -7,3 +9,107 @@
         <p>No existe la página solicitada.</p>
     </div>
 </div>
+-->
+
+<!--
+<section fxFlex fxLayout="column">
+    <mat-card class="left-card" fxLayout="column" fxLayoutAlign="center center">
+        <mat-card-content class="left-content">
+            <p id="error-name">Error 404</p>
+            <p id="error-message">Oh, la página que estas buscando no existe</p>
+            <p id="list-title">Consulta la lista de páginas: </p>
+            <ul id="navigation-list">
+                <li>
+                    <a>Inicio</a>
+                </li>
+                <li>
+                    <a>Explorar</a>
+                </li>
+                <li>
+                    <a>Administrador</a>
+                </li>
+            </ul>            
+        </mat-card-content>
+
+    </mat-card>
+</section>
+    
+<section fxFlex fxLayout="column">
+    <mat-card class="right-card" fxLayout="column" fxLayoutAlign="center center">
+
+        <img class = "error-image" src="assets\img\Rectangle 120.svg" alt="error image">
+
+        <mat-card-content fxLayout = "column">
+
+            <p id="Error404">Error 404</p>
+
+        </mat-card-content>
+                        
+    </mat-card>
+</section>
+-->
+
+<!--
+<div>
+    <div class="left">
+        <p id="error-name">Error 404</p>
+        <p id="error-message">Oh, la página que estas buscando no existe</p>
+        <p id="list-title">Consulta la lista de páginas: </p>
+        <ul id="navigation-list">
+            <li>
+                <a>Inicio</a>
+            </li>
+            <li>
+                <a>Explorar</a>
+            </li>
+            <li>
+                <a>Administrador</a>
+            </li>
+        </ul>            
+    </div>
+    <div class="right">
+        <img class = "error-image" src="assets\img\Rectangle 120.svg" alt="error image">
+        <p id="Error404">Error 404</p>
+    </div>
+</div>  
+-->
+
+<div class="container">
+    <mat-card class="card">
+        <mat-card-content>
+          <div fxLayout="row">
+            <!-- Main -->
+            <div fxLayout="row wrap" style="height: 600px">
+              <div fxFlexOrder="1" fxLayout="column" fxLayout.xs="column" fxFlex.xs="100" fxFlex.gt-xs="50"  fxLayoutAlign="center center">
+                <mat-card-subtitle>Error 404</mat-card-subtitle>
+                <mat-card-title>Oh, la página que estas buscando no existe</mat-card-title>
+
+                        <div fxLayout="row" fxFlex="50px"fxLayoutAlign="center center">
+                            <ul id="navigation-list">
+                                <li>
+                                    <a>Inicio</a>
+                                </li>
+                                <li>
+                                    <a>Explorar</a>
+                                </li>
+                                <li>
+                                    <a>Administrador</a>
+                                </li>
+                            </ul>   
+                        </div>
+            </div>
+            <div class = "right-div" fxFlexOrder="1" fxLayout="column" fxLayout.xs="column" fxFlex.xs="100" fxFlex.gt-xs="50"  fxLayoutAlign="center center">
+                <img  
+                class="img-md-medium" 
+                mat-card-image src="{{ imageConstruction }}" 
+                alt="Busca a los profesionales">
+
+                <h2>Error 404</h2>
+
+            </div>
+            </div>
+          </div>
+       </mat-card-content>
+    </mat-card>
+</div>
+    

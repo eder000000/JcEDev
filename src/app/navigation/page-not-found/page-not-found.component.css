@@ -11,3 +11,153 @@
     margin: auto;
     font-size: 100px;
 }
+
+
+.left{
+    align-self: center;
+    margin-left: 15%;
+    margin-top: 90px;
+    width: 60%;
+    background: none;
+    border: #000000;
+    
+}
+
+.right{
+    margin-top: -22%;
+    margin-left: 55%;
+    background: none;
+    border: #000000;
+    box-shadow: none;
+
+}
+
+#error-name{
+    font-family: 'Cabin';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+
+    color: #E57A44;
+}
+
+#error-message{
+    width: 50%;
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 42px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+}
+
+#list-title{
+
+    margin-top: 17px;
+
+    font-family: 'Cabin';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+
+    color: #313131;
+}
+
+#navigation-list{
+
+    margin-top: 19px;
+    margin-left: -3%;
+
+    list-style-image: url(src\assets\img\Vector.png);
+    font-family: 'Cabin';
+    font-style: normal;
+    line-height: 25px;
+
+    color: #313131;
+}
+
+.error-image{
+    align-self: center;
+}
+
+#Error404{
+    margin-top: 33px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 51px;
+
+    color: #E57A44;
+
+}
+
+
+
+
+
+
+.card {
+    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.card .mat-card-title {
+    padding: 5px;
+    margin-bottom: 15px;
+    line-height: 25pt;
+}
+
+.card .mat-card-subtitle {
+    color: black;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    line-height: 15pt;
+}
+
+.img-md-medium {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+  }
+
+  .explore-button {
+    background-color: #ff8e3c;
+    color: white;
+    font-weight: 400;
+    width: 180px;
+    height: 35px;
+    line-height: 24px;
+    border-style: solid;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  
+  .explore-button:hover {
+    background-color: white;
+    color: #ff8e3c;
+  }
+
+  .red{
+    color: #ff8e3c;
+  }
+
+
+
+
+
+    
+
+
+

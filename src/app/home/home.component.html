@@ -1,6 +1,6 @@
 <!--Redesign of homepage
 Author: Edmundo y Eder Garcia-->
-<section class="home-container" fxFlex fxLayout="column" fxLayoutAlign="center center">
+<section class="home-container" fxFlex fxLayout="column">
 
     <mat-card class="search-pro-card" fxLayout="column" fxLayoutAlign="center center">
        <mat-card-content>
@@ -54,5 +54,29 @@ Author: Edmundo y Eder Garcia-->
             <button class="info-button" mat-button >Mas información</button>
         </mat-card-content>
     </mat-card>
-</section>
+    
 
+    <mat-card class="verified-professionals-card" fxLayout fxLayoutAlign="center center">
+        
+        <img src="\assets\img\image-verified.svg" alt="Profesionales verificados">
+        
+        <mat-card-content>
+            <p id="title-verified">
+                Profesionales <font color="#E57A44">verificados</font>  y listos para darlo todo en el trabajo
+            </p>
+            <p id="text-verified">
+                ¿Preocupado por encontrar un buen profesionista? Confia en nosotros
+            </p> 
+            <button id="button-verified">
+                <img id="button-verified-img" src="assets\img\button-verified.svg" alt="imageButton">
+            </button> 
+            <p id="button-verified-text">Explora a los {{verifiedProfessionalsQuantity}} diferentes profesionistas</p>
+            
+            
+        </mat-card-content>
+
+
+    </mat-card>
+   
+
+</section>

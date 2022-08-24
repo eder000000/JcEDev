@@ -125,3 +125,84 @@ mat-card-actions {
   line-height: 1.5em;
   margin-bottom: 50px;
 }
+
+
+.verified-professionals-card{
+  margin-top: 1em;
+  width: 100%;
+  background: none;
+}
+
+.verified-professionals-card img{
+  margin-left: -5%;
+}
+
+#title-verified{
+
+  margin-left: 15%;
+  margin-top: -20%;
+  text-align: left;
+
+  width: 387px;
+  height: 134px;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  align-items: center;
+  color: #000000;
+
+}
+
+#text-verified{
+  margin-left: 15%;
+  text-align: left;
+  margin-top: auto;
+
+  width: 387px;
+  height: 69px;
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+#button-verified{
+  border: none;
+  background: none;
+  width: 76px;
+  height: 45px;
+  margin-left: -55%;
+  margin-top: 0%;
+  cursor: pointer;
+}
+
+#button-verified-img{
+  width: 76px;
+  height: 45px;
+}
+
+#button-verified-text{
+  margin-top: -16%;
+  margin-left: 40%;
+  text-align: left;
+
+  width: 275px;
+  height: 68px;
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+
+}
