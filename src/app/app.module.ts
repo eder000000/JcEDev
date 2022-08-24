@@ -41,6 +41,7 @@ import { FooterMainComponent } from './navigation/footer-main/footer-main.compon
 import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component';
 import { IntroComponent } from './navigation/intro/intro.component';
 import { PrivacyComponent } from './navigation/privacy/privacy.component';
+import { VerifiedProfessionalsComponent } from './navigation/verified-professionals/verified-professionals.component';
 
 @NgModule({
 	declarations: [
@@ -64,7 +65,8 @@ import { PrivacyComponent } from './navigation/privacy/privacy.component';
 		FooterMainComponent,
 		FindAJobComponent,
 		IntroComponent,
-		PrivacyComponent   
+		PrivacyComponent,
+		VerifiedProfessionalsComponent   
 	],
 	imports: [
 		BrowserModule,
