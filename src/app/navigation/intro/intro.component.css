@@ -1,23 +1,24 @@
 
 .container{
-  margin: 0px;
+  margin-bottom: 20px;
 }
 
-.card {
-    margin: 0 !important;
-}
 
-.card .mat-card-title {
+h1 {
+  font-weight: 500;
     padding: 5px;
-    margin-bottom: 15px;
+    margin: 15px;
     line-height: 25pt;
+    text-align: center;
 }
 
-.card .mat-card-subtitle {
+h2 {
+   text-align: center;
+   font-size: 18px; 
+   font-weight: 400;
     color: black;
     padding: 5px;
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin: 20px;
     line-height: 15pt;
 }
 
