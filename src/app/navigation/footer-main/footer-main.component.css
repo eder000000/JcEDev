@@ -1,11 +1,14 @@
+
+
 .container {
+  background-color: #373F51;
   width: 100%;
   display: flex;
 }
 
 .footer-main, 
 .footer-card {
-  max-width: 500px;
+  
   min-height: 250px;
   background-color: #373F51;
   color: white;
@@ -33,6 +36,11 @@ font-size: 12px;
   font-size: 12px;
   margin-bottom: 10px;
 } 
+
+.mat-card p{
+  text-align: justify;
+  margin: 15px;
+}
 
 .mat-icon{
   color: #ff8e3c;
