@@ -42,6 +42,7 @@ import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component'
 import { IntroComponent } from './navigation/intro/intro.component';
 import { PrivacyComponent } from './navigation/privacy/privacy.component';
 import { VerifiedProfessionalsComponent } from './navigation/verified-professionals/verified-professionals.component';
+import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
 
 @NgModule({
 	declarations: [
@@ -67,6 +68,7 @@ import { VerifiedProfessionalsComponent } from './navigation/verified-profession
 		IntroComponent,
 		PrivacyComponent,
 		VerifiedProfessionalsComponent   
+		EditProComponent, ProfessionalCardErrorComponent
 	],
 	imports: [
 		BrowserModule,

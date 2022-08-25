@@ -1,9 +1,37 @@
-<div class="center">
-    <div>
-        <mat-icon>warning</mat-icon>
-    </div>
-    <div>    
-        <h2>ERROR: 404 Not Found</h2>
-        <p>No existe la página solicitada.</p>
-    </div>
+
+<div class="container">
+    <mat-card class="card">
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div fxLayout="row wrap" style="height: 600px" >
+                    <div class="left-div" fxFlexOrder="1" fxLayout="column" fxLayout.xs="column" fxFlex.xs="100" fxFlex.gt-xs="50"  fxLayoutAlign="center start">
+                        <mat-card-subtitle id="error-name">Error 404</mat-card-subtitle>
+                        <mat-card-title id="error-message">Oh, la página que estas buscando no existe</mat-card-title>
+                        <mat-card-subtitle id="list-title">Consulta la lista de páginas: </mat-card-subtitle>
+
+                        <div fxLayout="row" fxFlex="50px"fxLayoutAlign="center start">
+                            <ul id="navigation-list">
+                                <li>
+                                    <a>Inicio</a>
+                                </li>
+                                <li>
+                                    <a>Explorar</a>
+                                </li>
+                                <li>
+                                    <a>Administrador</a>
+                                </li>
+                            </ul>   
+                        </div>
+                    </div>
+                    <div class = "right-div" fxFlexOrder="1" fxLayout="column" fxLayout.xs="column" fxFlex.xs="60" fxFlex.gt-xs="50"  fxLayoutAlign="center center">
+                        <img  
+                            class="img-md-medium" 
+                            mat-card-image src="{{ imageConstruction }}" 
+                            alt="Busca a los profesionales">
+                        <h2 id="Error404">Error 404</h2>
+                    </div>
+                </div>
+            </div>
+       </mat-card-content>
+    </mat-card>
 </div>
