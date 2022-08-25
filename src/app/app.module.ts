@@ -67,8 +67,9 @@ import { ProfessionalCardErrorComponent } from './catalog/professional-card-erro
 		FindAJobComponent,
 		IntroComponent,
 		PrivacyComponent,
-		VerifiedProfessionalsComponent   
-		EditProComponent, ProfessionalCardErrorComponent
+		VerifiedProfessionalsComponent,   
+		EditProComponent, 
+		ProfessionalCardErrorComponent
 	],
 	imports: [
 		BrowserModule,
