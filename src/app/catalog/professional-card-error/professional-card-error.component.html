@@ -1,0 +1,23 @@
+<div class="container">
+    <mat-card class="professional-card-error">
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div class="image-div">
+                    <img  
+                            class="img-md-medium" 
+                            mat-card-image src="{{ professionalErrorImage }}" 
+                            alt="Error professional">
+                </div>
+                <div class = "text-div" fxLayoutAlign = "center center">
+                    <div fxLayout="column" fxLayoutAlign="center start">
+                        <mat-card-title id="card-title">Oops, ha ocurrido un error</mat-card-title>
+                        <mat-card-subtitle id="card-text">No logramos mostrar el catálogo de profesionales, recarga la página o vuelve más tarde.</mat-card-subtitle>
+                        <button class="card-button" type="button">
+                            <span>Volver al inicio</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

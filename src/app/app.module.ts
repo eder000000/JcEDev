@@ -37,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { UserTableDialogComponent } from './user-table/user-table-dialog/user-table-dialog.component';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
+import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
 
 @NgModule({
 	declarations: [
@@ -56,7 +57,7 @@ import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 		UserTableComponent,
 		PageNotFoundComponent,
 		UserTableDialogComponent, 
-		EditProComponent
+		EditProComponent, ProfessionalCardErrorComponent
 	],
 	imports: [
 		BrowserModule,

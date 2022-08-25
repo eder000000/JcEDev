@@ -1,13 +1,78 @@
-.center {
-    position: absolute;
-    top: 40%;
-    width: 100%;
-    text-align: center;
+
+
+#error-name{
+    font-family: 'Cabin';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    width: 182px;
+    height: 28px;
+
+    color: #E57A44;
 }
 
-.mat-icon {
-    height: 100%;
-    width: 100%;
-    margin: auto;
-    font-size: 100px;
+#error-message{
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 42px;
+    display: flex;
+    align-items: center;
+    width: 412px;
+    height: 106px;
+
+    color: #000000;
 }
+
+
+#list-title{
+    font-family: 'Cabin';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #313131;
+    width: 246px;
+    height: 35px;
+
+}
+
+#navigation-list{
+
+    margin-top: -10%;
+    list-style-image: url(src\assets\img\Vector.png);
+    font-family: 'Cabin';
+    font-style: normal;
+    line-height: 25px;
+
+    color: #313131;
+}
+
+.img-md-medium {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+  }
+
+#Error404{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 51px;
+
+
+    color: #E57A44;
+}
+
+/*--------------------------------------------------------------------------------*/
+
+
+
+
