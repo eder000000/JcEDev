@@ -36,6 +36,8 @@ import { WorkingArea } from 'src/app/remote-models/working-area-model';
 	styleUrls: [ './edit-pro.component.css' ]
 })
 export class EditProComponent implements OnInit {
+	endpoint:string = "https://jce-flask-02.herokuapp.com"
+
 	isLoaded = false;
 	isLinear = true;
 	formNewProfesional: FormGroup;
@@ -198,7 +200,7 @@ export class EditProComponent implements OnInit {
 			_general_desc_form.setValue(user.user_model_description)
 		}
 
-		this.profileImageUrl = `http://127.0.0.1:5000/media/${user.user_model_media_id}/content`
+		this.profileImageUrl = `${this.endpoint}/media/${user.user_model_media_id}/content`
 		this.showProfilePicturePreview = "visible"		
 
 		//Declarations for "Working Areas" chips
@@ -383,7 +385,7 @@ export class EditProComponent implements OnInit {
 					"user_model_id": parseInt(this.userModelId),
 					"user_model_last_name": profesional.apellidos,
 					"user_model_media_id": this.profileImageId,
-					"user_model_org": 2,
+					"user_model_org": 1,
 					"user_model_phone_number": profesional.numeroCelular,
 					"user_model_professions": this.userOldProfessions,
 					"user_model_registry_date": (new Date()).toISOString(),

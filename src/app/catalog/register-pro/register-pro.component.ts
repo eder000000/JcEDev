@@ -34,6 +34,9 @@ import { isContinueStatement } from 'typescript';
 	styleUrls: [ './register-pro.component.css' ]
 })
 export class RegisterProComponent implements OnInit {
+
+	endpoint:string = "https://jce-flask-02.herokuapp.com"
+
 	isLinear = true;
 	formNewProfesional: FormGroup;
 	selected: any;
@@ -290,7 +293,7 @@ export class RegisterProComponent implements OnInit {
 					"user_model_id": 1,
 					"user_model_last_name": profesional.apellidos,
 					"user_model_media_id": this.profileImageId,
-					"user_model_org": 2,
+					"user_model_org": 1,
 					"user_model_phone_number": profesional.numeroCelular,
 					"user_model_professions": newUserModelProfessions,
 					"user_model_registry_date": (new Date()).toISOString(),
@@ -442,7 +445,7 @@ export class RegisterProComponent implements OnInit {
 				} else {
 					this.showProfilePicturePreview = "visible"
 					this.profileImageId = media.media_id;
-					this.profileImageUrl = `https://jce-flask-02.herokuapp.com/media/${media.media_id}/content`
+					this.profileImageUrl = `${this.endpoint}/media/${media.media_id}/content`
 				}
 			})
 		}
