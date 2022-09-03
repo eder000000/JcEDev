@@ -10,13 +10,16 @@ import { UserTableComponent } from './user-table/user-table.component';
 import { PageNotFoundComponent } from './navigation/page-not-found/page-not-found.component';
 import { AuthGuard } from './auth/auth.guard';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
 	{ path: 'home', component: HomeComponent },
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'login', component: LoginComponent, canActivate:[AuthGuard]},
-	
+	{ path: 'recoverPassword', component: PasswordRecoveryComponent },
+	{ path: 'resetPasswordTEST', component: PasswordResetComponent }, //DELETE WHEN TESTED
 	{ path: 'listado', component: ListProComponent },
 
 	//Admin

@@ -37,6 +37,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { UserTableDialogComponent } from './user-table/user-table-dialog/user-table-dialog.component';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
 	declarations: [
@@ -56,6 +58,8 @@ import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 		UserTableComponent,
 		PageNotFoundComponent,
 		UserTableDialogComponent, 
+		PasswordRecoveryComponent,
+		PasswordResetComponent,
 		EditProComponent
 	],
 	imports: [

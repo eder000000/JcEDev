@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { Colony } from '../remote-models/colony-model';
 import { CountryCode } from '../remote-models/country-code-model';
+import { Email } from '../remote-models/email-model';
 import { Media } from '../remote-models/media-model';
 import { Municipality } from '../remote-models/municipality-model';
 import { Org } from '../remote-models/org-model';
@@ -311,6 +312,19 @@ export class RemoteDbService {
   }
 
   /**
+   * POST /resetPassword
+   */
+     resetPassword(newPassword:string): Observable<any> {
+      return this.httpClient.post<any>(
+        this.endpoint + '/resetPassword', {
+          'user_new_password': newPassword
+        }, {
+          'headers': this.headers
+        }
+      )
+    }
+
+  /**
    * POST /logout
    */
    logout(userAuth:UserAuth): Observable<any> {
@@ -537,10 +551,28 @@ export class RemoteDbService {
     ).pipe(retry(1))
   }
 
+  /**
+   * GET /users/public
+   */
   getPublicUsersInfo(): Observable<PublicUserModel[]> {
     return this.httpClient.get<PublicUserModel[]>(
       this.endpoint + '/users/public', {
         'headers': this.headers
+      }
+    ).pipe(retry(1))
+  }
+
+  /**
+   * GET /emails/filter
+   */
+   getFilteredEmails(email: string): Observable<Email[]> {
+    var params : HttpParams = new HttpParams();
+    params.append('email', email);
+
+    return this.httpClient.get<Email[]>(
+      this.endpoint + '/emails/filter' , {
+        'headers': this.headers,
+        'params': params
       }
     ).pipe(retry(1))
   }
