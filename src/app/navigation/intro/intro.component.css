@@ -22,11 +22,14 @@ h2 {
     line-height: 15pt;
 }
 
+
 .img-md-medium {
-    margin-top: 10px;
-    width: 100%;
-    max-width: 500px;
+    margin: 5px;
+    width: 95%;
+    max-width: 600px;
+    min-width: 280px;
     height: auto;
+    border-radius: 20px;
   }
 
   .explore-button {
@@ -57,3 +60,88 @@ h2 {
   .columnOne-back{
     background-color: #F8F8F8;
   }
+
+
+
+.rectanguloOne{
+    min-width: 85px; 
+    width: 25%;
+    height: 8px; 
+    background: #AA4465;
+}
+
+.rectanguloTwo{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #F56476;
+}
+
+.rectanguloThree{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #E43F6F;
+}
+
+.rectanguloFour{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #AA4465;
+}
+
+.rectanguloOneLow{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #AA4465;
+}
+
+.rectanguloTwoLow{
+min-width: 85px; 
+width: 25%;
+height: 8px; 
+background: #F56476;
+}
+
+.rectanguloThreeLow{
+min-width: 85px; 
+width: 25%;
+height: 8px; 
+background: #E43F6F;
+}
+
+.rectanguloFourLow{
+min-width: 85px; 
+width: 25%;
+height: 8px; 
+background: #AA4465;
+}
+
+
+@media all and (min-width: 480px) {
+  .rectanguloOne {display:none;}
+  .rectanguloTwo {display:none;}
+  .rectanguloThree {display:none;}
+  .rectanguloFour {display:none;}
+  .rectanguloOneLow {display:block;}
+  .rectanguloTwoLow {display:block;}
+  .rectanguloThreeLow {display:block;}
+  .rectanguloFourLow {display:block;}
+
+
+
+}
+
+@media all and (max-width: 479px) {
+  .rectanguloOne {display:block;}
+  .rectanguloTwo {display:block;}
+  .rectanguloThree {display:block;}
+  .rectanguloFour {display:block;}
+  .rectanguloOneLow {display:none;}
+  .rectanguloTwoLow {display:none;}
+  .rectanguloThreeLow {display:none;}
+  .rectanguloFourLow {display:none;}
+
+}
