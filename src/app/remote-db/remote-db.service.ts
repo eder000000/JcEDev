@@ -322,6 +322,21 @@ export class RemoteDbService {
   }
 
   /**
+   * POST /signup
+   */
+  signup(username:string, password:string, email:string): Observable<any> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/signup', {
+        'user_auth_name': username, 
+        'user_auth_email': email,
+        'user_auth_password': password
+      }, {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
    * Set token in headers after login
    * @param token Given token after login
    */
