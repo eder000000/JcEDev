@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './navigation/page-not-found/page-not-foun
 import { AuthGuard } from './auth/auth.guard';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 import { PrivacyComponent } from './navigation/privacy/privacy.component';
+import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -20,11 +21,12 @@ const routes: Routes = [
 	{ path: 'login', component: LoginComponent, canActivate:[AuthGuard]},
 	
 	{ path: 'listado', component: ListProComponent },
+	{ path: 'cardError', component: ProfessionalCardErrorComponent },
 
 	//Admin
 	{ path: 'register', component: RegisterProComponent, canActivate:[AuthGuard] },
 
-	// Tabla usuarios
+	// Tabla usuarioss
 	// TODO: Child components:
 	// -/users
 	// -/users/:id => View More
@@ -35,6 +37,9 @@ const routes: Routes = [
 	{ path: 'editUser/:id', component: EditProComponent, canActivate:[AuthGuard]}, 
 
 	{ path: '**', component: PageNotFoundComponent }
+
+	
+	
 ];
 
 @NgModule({
