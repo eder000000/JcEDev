@@ -6,14 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found.component.css']
 })
 export class PageNotFoundComponent implements OnInit {
-  textPresentationCard = 'Jalisco con Empleo te conecta con los profesionales para todos tus proyectos de construcción, mejora, y/o reparación.';
-	imageConstruction = './assets/img/undraw_Notify_re_65on.png';
-	imageSuscription = './assets/img/undraw_coffee_break_h3uu_thumbnails.png';
-	textSuscriptionCard = 'Soy un profesional, ¿Cómo puedo suscribirme?';
-  professionalErrorImage = './assets/img/professional-card-error-image.png';
-
-
-
+	imageError = './assets/img/undraw_Notify_re_65on.png';
 
   constructor() { }
 
