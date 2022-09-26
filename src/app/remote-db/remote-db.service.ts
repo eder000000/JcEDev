@@ -338,7 +338,7 @@ export class RemoteDbService {
   /**
    * POST /signup
    */
-  signup(username:string, password:string, email:string): Observable<any> {
+  signup(username:string, email:string, password:string): Observable<any> {
     return this.httpClient.post<any>(
       this.endpoint + '/signup', {
         'user_auth_name': username, 

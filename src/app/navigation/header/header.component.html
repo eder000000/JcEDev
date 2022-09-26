@@ -14,6 +14,7 @@
             <ul  fxLayout fxLayoutGap="20px" class="navigation-items" fxHide.xs>
                 <!-- <li *ngIf="!isAuth"><a routerLink="/">Registro</a></li> -->
                 <li *ngIf="!isAuth"><a routerLink="/login">Ingresar</a></li>
+                <li *ngIf="!isAuth"><a routerLink="/signup">Registrarse</a></li>
                 <li *ngIf="isAuth"><a routerLink="/">Explorar</a></li>
                 <li *ngIf="isAuth"><a routerLink="/register">Registrar profesional</a></li>
                 <li *ngIf="isAuth"><a routerLink="/users">Tabla de usuarios</a></li>

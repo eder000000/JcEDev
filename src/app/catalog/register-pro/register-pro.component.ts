@@ -35,7 +35,7 @@ import { isContinueStatement } from 'typescript';
 })
 export class RegisterProComponent implements OnInit {
 
-	endpoint:string = "https://jce-flask-02.herokuapp.com"
+	endpoint:string = "http://127.0.0.1:5000"
 
 	isLinear = true;
 	formNewProfesional: FormGroup;

@@ -36,7 +36,7 @@ import { WorkingArea } from 'src/app/remote-models/working-area-model';
 	styleUrls: [ './edit-pro.component.css' ]
 })
 export class EditProComponent implements OnInit {
-	endpoint:string = "https://jce-flask-02.herokuapp.com"
+	endpoint:string = "http://127.0.0.1:5000"
 
 	isLoaded = false;
 	isLinear = true;
@@ -537,7 +537,7 @@ export class EditProComponent implements OnInit {
 				} else {
 					this.showProfilePicturePreview = "visible"
 					this.profileImageId = media.media_id;
-					this.profileImageUrl = `https://jce-flask-02.herokuapp.com/media/${media.media_id}/content`
+					this.profileImageUrl = `http://127.0.0.1:5000/media/${media.media_id}/content`
 				}
 			})
 		}

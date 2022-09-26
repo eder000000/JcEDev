@@ -4,6 +4,7 @@ import { PatternValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RemoteDbService } from 'src/app/remote-db/remote-db.service';
 import { PasswordMatch } from 'src/utils/passwordMatch';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,6 +17,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private remoteDbService: RemoteDbService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -54,9 +56,18 @@ export class SignupComponent implements OnInit {
       this.remoteDbService.signup(
         this.signupGroup.value.username,
         this.signupGroup.value.email,
-        this.signupGroup.value.password).subscribe(() => {
-          this.router.navigate(['/listado'])
-        });
+        this.signupGroup.value.password
+        ).subscribe(() => 
+          this.remoteDbService.login(
+          this.signupGroup.value.username, 
+          this.signupGroup.value.password
+          ).subscribe(session => {
+              this.authService.login({
+              token: session.token, 
+              user_model_id: session.user_model_id, 
+              user_auth_id: session.user_auth_id
+            })
+      }));  
     } else alert("Formulario no enviado. Hay campos con errores.");
   }
 
