@@ -81,7 +81,7 @@ export class ListProComponent  implements OnInit {
     this.iconOrganization = [
       {
         user_model_org: 1,
-        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png"  
+        url_logo: ""
       },
       {
         user_model_org: 2,
@@ -417,6 +417,7 @@ export class ListProComponent  implements OnInit {
       this.iconOrganization.forEach(actualOrganizarion => {
         if(actualOrganizarion.user_model_org == pro.user_model_org) iconOrganizarion = actualOrganizarion.url_logo
       })
+      
       currentCard.professionals.push({
         id: this.queryPros.indexOf(pro),
         fotoPerfil: this.proIdToMedia.get(pro.user_model_id), 
