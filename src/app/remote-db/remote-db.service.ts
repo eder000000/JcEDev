@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { Colony } from '../remote-models/colony-model';
 import { CountryCode } from '../remote-models/country-code-model';
-import { Email } from '../remote-models/email-model';
 import { Media } from '../remote-models/media-model';
 import { Municipality } from '../remote-models/municipality-model';
 import { Org } from '../remote-models/org-model';
@@ -314,10 +313,11 @@ export class RemoteDbService {
   /**
    * POST /resetPassword
    */
-     resetPassword(newPassword:string): Observable<any> {
+     resetPassword(newPassword:string, token:string): Observable<boolean> {
       return this.httpClient.post<any>(
-        this.endpoint + '/resetPassword', {
-          'user_new_password': newPassword
+        this.endpoint + '/resetpwd', {
+          'user_new_password': newPassword,
+          'reset_token': token
         }, {
           'headers': this.headers
         }
@@ -345,6 +345,17 @@ export class RemoteDbService {
         'user_auth_email': email,
         'user_auth_password': password
       }, {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
+   * POST /recoverpwd
+   */
+  sendRecoveryEmail(email: string): Observable<boolean> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/recoverpwd', JSON.stringify(email), {
         'headers': this.headers
       }
     )
@@ -562,18 +573,4 @@ export class RemoteDbService {
     ).pipe(retry(1))
   }
 
-  /**
-   * GET /emails/filter
-   */
-   getFilteredEmails(email: string): Observable<Email[]> {
-    var params : HttpParams = new HttpParams();
-    params.append('email', email);
-
-    return this.httpClient.get<Email[]>(
-      this.endpoint + '/emails/filter' , {
-        'headers': this.headers,
-        'params': params
-      }
-    ).pipe(retry(1))
-  }
 }

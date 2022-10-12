@@ -19,7 +19,7 @@ const routes: Routes = [
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'login', component: LoginComponent, canActivate:[AuthGuard]},
 	{ path: 'recoverPassword', component: PasswordRecoveryComponent },
-	{ path: 'resetPasswordTEST', component: PasswordResetComponent }, //DELETE WHEN TESTED
+	{ path: 'resetPassword/:token', component: PasswordResetComponent },
 	{ path: 'listado', component: ListProComponent },
 
 	//Admin

@@ -27,8 +27,8 @@ export class PasswordRecoveryComponent implements OnInit {
   
   onSubmit(){
     this.submitted = true;
-    this.remoteDbService.getFilteredEmails(this.emailRecoveryForm.value.email).subscribe(emails => {
-      if (emails.length > 0) this.emailMessage = "Se envió la liga de restablecimiento de contraseña a su correo."
+    this.remoteDbService.sendRecoveryEmail(this.emailRecoveryForm.value.email).subscribe(res => {
+      if (res) this.emailMessage = "Se envió la liga de restablecimiento de contraseña a su correo."
       else this.emailMessage = "El correo ingresado no se encuentra en los correos registrados."
     });   
   }
