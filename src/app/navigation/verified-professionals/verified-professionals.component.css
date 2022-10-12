@@ -1,0 +1,65 @@
+
+.container{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+
+  }
+
+  h1{
+    font-weight: 500;
+    text-align: center;
+    margin: 40px;
+  }
+
+  .sub{
+    font-size: 16px;
+    text-align: justify;
+    margin: 20px;
+  }
+  
+  .img-md-medium {
+    padding-top: 40px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+    }
+  
+    .explore-button {
+      background-color: #ff8e3c;
+      color: white;
+      font-weight: 400;
+      width: 180px;
+      height: 35px;
+      line-height: 24px;
+      border-style: solid;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    
+    .explore-button:hover {
+      background-color: whitesmoke;
+      color: #ff8e3c;
+    }
+  
+    .red{
+      color: #ff8e3c;
+    }
+
+    a {
+        text-align: center;
+        text-decoration: none;
+        color: black;
+    }
+
+    .mat-icon {
+        display: inline-block;
+        height: 30px;
+        margin: 0 auto;
+        padding-right: 15px;
+        text-align: center;
+        vertical-align: middle;
+        width: 15%;
+        color: #ff8e3c;
+    }
