@@ -31,7 +31,6 @@
         Borrar busqueda
     </button>
 </div>
-
 <!-- Profesions -->
 <section class="profesionals-list">
     <div *ngFor="let cardData of cardsData; let c = index">
@@ -39,21 +38,25 @@
         <div *ngFor="let pro of cardData.professionals; let p = index">
         <mat-card class="profesional-card mat-elevation-z4"> 
             <mat-card-header>
-               <img mat-card-avatar src={{pro.fotoPerfil}}/>
+                <img mat-card-avatar src={{pro.fotoPerfil}} alt="distintivo"/>
                 <mat-card-title>{{pro.primerNombre}} {{pro.segundoNombre}} {{pro.apellidos}}</mat-card-title>
+                <div *ngIf="pro.logo_org!=''">
+                    <img mat-card-avatar src={{pro.logo_org}}/>
+                </div>
                 <mat-card-subtitle>
-                    <div class="profesionals-list" > 
-                        <button
+                        <div class="profesionals-list"> 
+                            <button
                             *ngFor="let oficio of pro.oficios; let i=index" 
                             [ngClass]="pro.selectedJob == i ? 'oficios-button-selected' : 'oficios-button'"
                             (click)="updateJobInfo(c, p, i)"
-                        >
-                        {{oficio.oficio_name}}</button>
-                    </div>
+                            >
+                            {{oficio.oficio_name}}</button>
+                        </div>
                 </mat-card-subtitle>
             </mat-card-header>
               <mat-card-content >
-                <p>{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
+                <!-- Here general description -->
+                <p>{{pro.descripcion}}</p>
             <mat-accordion class="acordion">
                 <mat-expansion-panel class="mat-elevation-z0" (opened)="pro.panelOpenState = true" (closed)="pro.panelOpenState = false">
                     <mat-expansion-panel-header>
@@ -69,7 +72,7 @@
                     </div>
                     <div class="location-list">
                         <p class="card-text">{{pro.ubicacionesTrabajo}}</p>  
-                    </div>
+                    </div><br>
                 </div>
                     <div>
                         <p class="label-card">Teléfono de contacto: </p> 
@@ -77,8 +80,16 @@
 
                     <div class="location-list">
                         <p class="card-text">{{pro.numeroCelular}}</p> 
+                    </div><br>
+
+                    <div>
+                        <p class="label-card">Descripcion del trabajo: </p> 
                     </div>
 
+                    <div class="location-list">
+                        <p class="card-text">{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
+                    </div><br>
+                    
                     <div>
                         <p class="label-card">Imagenes de trabajos: </p> 
                     </div>

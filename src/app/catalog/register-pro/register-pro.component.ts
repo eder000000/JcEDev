@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {ElementRef, ViewChild} from '@angular/core';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 import { concatJSON } from '../../../utils/json-utils';
 import { HerokuAddressService } from 'src/app/heroku-address/heroku-address.service';
@@ -17,6 +24,9 @@ import { Media } from 'src/app/remote-models/media-model';
 import { UserModel } from 'src/app/remote-models/user-model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserAddress } from 'src/app/remote-models/user-address-model';
+import { ContentObserver } from '@angular/cdk/observers';
+import { element } from 'protractor';
+import { isContinueStatement } from 'typescript';
 
 @Component({
 	selector: 'app-register-pro',
@@ -24,6 +34,9 @@ import { UserAddress } from 'src/app/remote-models/user-address-model';
 	styleUrls: [ './register-pro.component.css' ]
 })
 export class RegisterProComponent implements OnInit {
+
+	endpoint:string = "https://jce-flask-02.herokuapp.com"
+
 	isLinear = true;
 	formNewProfesional: FormGroup;
 	selected: any;
@@ -48,12 +61,28 @@ export class RegisterProComponent implements OnInit {
 
 	userID:string
 
+	//Declarations for "Working Areas" chips
+	//V1
+	separatorKeysCodes: number[] = [ENTER, COMMA];
+	workingAreasCtrl = new FormControl('');
+	filteredWorkingAreas: Observable<string[]>;
+	workingAreas: string[] = [];
+	allWorkingAreas: string[] = [];
+	@ViewChild('workingAreaInput') workingAreaInput: ElementRef<HTMLInputElement>;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router, 
 		private remoteDbService: RemoteDbService, 
-		private authService: AuthService
-	) {}
+		private authService: AuthService,
+		// private _ngZone: NgZone		
+	) {
+		//Declarations for "Working Areas" chips
+		this.filteredWorkingAreas = this.workingAreasCtrl.valueChanges.pipe(
+			startWith(null),
+			map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allWorkingAreas.slice())),
+		  );
+	}
 
 	ngOnInit() {
 		this.maxDate = new Date();
@@ -76,70 +105,79 @@ export class RegisterProComponent implements OnInit {
 		// JAL_CODE = 14
 		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
 			this.allMunicipalities = mun;
+			
+			//For Working Area chiplist 
+			this.allMunicipalities.forEach(municipality => {
+				this.allWorkingAreas.push(municipality.municipality_name)
+			});
 		});
+		
 
 		// Load skills
 		this.remoteDbService.getSkills()
 			.subscribe((skills) => {
 				this.allSkills = skills;	
-			})
+		})
+
+
 
 		this.firstFormNewProfesional = this.formBuilder.group({
 			nombres: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			segundoNombre: new FormControl(''),
 
 			apellidos: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			fechaNacimiento: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			}),
 
 			numeroCelular: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
+				// validators: [ Validators.required, Validators.maxLength(12), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]
 			})
 		});
 
 		this.secondFormNewProfesional = this.formBuilder.group({
 			calle: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			}),
 
 			numExterior: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(6) ]
+				// validators: [ Validators.required, Validators.maxLength(6) ]
 			}),
 
 			numInterior: new FormControl('', {
-				validators: [ Validators.maxLength(6) ]
+				// validators: [ Validators.maxLength(6) ]
 			}),
 
 			colonia: new FormControl('', {
-				validators: [ Validators.required, Validators.maxLength(30) ]
+				// validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
 			codigoPostal: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			}),
 
 			municipio: new FormControl('', {
-				validators: [ Validators.required ]
+				// validators: [ Validators.required ]
 			})
 		});
 
 		this.thirdFormNewProfesional = this.formBuilder.group({
+			general_description: new FormControl(''),
 			oficios: new FormArray([
 				new FormGroup({
 					oficio_select: new FormControl('', Validators.required)
 				})
 			]), 
-
-			ubicacionTrabajo: new FormControl('', {
-				validators: [ Validators.required ]
-			})
+			ubicacionTrabajo: new FormArray([])
+			// ubicacionTrabajo: new FormControl('', {
+			// 	validators: [ Validators.required ]
+			// })
 		});
 	}
 
@@ -183,8 +221,12 @@ export class RegisterProComponent implements OnInit {
 
 		profesional = concatJSON(profesional, this.thirdFormNewProfesional.value);
 		profesional = concatJSON(profesional, { fotoPerfil: this.profileImageId });
+		
+		//Pendiente de agregar a la lista para posterior guardado - 20-06-22
+		console.log("ESTO ES DESCRIPCION GENERAL")
+		console.log(this.thirdFormNewProfesional.value.general_description)
+		
 
-		console.log('Profesional Object', profesional);
 		
 		// Build UserAddress from professional object
 		// FIXME: Interior number defaulted as 0 (it's needed for the backend) 
@@ -203,10 +245,10 @@ export class RegisterProComponent implements OnInit {
 			last_update_date: (new Date()).toISOString()
 		}
 
-		console.log('[Before Post] New User Address Object', newUserAddress)
+		// console.log('[Before Post] New User Address Object', newUserAddress)
 		this.remoteDbService.postUserAddress(newUserAddress).subscribe(
 			user_address => {
-				console.log('[After Post] New User Address Object', user_address)
+				// console.log('[After Post] New User Address Object', user_address)
 
 				// FIXME: At this moment, all orgs are from JcE (BE)
 				// FIXME: Build working areas (from array)
@@ -220,6 +262,7 @@ export class RegisterProComponent implements OnInit {
 							"evidence_media": foto
 						})
 					})
+
 					newUserModelProfessions.push({
 						"profession_evidences": newOficioEvidence, 
 						"profession_id": 1, 
@@ -227,11 +270,20 @@ export class RegisterProComponent implements OnInit {
 					})
 				})
 
+
 				var newUserModelWorkingAreas = [];
-				newUserModelWorkingAreas.push({
-					"working_area_id": 1,
-					"working_area_municipality": parseInt(profesional.ubicacionTrabajo)
+				this.workingAreas.forEach(elementArea => {
+					this.allMunicipalities.forEach(elementMun => {
+						if(elementArea == elementMun.municipality_name){
+							newUserModelWorkingAreas.push({
+								"working_area_id": elementMun.id_state_code,
+								"working_area_municipality": elementMun.id_municipality			
+							});
+						} 
+					})
 				})
+
+				console.log(profesional)
 
 				var newUserModel:UserModel = {
 					"user_model_address_id": user_address.id_user_address,
@@ -241,18 +293,21 @@ export class RegisterProComponent implements OnInit {
 					"user_model_id": 1,
 					"user_model_last_name": profesional.apellidos,
 					"user_model_media_id": this.profileImageId,
-					"user_model_org": 2,
+					"user_model_org": 1,
 					"user_model_phone_number": profesional.numeroCelular,
 					"user_model_professions": newUserModelProfessions,
 					"user_model_registry_date": (new Date()).toISOString(),
 					"user_model_surname": profesional.segundoNombre,
 					"user_model_updated_date": (new Date()).toISOString(),
 					"user_model_working_areas": newUserModelWorkingAreas,
+					"user_model_description": profesional.general_description,
 					"user_role_id": 5,
 					"user_status_id": 1
 				}	
 
 				console.log('[Before Post] New User Model Object', newUserModel)
+				console.log('Nuevo usuario agregado')
+				
 				this.remoteDbService.postUserData(newUserModel).subscribe(
 					result => {
 						this.router.navigate([ '/listado' ]);
@@ -390,11 +445,71 @@ export class RegisterProComponent implements OnInit {
 				} else {
 					this.showProfilePicturePreview = "visible"
 					this.profileImageId = media.media_id;
-					this.profileImageUrl = `https://jce-flask-02.herokuapp.com/media/${media.media_id}/content`
+					this.profileImageUrl = `${this.endpoint}/media/${media.media_id}/content`
 				}
 			})
 		}
 		
 		reader.readAsDataURL(imageArray[index])
 	}
+
+	@Input('cdkTextareaAutosize') enable: false;	
+
+	//Declarations for "Working Areas" chips
+	add(event: MatChipInputEvent): void {
+		const value = (event.value || '').trim();
+		// Add our fruit
+		if (value) {
+		  let addElement = true
+		  this.workingAreas.forEach(actualWorkingArea => {
+			if(actualWorkingArea == value) addElement = false;
+		  });
+
+		  if(addElement) this.workingAreas.push(value);
+		}
+	
+		// Clear the input value
+		
+		if(event.input){
+			event.input.value = '';    
+		  }
+		
+		this.workingAreasCtrl.setValue(null);
+	  }
+	
+	  remove(fruit: string): void {
+		const index = this.workingAreas.indexOf(fruit);
+	
+		if (index >= 0) {
+		  this.workingAreas.splice(index, 1);
+		}
+	  }
+	
+	  selectedChipListWorkingArea(event: MatAutocompleteSelectedEvent): void {
+		this.workingAreas.push(event.option.viewValue);
+		this.workingAreaInput.nativeElement.value = '';
+		this.workingAreasCtrl.setValue(null);
+	  }
+	
+	  //Fixme: Cuadratic algorithm (refactoring)
+	  private _filter(value: string): string[] {
+		this.allWorkingAreas = [];
+		if(this.workingAreas.length != 0){		
+			this.allMunicipalities.forEach(actualMunicipality => {
+					let addElement = true;
+					this.workingAreas.forEach(selectedMunicipality => {
+						if(actualMunicipality.municipality_name == selectedMunicipality) addElement = false;
+					})
+					if(addElement) this.allWorkingAreas.push(actualMunicipality.municipality_name);
+			})
+		} 
+		else {
+			this.allMunicipalities.forEach(municipality => {
+				this.allWorkingAreas.push(municipality.municipality_name)
+			});
+		}
+
+		const filterValue = value.toLowerCase();
+		return this.allWorkingAreas.filter(fruit => fruit.toLowerCase().includes(filterValue));
+	  }
 }

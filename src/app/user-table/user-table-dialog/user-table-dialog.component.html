@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Información general</h1>
+<mat-list>
+  <mat-dialog-content>
+    <div mat-subheader>Nombre del usuario</div>
+    <mat-list-item><p>ID de usuario: {{data.userInformation.id_user}}</p></mat-list-item>  
+    <mat-list-item><p>Nombre (completo): {{data.userInformation.first_name}} {{data.userInformation.last_name}}</p></mat-list-item>  
+    <mat-divider></mat-divider>
+    <div mat-subheader>Rol y estatus</div>
+    <mat-list-item><p>Role: {{data.userInformation.role}}</p></mat-list-item>
+    <mat-list-item><p>Estatus: {{data.userInformation.status}}</p></mat-list-item>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Dirección del usuario</div>
+    <mat-list-item><p>Estado: {{data.userAddressInformation.state_name}}</p></mat-list-item>
+    <mat-list-item><p>Municipio: {{data.userAddressInformation.municipality_name}}</p></mat-list-item>
+    <mat-list-item><p>Dirección: {{data.userAddressInformation.street_name}} #{{data.userAddressInformation.main_number}}, {{data.userAddressInformation.colony_name}}</p></mat-list-item>
+    <mat-list-item *ngIf="data.userAddressInformation.interior_number!=0"><p>Numero interior: #{{data.userAddressInformation.interior_number}}</p></mat-list-item>
+  <mat-divider></mat-divider>
+  <div *ngIf="data.userInformation.userSkills.length!=0">
+    <div mat-subheader>Profesiones</div>
+    <mat-chip-list>
+      <div *ngFor="let profession of data.userInformation.userSkills">
+        <mat-chip>{{ profession }}</mat-chip>
+      </div>
+    </mat-chip-list>
+    <br><mat-divider></mat-divider>
+    <div mat-subheader>Areas de trabajo</div>
+    <mat-chip-list>
+      <div *ngFor="let workingArea of data.userInformation.userWorkingAreas">
+        <mat-chip>{{ workingArea }}</mat-chip>
+      </div>
+    </mat-chip-list>
+  </div>
+</mat-dialog-content>
+</mat-list>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+</div>

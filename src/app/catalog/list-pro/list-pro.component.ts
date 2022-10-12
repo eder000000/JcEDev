@@ -9,6 +9,8 @@ import { map, startWith } from 'rxjs/operators';
 import { RemoteDbService } from 'src/app/remote-db/remote-db.service'
 import { UserModel } from 'src/app/remote-models/user-model';
 
+// FIXME: Default job is not the right one [@serviciosocial]
+
 interface CardData {
   skill_name?: string;
   professionals?: {
@@ -17,16 +19,23 @@ interface CardData {
     primerNombre?: string;
     segundoNombre?: string;
     apellidos?: string;
+    logo_org?: string;
     selectedJob?: number;
     panelOpenState?: boolean;
-    ubicacionesTrabajo?: number[];
+    ubicacionesTrabajo?: string;
     numeroCelular?: string;
+    descripcion?: string;
     oficios?: {
       oficio_name?: string;
       oficio_descripcion?: string,
       fotos?: string[];
     }[]
   }[]
+}
+
+interface IconOrganization {
+  user_model_org: number
+  url_logo: string 
 }
 
 @Component({
@@ -40,6 +49,7 @@ export class ListProComponent  implements OnInit {
   queryPros: UserModel[];
   allPros: UserModel[];  
   requestedJob: string;
+  iconOrganization: IconOrganization[];
 
   availableProfessions: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA]; 
@@ -51,7 +61,9 @@ export class ListProComponent  implements OnInit {
   profIdtoName: Map<number, string> = new Map<number, string>();
   profIdtoDesc: Map<number, string> = new Map<number, string>();
   proIdToMedia: Map<number, string> = new Map<number, string>();
+  munIdToString: Map<number, string> = new Map<number, string>();
   proAndSkillToMedia: Map<string, string[]> = new Map<string, string[]>();
+  
 
   @ViewChild('profesionInput') profesionInput: ElementRef<HTMLInputElement>;
 
@@ -65,6 +77,17 @@ export class ListProComponent  implements OnInit {
     })
     
     this.cardsData = [];
+
+    this.iconOrganization = [
+      {
+        user_model_org: 1,
+        url_logo: ""
+      },
+      {
+        user_model_org: 2,
+        url_logo: "../../../assets/img/Bempleos circular 4 amarillo.png"
+      }
+    ]
     //Get all the users
     this.remoteDbService.getPublicUsersInfo().subscribe(pros => {
       // No Requested Job
@@ -74,7 +97,6 @@ export class ListProComponent  implements OnInit {
       // Saves all unique idSkills in an array "this.allProfessionIds" and saves 
       //the key to use the media map "this.proAndSkillToMedia"  
       pros.forEach(pro => {
-        console.log("Professional Object", pro);
 
         // This part prevents profession without registered professionals from appearing in the recomendation list 
         pro.user_model_professions.forEach(oficio => {
@@ -83,24 +105,20 @@ export class ListProComponent  implements OnInit {
             this.allProfessionIds.push(oficio.profession_skill)
           }
 
-          console.log("Oficio Object", oficio);
           this.proAndSkillToMedia.set(id, []);
           
           oficio.profession_evidences.forEach(ev => {
             this.proAndSkillToMedia.set(id, [])
             this.remoteDbService.getMediaById(ev.evidence_media).subscribe(m => {
-              console.log("Media Object", m);
               this.proAndSkillToMedia.get(id).push(m.media_link); 
             })
           })
         });
 
-        console.log("Professions Ids", this.allProfessionIds)
         
         // Save the professionals' media for a set profession in the map with a unique id
         this.remoteDbService.getUserMediaById(pro.user_model_id).subscribe(media => {
           this.proIdToMedia.set(pro.user_model_id, media.media_link)
-          console.log("Profile Picture Object", media);
         });
         
       });
@@ -121,8 +139,6 @@ export class ListProComponent  implements OnInit {
           this.profIdtoDesc.set(skill.skills_id, skill.skills_description)
         })
 
-        console.log('Prof Id to Name Map', this.profIdtoName);
-
         // Saves all the profession in the filteredProfession (For print in the recomendation list)
         this.availableProfessions = []
         this.allProfessions.forEach(profession => {
@@ -130,32 +146,47 @@ export class ListProComponent  implements OnInit {
         }); 
         this.availableProfessions.sort();
 
-        if (!this.requestedJob) { 
-          console.log('Pros List', pros)
-          console.log('Get All Visible Skills Output', this.getAllVisibleSkills(pros))
+        var munArray = [];
+        pros.forEach(pro => {
+          pro.user_model_working_areas.forEach(wa => {
+            if (!munArray.includes(wa.working_area_municipality)) {
+              munArray.push(wa.working_area_municipality);
+            }
+          })
+        })
 
-          this.buildCardsData(pros, this.getAllVisibleSkills(pros));
-        } else {
-          this.buildCardsDataWithFilter(
-            this.getProfessionalsByProfession(pros, this.requestedJob), 
-            this.requestedJob
-          );
-  
-          this.availableProfessions = this.availableProfessions.filter(prof => {
-            return prof !== this.requestedJob; 
-          });
-  
-          this.professions.push(this.requestedJob);
-          this.sortCards();
-        }
+        munArray.forEach(munId => {
+          this.remoteDbService.getMunicipalityById(munId).subscribe(mun => {
+            this.munIdToString.set(munId, mun.municipality_name);
+            // Last mun loaded into map
+            if (munArray[munArray.length-1] === mun.id_municipality) {
+
+              if (!this.requestedJob) {
+                this.buildCardsData(pros, this.getAllVisibleSkills(pros));
+              } else {
+                this.buildCardsDataWithFilter(
+                  this.getProfessionalsByProfession(pros, this.requestedJob), 
+                  this.requestedJob
+                );
+        
+                this.availableProfessions = this.availableProfessions.filter(prof => {
+                  return prof !== this.requestedJob; 
+                });
+        
+                this.professions.push(this.requestedJob);
+                this.sortCards();
+              }
+      
+              this.filteredProfessions = this.professionCtrl.valueChanges.pipe(
+                startWith(null), 
+                map((profession: string | null) => 
+                (profession ? this._filter(profession) : this.availableProfessions.slice())
+                )
+              );
+            }
+          })
+        })
       })
-
-      this.filteredProfessions = this.professionCtrl.valueChanges.pipe(
-        startWith(null), 
-        map((profession: string | null) => 
-        (profession ? this._filter(profession) : this.availableProfessions.slice())
-        )
-      );
     })
    }
 
@@ -261,6 +292,7 @@ export class ListProComponent  implements OnInit {
 
 
   sortCards() {
+
     this.cardsData = this.cardsData.sort((a, b) => {
       if (a.skill_name > b.skill_name) {
         return 1;
@@ -284,17 +316,18 @@ export class ListProComponent  implements OnInit {
         }
       }) 
 
-      cardData.professionals.forEach(pro => {
-        pro.oficios = pro.oficios.sort((a, b) => {
-          if (a.oficio_name > b.oficio_name) {
-            return 1;
-          } else if (a.oficio_name < b.oficio_name) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      })
+      //El problema es que al reordenar los indices se desacomodan 
+      // cardData.professionals.forEach(pro => {
+      //   pro.oficios = pro.oficios.sort((a, b) => {
+      //     if (a.oficio_name > b.oficio_name) {
+      //       return 1;
+      //     } else if (a.oficio_name < b.oficio_name) {
+      //       return -1;
+      //     } else {
+      //       return 0;
+      //     }
+      //   });
+      // })
     });
   }
 
@@ -344,35 +377,59 @@ export class ListProComponent  implements OnInit {
   }
 
   buildCardsDataWithFilter(pros: UserModel[], filter:string) {
-    this.cardsData.push({ skill_name: filter });
+    //Guarda la lista de profesiones que se estan buscando, en caso de no haber parametros se traen todas
+    this.cardsData.push({ skill_name: filter }); 
+    // console.log("Esto es: this.cardsData")
+    // console.log(this.cardsData)
+    //Lista de profesionales por profesionales
     var currentCard: CardData = this.cardsData[this.cardsData.length-1];
-
-    currentCard.professionals = [];
+    // console.log("Esto es: currentCard")
+    // console.log(currentCard)
     
+    currentCard.professionals = []; //Aqui se guardaran las cartas ya creadas
+    
+    // console.log("Esto es: pros")
+    // console.log(pros)
+
     pros.forEach(pro => {
       var defaultSelectedJob:number =  0;
       var formattedProfessions = [];
       for (var k = 0; k < pro.user_model_professions.length; k++) {
-        if (this.profIdtoName[pro.user_model_professions[k].profession_skill] === filter) {
+        if (this.profIdtoName.get(pro.user_model_professions[k].profession_skill) === filter) {
           defaultSelectedJob = k;
         }
         formattedProfessions[k] = {
-          "oficio_name": this.profIdtoName[pro.user_model_professions[k].profession_skill],
-          "oficio_descripcion": this.profIdtoDesc[pro.user_model_professions[k].profession_skill],
-          "fotos": this.proAndSkillToMedia['pro'+pro.user_model_id+'sk'+pro.user_model_professions[k].profession_id]
+          "oficio_name": this.profIdtoName.get(pro.user_model_professions[k].profession_skill),
+          "oficio_descripcion": this.profIdtoDesc.get(pro.user_model_professions[k].profession_skill),
+          "fotos": this.proAndSkillToMedia.get('pro'+pro.user_model_id+'sk'+pro.user_model_professions[k].profession_id)
         }
       }
 
+      var workingAreasString = "";
+      pro.user_model_working_areas.forEach(wa => {
+        workingAreasString += this.munIdToString.get(wa.working_area_municipality);
+        if (pro.user_model_working_areas[pro.user_model_working_areas.length -1] != wa){
+          workingAreasString += ", "
+        }
+      })
+
+      var iconOrganizarion = '';
+      this.iconOrganization.forEach(actualOrganizarion => {
+        if(actualOrganizarion.user_model_org == pro.user_model_org) iconOrganizarion = actualOrganizarion.url_logo
+      })
+      
       currentCard.professionals.push({
         id: this.queryPros.indexOf(pro),
-        fotoPerfil: this.proIdToMedia[pro.user_model_id], 
+        fotoPerfil: this.proIdToMedia.get(pro.user_model_id), 
         primerNombre: pro.user_model_first_name,
         segundoNombre: pro.user_model_surname,
         apellidos: pro.user_model_last_name,
+        logo_org: iconOrganizarion,
         selectedJob: defaultSelectedJob, 
         panelOpenState: false, 
-        ubicacionesTrabajo: pro.user_model_working_areas.map(wa => { return wa.working_area_municipality }), 
-        numeroCelular: pro.user_model_phone_number, 
+        ubicacionesTrabajo: workingAreasString, 
+        numeroCelular: pro.user_model_phone_number,
+        descripcion: pro.user_model_description, 
         oficios: formattedProfessions
       })
     });
@@ -401,7 +458,7 @@ export class ListProComponent  implements OnInit {
     var filteredPros: UserModel[] = [];
     pros.forEach(pro => {
       pro.user_model_professions.forEach(oficio => {
-        if (this.profIdtoName[oficio.profession_skill] == filter) {
+        if (this.profIdtoName.get(oficio.profession_skill) == filter) {
           filteredPros.push(pro);
           return;
         }

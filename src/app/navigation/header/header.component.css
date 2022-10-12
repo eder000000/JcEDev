@@ -1,29 +1,28 @@
 .toolbar-theme {
-  background: #ff8e3c;
+  background: #FCECC9;
   border: none;
-  color: #fff;
+  color: black;
   font-size: 37px;
 }
 
 a {
   text-decoration: none;
-  color: white;
-
+  color: black;
 }
 
 .logo {
-  text-shadow: 1px 1px 2px #b8c1ec;
+  text-shadow: 1px 1px 2px #f6f4f3;
 }
 
 .material-icons.color_white {
   background: transparent;
   border: none;
-  color: white;
+  color: black;
 }
 
 a:hover,
 a:active {
-  color: lightgray;
+  color: #ff8e3c;
 }
 
 .navigation-items {
@@ -31,4 +30,19 @@ a:active {
   padding: 0;
   margin: 0;
   font-size: 16px;
+}
+
+.red-button {
+  background-color: #ff8e3c;
+  padding: 10px;
+  color: white;
+  font-weight: 200;
+  line-height: 1px;
+  border-radius: 25px;
+  margin-top: 10px;
+}
+
+.red-button:hover {
+  background-color: white;
+  color: #ff8e3c;
 }

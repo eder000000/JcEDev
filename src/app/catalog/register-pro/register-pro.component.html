@@ -124,6 +124,7 @@
         </form>
         </mat-step>
 
+
         <mat-step [stepControl]="thirdFormNewProfesional">
         <form [formGroup]="thirdFormNewProfesional"
         	class="register-form" 
@@ -131,6 +132,17 @@
         	fxLayoutAlign="center center" 
         	fxLayoutGap="10px">
          <ng-template matStepLabel>Oficio</ng-template>
+         
+         <mat-form-field class="register-full-width mat-form-field-textarea" style="margin-top: 3px;" appearance="fill">
+            <mat-label>Cuantos, ¿quien eres?</mat-label>
+            <textarea matInput
+                      formControlName="general_description" 
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20"></textarea>
+          </mat-form-field>
+
          <ng-container formArrayName="oficios">
          <div *ngFor="let _ of oficios.controls; let i=index">
                 <ng-container [formGroupName]="i">
@@ -178,15 +190,42 @@
         </ng-container>
      <button class="add-button" (click)="addFormControl()"> <mat-icon>add_circle_outline</mat-icon></button>
        
-        <mat-form-field  class="register-full-width">
+        <!-- <mat-form-field  class="register-full-width">
             <mat-label class="small-label">Ubicacion para trabajar</mat-label>
             <mat-select formControlName="ubicacionTrabajo">
                     <mat-option *ngFor="let mun of allMunicipalities" value={{mun.id_municipality}}>
                         {{mun.municipality_name}}
                     </mat-option>
             </mat-select>
-            <input matInput #input   >
-        </mat-form-field> 
+            <input matInput #input>
+        </mat-form-field>  -->
+
+        <mat-form-field class="chip-list register-full-width" appearance="fill">
+            <mat-label>Areas donde ofreces tus servicio(s)</mat-label>
+            <mat-chip-list formControlName="ubicacionTrabajo" #chipList aria-label="Fruit selection">
+              <mat-chip
+                *ngFor="let workingArea of workingAreas"
+                (removed)="remove(workingArea)">
+                {{workingArea}}
+                <button matChipRemove class="button-remove-chip-list">
+                  <mat-icon class="remove-icon-chip-list">cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input
+                placeholder="Selecciona una area."
+                #workingAreaInput
+                [formControl]="workingAreasCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedChipListWorkingArea($event)">
+              <mat-option *ngFor="let workingArea of filteredWorkingAreas | async" [value]="workingArea">
+                {{workingArea}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
 
             <div>
               <button mat-button class="save-button" matStepperPrevious>Regresar</button>

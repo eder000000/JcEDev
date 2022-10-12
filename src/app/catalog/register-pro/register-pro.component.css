@@ -110,3 +110,27 @@ mat-card {
   padding: 5px 10px 2px 5px;
 
 }
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+.mat-form-field-textarea {
+  margin-top: 0.5em;
+}
+
+.button-remove-chip-list {
+  padding: 0;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.chip-list{
+  width: 100%;
+}
+
+.remove-icon-chip-list {
+  position: absolute;
+  right: 5px;
+  top: 12.5%;
+}

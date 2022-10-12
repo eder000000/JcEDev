@@ -20,8 +20,11 @@ import { ZipCode } from '../remote-models/zip-code-model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RemoteDbService {
-  endpoint:string = 'https://jce-flask-02.herokuapp.com'
+  // FIXME: Endopint change for local testing
+  //endpoint:string = 'http://127.0.0.1:5000'
+  endpoint:string = 'https://jce-server.herokuapp.com'
   headers:{}
   token:string
 
@@ -490,6 +493,7 @@ export class RemoteDbService {
    * PUT /users/:id/address
    */
    putUserAddress(address: UserAddress, user_model_id: number): Observable<any> {
+    console.log(address);
     return this.httpClient.put<UserAddress>(
       this.endpoint + '/users/' + user_model_id + '/address', address, {
         'headers': this.headers

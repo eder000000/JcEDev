@@ -1,0 +1,51 @@
+.image-div{
+    padding: 3%;
+}
+
+
+#card-title{
+    width: 290px;
+    height: 56px;
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+}
+
+#card-text{
+    width: 290px;
+    height: 80px;
+    font-family: 'Cabin';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+
+    color: #313131;
+
+}
+
+.card-button{
+    background-image: url(src\assets\img\Rectangle19.png);
+    background-color: white;
+    box-shadow: none;
+    border: none;
+    height: 36px;
+    width: 199px;
+
+    font-family: 'Cabin';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+
+    color: #FFFFFF;
+}
