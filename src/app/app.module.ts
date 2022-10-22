@@ -43,6 +43,7 @@ import { IntroComponent } from './navigation/intro/intro.component';
 import { PrivacyComponent } from './navigation/privacy/privacy.component';
 import { VerifiedProfessionalsComponent } from './navigation/verified-professionals/verified-professionals.component';
 import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
+import { HeaderProComponent } from './catalog/header-pro/header-pro.component';
 
 @NgModule({
 	declarations: [
@@ -69,7 +70,7 @@ import { ProfessionalCardErrorComponent } from './catalog/professional-card-erro
 		PrivacyComponent,
 		VerifiedProfessionalsComponent,   
 		EditProComponent, 
-		ProfessionalCardErrorComponent
+		ProfessionalCardErrorComponent, HeaderProComponent
 	],
 	imports: [
 		BrowserModule,
