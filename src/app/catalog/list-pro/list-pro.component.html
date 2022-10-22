@@ -100,30 +100,35 @@
                             </mat-expansion-panel-header>
                         <div>
                                 <div>
-                                <p class="label-card">Area para trabajar:</p> 
+                                <p class="label-card"><mat-icon>location_searching</mat-icon>Área para trabajar:</p> 
                             </div>
                             <div class="location-list">
                                 <p class="card-text">{{pro.ubicacionesTrabajo}}</p>  
                             </div><br>
                         </div>
+                        <mat-divider></mat-divider>
                             <div>
-                                <p class="label-card">Teléfono de contacto: </p> 
+                                <p class="label-card"><mat-icon> phone</mat-icon>Teléfono de contacto: </p> 
                             </div>
         
                             <div class="location-list">
                                 <p class="card-text">{{pro.numeroCelular}}</p> 
-                            </div><br>
+                            </div>
+
+                            <mat-divider></mat-divider>
         
                             <div>
-                                <p class="label-card">Descripcion del trabajo: </p> 
+                                <p class="label-card"><mat-icon>more</mat-icon>Descripcion del trabajo: </p> 
                             </div>
         
                             <div class="location-list">
                                 <p class="card-text">{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
-                            </div><br>
+                            </div>
+
+                            <mat-divider></mat-divider>
                             
                             <div>
-                                <p class="label-card">Imagenes de trabajos: </p> 
+                                <p class="label-card"><mat-icon>collections</mat-icon>Imagenes de trabajos: </p> 
                             </div>
                             <div class="gallery-container">
                                 <div class="gallery-viewport">

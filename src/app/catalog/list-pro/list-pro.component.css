@@ -116,6 +116,24 @@ mat-icon{
   line-height: 24px;
 }
 
+.label-card{
+  margin-top: 1em;;
+  margin-left: 0px;
+  font-size: calc(.4em + 1.2vw);
+  font-weight: 500;
+  width: 100%;
+}
+
+.card-text{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 35px;
+  font-size: calc(.4em + 1.2vw);
+  font-weight: 400;
+  color: #667080;
+
+}
+
 .mat-basic-chip {
   border-color: #ff8e3c;
   border-style: solid;
@@ -169,7 +187,7 @@ button.oficios-button-selected {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: start;
 }
 
 .myGallery {
