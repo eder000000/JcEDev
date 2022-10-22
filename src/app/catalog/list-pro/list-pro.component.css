@@ -1,6 +1,6 @@
 html,
 body {
-  height: 100%;
+  height: 100vh;
 }
 
 body {
@@ -10,28 +10,42 @@ body {
 
 .profesionals-list {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
-  margin-top: 20px;
-  width: 100%;
+  align-items: center;
+  max-width: 100%;
 }
 
 .profesionals-list-titles{
   text-align: center;
 }
 
+.pro-list-titles{
+  font-size: calc(1em + 1vw);
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.pro-description{
+  margin-right: 1em;
+  margin-left: 1em;
+  font-size: calc(.6em + 1vw);
+  font-weight: 400;
+  width: 90%;
+  line-height: 1.3em;
+}
+
+
 .profesional-card {
-  background-color: #f8f5f2;
-  width: 85%;
-  margin: .5em;
+  background-color: #FFFFFF;
   border-radius: 15px;
   margin-bottom: 15px;
-  min-width: 200px;
-  max-width: 400px;
+  min-width: 350px;
+  max-width: 900px;
 }
 
 .acordion {
+  margin-top: 10px;
   border-radius: 15px;
   width: 70%;
   min-width: 100px;
@@ -39,10 +53,28 @@ body {
 
 }
 
-.mat-card-title {
-  font-size: calc(0.7em + 1.5vw);
-  max-width: 100%;
-  line-height: 1.2
+mat-card-title {
+  margin-left: 25px;
+  margin-bottom: 15px;
+  font-size: calc(1em + 1vw);
+  font-weight: 600;
+  width: 100%;
+  line-height: 1.2em;
+}
+
+.verificado{
+  margin-top: 15px;
+  margin-left: 25px;
+  font-size: calc(.7em + 1vw);
+  font-weight: 400;
+  width: 100%;
+  line-height: 1em;
+
+}
+
+mat-icon{
+  margin-right: 10px;
+  color: #E57A44;
 }
 
 .oficios {
@@ -50,10 +82,23 @@ body {
 
 }
 
-.mat-card-avatar {
+.avatar{
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 15px;
+ 
+}
+.avatar-img{
+  border-radius: 5%;
+  height: calc(6em + 3vw);
+  width: calc(6em + 3vw);
+}
+
+.mat-card-distintivo {
+  margin-right: 10px;
   border-radius: 10%;
-  height: calc(2.5em + 1.5vw);
-  width: calc(2.5em + 1.5vw);
+  height: calc(.5em + 1.3vw);
+  width: calc(.5em + 1.3vw);
   flex-shrink: 0;
 }
 
@@ -61,25 +106,30 @@ body {
   text-align: center;
 }
 
-.label {
-  padding-right: 15%;
-}
-
-.label-card {
-  font-weight: 500;
-
-}
-
-.card-text {
-  color: #2a2a2a;
-  margin: 0 30px;
-}
-
 
 .details-button {
   text-decoration: none;
   color: #ff8e3c;
   line-height: 24px;
+}
+
+.label-card{
+  margin-top: 1em;;
+  margin-left: 0px;
+  font-size: calc(.7em + 1vw);
+  font-weight: 500;
+  width: 100%;
+}
+
+.card-text{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 35px;
+  font-size: calc(.7em + 1vw);
+  font-weight: 400;
+  color: #667080;
+  line-height: 1.3em;
+
 }
 
 .mat-basic-chip {
@@ -95,13 +145,14 @@ body {
 
 button.oficios-button {
   background-color: white;
-  border-color: #ff8e3c;
+  border-color: #E57A44;
   border-style: solid;
   border-width: 1px;
   color: #2a2a2a;
   border-radius: 10px;
   padding: 5px 10px;
-  margin: 5px;
+  margin-left: 2.5em;
+  margin-top: 2em;
   font-size: 12px;
   cursor: pointer;
 }
@@ -109,14 +160,15 @@ button.oficios-button {
 button.oficios-button:focus,
 button.oficios-button:hover,
 button.oficios-button-selected {
-  background-color: #f3a167;
-  color: #f8f5f2;
+  background-color:  #FCECC9;
+  color: black;
   border-radius: 10px;
   padding: 5px 10px;
-  margin: 5px;
+  margin-left: 2.5em;
+  margin-top: 2em;
   font-size: 12px;
   cursor: pointer;
-  border-color: #ff8e3c;
+  border-color: #FCECC9;
   border-style: solid;
   border-width: 1px;
 }
@@ -133,7 +185,7 @@ button.oficios-button-selected {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: start;
 }
 
 .myGallery {

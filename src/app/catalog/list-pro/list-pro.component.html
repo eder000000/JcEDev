@@ -1,3 +1,5 @@
+<app-header-pro></app-header-pro>
+
 <!-- Searcher -->
 <mat-form-field class="chip-list" appearance="fill">
     <mat-label>Filtrar por trabajo</mat-label>
@@ -34,80 +36,117 @@
 <!-- Profesions -->
 <section class="profesionals-list">
     <div *ngFor="let cardData of cardsData; let c = index">
-        <h1>{{cardData.skill_name}}</h1>
+            <div class="pro-list-titles" >
+            <h1>{{cardData.skill_name}}</h1>
+            </div>
         <div *ngFor="let pro of cardData.professionals; let p = index">
-        <mat-card class="profesional-card mat-elevation-z4"> 
-            <mat-card-header>
-                <img mat-card-avatar src={{pro.fotoPerfil}} alt="distintivo"/>
-                <mat-card-title>{{pro.primerNombre}} {{pro.segundoNombre}} {{pro.apellidos}}</mat-card-title>
-                <div *ngIf="pro.logo_org!=''">
-                    <img mat-card-avatar src={{pro.logo_org}}/>
+
+
+          <mat-card class="profesional-card mat-elevation-z0">
+              <div fxLayout="column">
+                <div fxLayout="row">
+                  <div class="avatar" fxLayout="row" fxFlex="30" fxFlexFillfxLayoutAlign="space-around stretch">
+                    <mat-card-header>
+                        <img  class="avatar-img" src={{pro.fotoPerfil}} alt="avatar"/>
+                    </mat-card-header>  
                 </div>
-                <mat-card-subtitle>
-                        <div class="profesionals-list"> 
-                            <button
-                            *ngFor="let oficio of pro.oficios; let i=index" 
-                            [ngClass]="pro.selectedJob == i ? 'oficios-button-selected' : 'oficios-button'"
-                            (click)="updateJobInfo(c, p, i)"
-                            >
-                            {{oficio.oficio_name}}</button>
-                        </div>
-                </mat-card-subtitle>
-            </mat-card-header>
-              <mat-card-content >
-                <!-- Here general description -->
-                <p>{{pro.descripcion}}</p>
-            <mat-accordion class="acordion">
-                <mat-expansion-panel class="mat-elevation-z0" (opened)="pro.panelOpenState = true" (closed)="pro.panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-description>
-                            <a class="details-button" 
-                            mat-raised-button align="end" 
-                            > Ver {{pro.panelOpenState ? 'menos' : 'más'}}</a>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                <div>
+
+                  <div fxLayout="column" fxFlex="70" fxFlexFill  fxLayoutAlign="space-around stretch">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-card-title>{{pro.primerNombre}} {{pro.apellidos}}</mat-card-title>
+                    </div>
+                    <div fxLayout="row"  fxLayoutAlign="start center">
+                        <mat-card-content>
+                            <div *ngIf="pro.logo_org!=''">
+                                <p class="verificado"><mat-icon>check_circle_outline</mat-icon>Verificado por el <span style="color: #E57A44;">Banco de empleos</span></p>
+                            </div>
+                        </mat-card-content>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <mat-card-content>
+                            <p class="verificado"><mat-icon> location_on</mat-icon><span>(Ubicacion)</span></p>
+                        </mat-card-content>
+                    </div>
+                  </div>
+                </div>
+                <div fxLayout="column" >
+                    <div  fxLayout="column"  fxLayoutAlign="start center">
+                        <mat-card-content>
+                            <div> 
+                                <button
+                                *ngFor="let oficio of pro.oficios; let i=index" 
+                                [ngClass]="pro.selectedJob == i ? 'oficios-button-selected' : 'oficios-button'"
+                                (click)="updateJobInfo(c, p, i)"
+                                >
+                                {{oficio.oficio_name}}</button>
+                            </div>
+                        </mat-card-content>
+                      </div>
+                  <div class="pro-description"  fxLayoutAlign="start center">
+                    <mat-card-content>
+                        <p>{{pro.descripcion}}</p>
+                    </mat-card-content>
+                  </div>
+                  <div  fxLayoutAlign="center center">
+                    <mat-card-content >
+                    <mat-accordion class="acordion">
+                        <mat-expansion-panel class="mat-elevation-z0" (opened)="pro.panelOpenState = true" (closed)="pro.panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <a class="details-button" 
+                                     align="end" 
+                                    > Ver {{pro.panelOpenState ? 'menos' : 'más'}}</a>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
                         <div>
-                        <p class="label-card">Area para trabajar:</p> 
-                    </div>
-                    <div class="location-list">
-                        <p class="card-text">{{pro.ubicacionesTrabajo}}</p>  
-                    </div><br>
+                                <div>
+                                <p class="label-card"><mat-icon>location_searching</mat-icon>Área para trabajar:</p> 
+                            </div>
+                            <div class="location-list">
+                                <p class="card-text">{{pro.ubicacionesTrabajo}}</p>  
+                            </div><br>
+                        </div>
+                        <mat-divider></mat-divider>
+                            <div>
+                                <p class="label-card"><mat-icon> phone</mat-icon>Teléfono de contacto: </p> 
+                            </div>
+        
+                            <div class="location-list">
+                                <p class="card-text">{{pro.numeroCelular}}</p> 
+                            </div>
+
+                            <mat-divider></mat-divider>
+        
+                            <div>
+                                <p class="label-card"><mat-icon>more</mat-icon>Descripcion del trabajo: </p> 
+                            </div>
+        
+                            <div class="location-list">
+                                <p class="card-text">{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
+                            </div>
+
+                            <mat-divider></mat-divider>
+                            
+                            <div>
+                                <p class="label-card"><mat-icon>collections</mat-icon>Imagenes de trabajos: </p> 
+                            </div>
+                            <div class="gallery-container">
+                                <div class="gallery-viewport">
+                                    <ul class="gallery-list">
+                                        <li *ngFor="let foto of pro.oficios[pro.selectedJob].fotos" class="gallery-item">
+                                            <img style="width: 100%;" src={{foto}}/>
+                                        </li>
+                                    </ul>
+                                </div>   
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                      </mat-card-content>
+                  </div>          
                 </div>
-                    <div>
-                        <p class="label-card">Teléfono de contacto: </p> 
-                    </div>
+              </div>
+          </mat-card>
 
-                    <div class="location-list">
-                        <p class="card-text">{{pro.numeroCelular}}</p> 
-                    </div><br>
-
-                    <div>
-                        <p class="label-card">Descripcion del trabajo: </p> 
-                    </div>
-
-                    <div class="location-list">
-                        <p class="card-text">{{pro.oficios[pro.selectedJob].oficio_descripcion}}</p>
-                    </div><br>
-                    
-                    <div>
-                        <p class="label-card">Imagenes de trabajos: </p> 
-                    </div>
-                    <div class="gallery-container">
-                        <div class="gallery-viewport">
-                            <ul class="gallery-list">
-                                <li *ngFor="let foto of pro.oficios[pro.selectedJob].fotos" class="gallery-item">
-                                    <img style="width: 100%;" src={{foto}}/>
-                                </li>
-                            </ul>
-                        </div>   
-                    </div>
-                    
-                </mat-expansion-panel>
-            </mat-accordion>
-
-              </mat-card-content>
-        </mat-card>
         </div>
     </div>
 </section>
