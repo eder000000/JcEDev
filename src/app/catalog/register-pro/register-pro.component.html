@@ -21,15 +21,15 @@
             fxLayoutGap="10px">
     
         	<mat-form-field class="register-full-width">
-        		<mat-label class="small-label">Primer Nombre</mat-label>
+        		<mat-label class="small-label">Nombres</mat-label>
         		<input matInput #input formControlName="nombres">
         		<mat-error *ngIf="firstFormNewProfesional.controls.nombres.errors">El campo es requerido.</mat-error>
         	</mat-form-field>
 
-            <mat-form-field class="register-full-width">
+            <!-- <mat-form-field class="register-full-width">
         		<mat-label class="small-label">Segundo Nombre</mat-label>
         		<input matInput #input formControlName="segundoNombre">
-        	</mat-form-field>
+        	</mat-form-field> -->
             
         	<mat-form-field  class="register-full-width">
         		<mat-label class="small-label">Apellidos</mat-label>
@@ -134,7 +134,7 @@
          <ng-template matStepLabel>Oficio</ng-template>
          
          <mat-form-field class="register-full-width mat-form-field-textarea" style="margin-top: 3px;" appearance="fill">
-            <mat-label>Cuantos, ¿quien eres?</mat-label>
+            <mat-label>Cuentanos, ¿quien eres?</mat-label>
             <textarea matInput
                       formControlName="general_description" 
                       cdkTextareaAutosize
