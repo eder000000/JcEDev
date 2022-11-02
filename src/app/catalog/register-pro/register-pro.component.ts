@@ -126,7 +126,7 @@ export class RegisterProComponent implements OnInit {
 				// validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
-			segundoNombre: new FormControl(''),
+			// segundoNombre: new FormControl(''),
 
 			apellidos: new FormControl('', {
 				// validators: [ Validators.required, Validators.maxLength(30) ]
@@ -297,7 +297,7 @@ export class RegisterProComponent implements OnInit {
 					"user_model_phone_number": profesional.numeroCelular,
 					"user_model_professions": newUserModelProfessions,
 					"user_model_registry_date": (new Date()).toISOString(),
-					"user_model_surname": profesional.segundoNombre,
+					// "user_model_surname": profesional.segundoNombre,
 					"user_model_updated_date": (new Date()).toISOString(),
 					"user_model_working_areas": newUserModelWorkingAreas,
 					"user_model_description": profesional.general_description,

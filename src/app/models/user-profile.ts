@@ -6,7 +6,7 @@ export interface UserProfile {
     curp : string;
     facebookProfile : string;
     firstName : string;
-    firstSurname : string;
+    // firstSurname : string;
     homeNumber : string;
     idImage : string;
     linkedinProfile : string;
