@@ -61,7 +61,7 @@
             </ng-template>
 
             <mat-form-field  class="register-full-width">
-                <mat-label class="small-label">Numero celular</mat-label>
+                <mat-label class="small-label">Número celular</mat-label>
                 <input matInput #input    formControlName="numeroCelular">
                 <mat-error>El campo es requerido.</mat-error>
              </mat-form-field>
@@ -78,7 +78,7 @@
     		fxLayout="column" 
     		fxLayoutAlign="center center" 
     		fxLayoutGap="10px">
-     	<ng-template matStepLabel>Direccion personal</ng-template>
+     	<ng-template matStepLabel>Dirección personal</ng-template>
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Municipio</mat-label>
                 <mat-select formControlName="municipio" (selectionChange) = "renderColonies($event.value)">
@@ -103,17 +103,17 @@
             </mat-form-field>
                 
             <mat-form-field  class="register-small-width">
-                <mat-label class="small-label">Numero exterior</mat-label>
+                <mat-label class="small-label">Número exterior</mat-label>
                 <input matInput #input formControlName="numExterior">
             </mat-form-field>
 
             <mat-form-field  class="register-small-width">
-                <mat-label class="small-label">Numero interior</mat-label>
+                <mat-label class="small-label">Número interior</mat-label>
                 <input matInput #input     formControlName="numInterior">
             </mat-form-field>
 
             <mat-form-field  class="register-small-width">
-                <mat-label class="small-label">Codigo Postal</mat-label>
+                <mat-label class="small-label">Código Postal</mat-label>
                 <input matInput #input     formControlName="codigoPostal" (focusout) = "renderAddress($event.srcElement.value)">
             </mat-form-field>
 
@@ -134,7 +134,7 @@
          <ng-template matStepLabel>Oficio</ng-template>
          
          <mat-form-field class="register-full-width mat-form-field-textarea" style="margin-top: 3px;" appearance="fill">
-            <mat-label>Cuentanos, ¿quien eres?</mat-label>
+            <mat-label>Cuéntanos, ¿quién eres?</mat-label>
             <textarea matInput
                       formControlName="general_description" 
                       cdkTextareaAutosize
@@ -201,7 +201,7 @@
         </mat-form-field>  -->
 
         <mat-form-field class="chip-list register-full-width" appearance="fill">
-            <mat-label>Areas donde ofreces tus servicio(s)</mat-label>
+            <mat-label>Áreas donde ofreces tus servicio(s)</mat-label>
             <mat-chip-list formControlName="ubicacionTrabajo" #chipList aria-label="Fruit selection">
               <mat-chip
                 *ngFor="let workingArea of workingAreas"
@@ -212,7 +212,7 @@
                 </button>
               </mat-chip>
               <input
-                placeholder="Selecciona una area."
+                placeholder="Escribe y selecciona tus áreas."
                 #workingAreaInput
                 [formControl]="workingAreasCtrl"
                 [matAutocomplete]="auto"
