@@ -33,8 +33,9 @@
         Borrar busqueda
     </button>
 </div>
+
 <!-- Profesions -->
-<section class="profesionals-list">
+<section class="profesionals-list" fxLayout="column" fxLayoutAlign="space-around center" >
     <div *ngFor="let cardData of cardsData; let c = index">
             <div class="pro-list-titles" >
             <h1>{{cardData.skill_name}}</h1>
@@ -42,7 +43,7 @@
         <div *ngFor="let pro of cardData.professionals; let p = index">
 
 
-          <mat-card class="profesional-card mat-elevation-z0">
+          <mat-card class="profesional-card mat-elevation-z1" >
               <div fxLayout="column">
                 <div fxLayout="row">
                   <div class="avatar" fxLayout="row" fxFlex="30" fxFlexFillfxLayoutAlign="space-around stretch">
@@ -102,7 +103,7 @@
                                 <div>
                                 <p class="label-card"><mat-icon>location_searching</mat-icon>Área para trabajar:</p> 
                             </div>
-                            <div class="location-list">
+                            <div class="location-list" fxLayout="column"  fxLayoutAlign="center center">
                                 <p class="card-text">{{pro.ubicacionesTrabajo}}</p>  
                             </div><br>
                         </div>
@@ -111,7 +112,7 @@
                                 <p class="label-card"><mat-icon> phone</mat-icon>Teléfono de contacto: </p> 
                             </div>
         
-                            <div class="location-list">
+                            <div class="location-list" fxLayout="column"  fxLayoutAlign="center center">
                                 <p class="card-text">{{pro.numeroCelular}}</p> 
                             </div>
 
