@@ -107,7 +107,7 @@ export class RegisterProComponent implements OnInit {
 
 		// JAL_CODE = 14
 		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
-			this.allMunicipalities = mun;
+			this.allMunicipalities = mun.sort((a, b) => a.municipality_name.localeCompare(b.municipality_name));
 			
 			//For Working Area chiplist 
 			this.allMunicipalities.forEach(municipality => {
@@ -322,7 +322,7 @@ export class RegisterProComponent implements OnInit {
 
 	renderColonies(value) {
 		this.remoteDbService.getFilteredColonies(undefined, value).subscribe((col) => {
-			this.allColonies = col;
+			this.allColonies = col.sort((a, b) => a.colony_name.localeCompare(b.colony_name));
 			this.secondFormNewProfesional.controls.codigoPostal.setValue('');
 		});
 	}
