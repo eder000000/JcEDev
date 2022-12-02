@@ -12,7 +12,8 @@ import { AuthService } from '../auth.service';
 
 export class LoginComponent implements OnInit{
   loginForm : FormGroup;
-  
+  imageLogin = "assets/img/login_image.png";
+
   constructor(
     private authService: AuthService,
     private remoteDbService: RemoteDbService  

@@ -19,6 +19,7 @@ const routes: Routes = [
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'privacidad', component: PrivacyComponent },
 	{ path: 'login', component: LoginComponent, canActivate:[AuthGuard]},
+	{ path: 'user-table', component: UserTableComponent},
 	
 	{ path: 'listado', component: ListProComponent },
 	{ path: 'cardError', component: ProfessionalCardErrorComponent },

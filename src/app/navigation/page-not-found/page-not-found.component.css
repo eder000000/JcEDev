@@ -1,5 +1,4 @@
 
-
 #error-name{
     font-family: 'Cabin';
     font-style: normal;
@@ -49,7 +48,11 @@
     font-family: 'Cabin';
     font-style: normal;
     line-height: 25px;
+    color: #313131;
+}
 
+#navigation-list a{
+    text-decoration: none;
     color: #313131;
 }
 

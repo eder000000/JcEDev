@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
   min-height: 100vh;
   margin: 0;
@@ -42,4 +42,83 @@ mat-card-title {
   line-height: 24px;
   border: 0;
   border-radius: 10px;
+} */
+
+.card{
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+ 
+ .container{
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+      to right,
+      #F5F5F5 0%,
+      #F5F5F5 50%,
+      #FCECC9 50%,
+      #FCECC9 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+
+#login-title{
+  width: 345px;
+  height: 73px;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+
+  color: #E57A44;
+}
+
+#login-message{
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #313131;
+}
+
+
+.login-full-width {
+  width: 100%;
+}
+
+.login-button {
+  background-color: #ff8e3c;
+  color: white;
+  width: 120px;
+  height: 30px;
+  line-height: 24px;
+  border: 0;
+  border-radius: 10px;
+} 
+
+.img-md-medium {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+#login-right{
+  width: 250px;
+  height: 82px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 51px;
+
+  color: #E57A44;
 }
