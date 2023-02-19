@@ -38,7 +38,7 @@ import { Subject } from 'rxjs';
 })
 export class RegisterProComponent implements OnInit {
 
-	endpoint:string = "https://jce-flask-02.herokuapp.com"
+	endpoint:string = "http://127.0.0.1:5000/"
 
 	isLinear = true;
 	formNewProfesional: FormGroup;
@@ -303,7 +303,7 @@ export class RegisterProComponent implements OnInit {
 						"user_model_updated_date": (new Date()).toISOString(),
 						"user_model_working_areas": newUserModelWorkingAreas,
 						"user_model_description": profesional.general_description,
-						"user_role_id": 5,
+						"user_role_id": 3,
 						"user_status_id": 1
 					}	
 
