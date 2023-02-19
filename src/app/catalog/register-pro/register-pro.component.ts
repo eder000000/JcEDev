@@ -27,6 +27,9 @@ import { UserAddress } from 'src/app/remote-models/user-address-model';
 import { ContentObserver } from '@angular/cdk/observers';
 import { element } from 'protractor';
 import { isContinueStatement } from 'typescript';
+import { ReadVarExpr } from '@angular/compiler';
+import * as default_pp from './default_pp.json';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-register-pro',
@@ -35,7 +38,7 @@ import { isContinueStatement } from 'typescript';
 })
 export class RegisterProComponent implements OnInit {
 
-	endpoint:string = "http://127.0.0.1:5000"
+	endpoint:string = "http://127.0.0.1:5000/"
 
 	isLinear = true;
 	formNewProfesional: FormGroup;
@@ -104,7 +107,7 @@ export class RegisterProComponent implements OnInit {
 
 		// JAL_CODE = 14
 		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
-			this.allMunicipalities = mun;
+			this.allMunicipalities = mun.sort((a, b) => a.municipality_name.localeCompare(b.municipality_name));
 			
 			//For Working Area chiplist 
 			this.allMunicipalities.forEach(municipality => {
@@ -126,7 +129,7 @@ export class RegisterProComponent implements OnInit {
 				// validators: [ Validators.required, Validators.maxLength(30) ]
 			}),
 
-			segundoNombre: new FormControl(''),
+			// segundoNombre: new FormControl(''),
 
 			apellidos: new FormControl('', {
 				// validators: [ Validators.required, Validators.maxLength(30) ]
@@ -226,8 +229,6 @@ export class RegisterProComponent implements OnInit {
 		console.log("ESTO ES DESCRIPCION GENERAL")
 		console.log(this.thirdFormNewProfesional.value.general_description)
 		
-
-		
 		// Build UserAddress from professional object
 		// FIXME: Interior number defaulted as 0 (it's needed for the backend) 
 
@@ -270,7 +271,6 @@ export class RegisterProComponent implements OnInit {
 					})
 				})
 
-
 				var newUserModelWorkingAreas = [];
 				this.workingAreas.forEach(elementArea => {
 					this.allMunicipalities.forEach(elementMun => {
@@ -283,53 +283,46 @@ export class RegisterProComponent implements OnInit {
 					})
 				})
 
-				console.log(profesional)
+				this.uploadDefaultImageIfUnset().subscribe(id => {
+					this.profileImageId = id;
+					console.log(profesional);
 
-				var newUserModel:UserModel = {
-					"user_model_address_id": user_address.id_user_address,
-					"user_model_birthday": profesional.fechaNacimiento.toISOString(),
-					"user_model_creator_id": this.authService.getSession().user_auth_id,
-					"user_model_first_name": profesional.nombres,
-					"user_model_id": 1,
-					"user_model_last_name": profesional.apellidos,
-					"user_model_media_id": this.profileImageId,
-					"user_model_org": 1,
-					"user_model_phone_number": profesional.numeroCelular,
-					"user_model_professions": newUserModelProfessions,
-					"user_model_registry_date": (new Date()).toISOString(),
-					"user_model_surname": profesional.segundoNombre,
-					"user_model_updated_date": (new Date()).toISOString(),
-					"user_model_working_areas": newUserModelWorkingAreas,
-					"user_model_description": profesional.general_description,
-					"user_role_id": 5,
-					"user_status_id": 1
-				}	
+					var newUserModel:UserModel = {
+						"user_model_address_id": user_address.id_user_address,
+						"user_model_birthday": profesional.fechaNacimiento.toISOString(),
+						"user_model_creator_id": this.authService.getSession().user_auth_id,
+						"user_model_first_name": profesional.nombres,
+						"user_model_id": 1,
+						"user_model_last_name": profesional.apellidos,
+						"user_model_media_id": this.profileImageId,
+						"user_model_org": 1,
+						"user_model_phone_number": profesional.numeroCelular,
+						"user_model_professions": newUserModelProfessions,
+						"user_model_registry_date": (new Date()).toISOString(),
+						// "user_model_surname": profesional.segundoNombre,
+						"user_model_updated_date": (new Date()).toISOString(),
+						"user_model_working_areas": newUserModelWorkingAreas,
+						"user_model_description": profesional.general_description,
+						"user_role_id": 3,
+						"user_status_id": 1
+					}	
 
-				console.log('[Before Post] New User Model Object', newUserModel)
-				console.log('Nuevo usuario agregado')
-				
-				this.remoteDbService.postUserData(newUserModel).subscribe(
-					result => {
-						this.router.navigate([ '/listado' ]);
-					} 
-				)
+					console.log('[Before Post] New User Model Object', newUserModel)
+					console.log('Nuevo usuario agregado')
+					
+					this.remoteDbService.postUserData(newUserModel).subscribe(
+						result => {
+							this.router.navigate([ '/listado' ]);
+						} 
+					)
+				});
 			}
 		)
-		
-
-		// this.firebaseService
-		// 	.post(profesional)
-		// 	.then(() => {
-		// 		this.router.navigate([ '/listado' ]);
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log('Firebase Error: ', e);
-		// 	});
 	}
 
 	renderColonies(value) {
 		this.remoteDbService.getFilteredColonies(undefined, value).subscribe((col) => {
-			this.allColonies = col;
+			this.allColonies = col.sort((a, b) => a.colony_name.localeCompare(b.colony_name));
 			this.secondFormNewProfesional.controls.codigoPostal.setValue('');
 		});
 	}
@@ -451,6 +444,39 @@ export class RegisterProComponent implements OnInit {
 		}
 		
 		reader.readAsDataURL(imageArray[index])
+	}
+
+	uploadDefaultImageIfUnset(): Observable<number> {
+		var subject = new Subject<number>();
+		if (this.profileImageId != 0) {
+			subject.next(this.profileImageId);
+			return subject.asObservable();
+		}
+		const data = default_pp["data"];
+		console.log(data);
+		var loadedDate = new Date();
+		var loadedString = `${loadedDate.getDate()}${loadedDate.getMonth()}${loadedDate.getFullYear()}${loadedDate.getMilliseconds()}`;
+		var media_data = data.split('data:image/jpeg;base64,')[1]; 
+		var media_title = `${this.userID}_${loadedString}.jpeg`;
+
+		var newMedia:Media = {
+			media_id: 0, 
+			media_link: '', 
+			media_size: 0, 
+			media_description: `User ${this.userID} Image Uploaded on ${loadedString}`, 
+			media_title: media_title, 
+			media_data: media_data, 
+			media_status_id: 1, 
+			media_content_updated_date: `${loadedDate}`, 
+			media_content_upload_date: `${loadedDate}`
+		}
+
+		this.remoteDbService.postMedia(newMedia).subscribe(media => {
+			this.profileImageUrl = `${this.endpoint}/media/${media.media_id}/content`
+			subject.next(media.media_id);
+		});
+
+		return subject.asObservable();
 	}
 
 	@Input('cdkTextareaAutosize') enable: false;	

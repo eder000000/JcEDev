@@ -37,6 +37,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { UserTableDialogComponent } from './user-table/user-table-dialog/user-table-dialog.component';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
+import { FooterMainComponent } from './navigation/footer-main/footer-main.component';
+import { FindAJobComponent } from './navigation/find-a-job/find-a-job.component';
+import { IntroComponent } from './navigation/intro/intro.component';
+import { PrivacyComponent } from './navigation/privacy/privacy.component';
+import { VerifiedProfessionalsComponent } from './navigation/verified-professionals/verified-professionals.component';
+import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
+import { HeaderProComponent } from './catalog/header-pro/header-pro.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 
@@ -58,9 +65,16 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 		UserTableComponent,
 		PageNotFoundComponent,
 		UserTableDialogComponent, 
+		EditProComponent,
+		FooterMainComponent,
+		FindAJobComponent,
+		IntroComponent,
+		PrivacyComponent,
+		VerifiedProfessionalsComponent,   
 		PasswordRecoveryComponent,
 		PasswordResetComponent,
-		EditProComponent
+		EditProComponent, 
+		ProfessionalCardErrorComponent, HeaderProComponent
 	],
 	imports: [
 		BrowserModule,

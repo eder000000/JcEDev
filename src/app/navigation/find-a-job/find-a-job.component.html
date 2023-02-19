@@ -1,0 +1,33 @@
+<mat-card class="one-card mat-elevation-z2">
+<mat-card-content>
+  <div fxLayout="column">
+    <!-- Header -->
+    <div fxLayout="row" fxFlex="50px" fxLayoutAlign="center center">
+      <mat-card-title>¿Buscas encontrar un nuevo empleo?</mat-card-title>
+    </div>
+    <div fxLayout="row" fxFlex="50px"  fxLayoutAlign="center center">
+      <p>
+        Ponte en contacto con nosotros y descubre las increibles oportunidades de trabajo que tenemos para ti.
+       </p>
+    </div>
+    <!-- Main -->
+    <div fxLayout="row wrap" style="height: 150px">
+      <div fxFlexOrder="1" fxLayout="row" fxLayout.xs="column" fxFlex.xs="100" fxFlex.gt-xs="30"  fxLayoutAlign="center center">
+        <p><mat-icon> phone</mat-icon>33 3810 6569</p>
+      </div>
+      <div fxFlexOrder="5" fxLayout="row" fxFlex.xs="100" fxFlex.gt-xs="70" fxFlex.gt-sm="50"  fxLayoutAlign="center center">
+        <p><mat-icon> mail_outline</mat-icon>bancodeempleos@bdalimentos.org</p>
+      </div>
+      <div fxFlexOrder="10" fxLayout="row" fxHide.xs fxHide.sm fxFlex.gt-sm="20"  fxLayoutAlign="center center">
+        <img class="img-xxs-small" mat-card-image src="\assets\img\undraw_coffee_break_h3uu_thumbnails.png">
+      </div>
+    </div>
+    <!-- Footer -->
+    <div fxLayout="row" fxFlex="50px"  fxLayoutAlign="center center">
+      <mat-card-actions align="center">
+        <button class="explore-button" mat-button routerLink="/listado">Ponerme en contacto</button>
+        </mat-card-actions>
+    </div>
+  </div>
+</mat-card-content>
+</mat-card>

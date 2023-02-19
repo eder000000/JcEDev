@@ -1,0 +1,35 @@
+.container{
+margin-top: 40px;
+text-align: justify;
+}
+
+h1{
+    text-align: center;
+    margin: 30px;
+    font-weight: 500;
+}
+
+h2{
+    font-weight: 400;
+    margin: 30px;
+}
+
+li{
+    margin-right: 20px;
+}
+
+.parrafo{
+    margin: 25px;
+}
+
+.red{
+    color: red;
+}
+
+.bold{
+    font-weight: 400;
+}
+
+.circle{
+    list-style-type: circle;
+}

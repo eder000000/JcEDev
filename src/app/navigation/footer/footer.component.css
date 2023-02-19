@@ -5,17 +5,17 @@ body {
 
 a {
   text-decoration: none;
-  color: white;
+  color: #000;
 }
 
 .footer {
-  background-color: #ff8e3c;
-  color: white;
+  background-color: #FCECC9;
+  color: #000;
 }
 
 a:hover,
 a:active {
-  color: lightgray;
+  color: #e16162;
 }
 
 
@@ -39,3 +39,13 @@ a:active {
   filter: drop-shadow(1px 1px 2px #e16162);
 
 }
+
+.grid-item {
+  padding: 10px;
+}
+
+.grid-item:hover {
+  cursor: pointer;
+  color: #e16162;
+}
+

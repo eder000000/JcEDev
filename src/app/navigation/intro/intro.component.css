@@ -1,0 +1,147 @@
+
+.container{
+  margin-bottom: 20px;
+}
+
+
+h1 {
+  font-weight: 500;
+    padding: 5px;
+    margin: 15px;
+    line-height: 25pt;
+    text-align: center;
+}
+
+h2 {
+   text-align: center;
+   font-size: 18px; 
+   font-weight: 400;
+    color: black;
+    padding: 5px;
+    margin: 20px;
+    line-height: 15pt;
+}
+
+
+.img-md-medium {
+    margin: 5px;
+    width: 95%;
+    max-width: 600px;
+    min-width: 280px;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .explore-button {
+    background-color: #ff8e3c;
+    color: white;
+    font-weight: 400;
+    width: 180px;
+    height: 35px;
+    line-height: 24px;
+    border-style: solid;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  
+  .explore-button:hover {
+    background-color: white;
+    color: #ff8e3c;
+  }
+
+  .red{
+    color: #ff8e3c;
+  }
+  
+  .column-back{
+    background-color: #FCECC9;
+  }
+
+  .columnOne-back{
+    background-color: #F8F8F8;
+  }
+
+
+
+.rectanguloOne{
+    min-width: 85px; 
+    width: 25%;
+    height: 8px; 
+    background: #AA4465;
+}
+
+.rectanguloTwo{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #F56476;
+}
+
+.rectanguloThree{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #E43F6F;
+}
+
+.rectanguloFour{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #AA4465;
+}
+
+.rectanguloOneLow{
+  min-width: 85px; 
+  width: 25%;
+  height: 8px; 
+  background: #AA4465;
+}
+
+.rectanguloTwoLow{
+min-width: 85px; 
+width: 25%;
+height: 8px; 
+background: #F56476;
+}
+
+.rectanguloThreeLow{
+min-width: 85px; 
+width: 25%;
+height: 8px; 
+background: #E43F6F;
+}
+
+.rectanguloFourLow{
+min-width: 85px; 
+width: 25%;
+height: 8px; 
+background: #AA4465;
+}
+
+
+@media all and (min-width: 480px) {
+  .rectanguloOne {display:none;}
+  .rectanguloTwo {display:none;}
+  .rectanguloThree {display:none;}
+  .rectanguloFour {display:none;}
+  .rectanguloOneLow {display:block;}
+  .rectanguloTwoLow {display:block;}
+  .rectanguloThreeLow {display:block;}
+  .rectanguloFourLow {display:block;}
+
+
+
+}
+
+@media all and (max-width: 479px) {
+  .rectanguloOne {display:block;}
+  .rectanguloTwo {display:block;}
+  .rectanguloThree {display:block;}
+  .rectanguloFour {display:block;}
+  .rectanguloOneLow {display:none;}
+  .rectanguloTwoLow {display:none;}
+  .rectanguloThreeLow {display:none;}
+  .rectanguloFourLow {display:none;}
+
+}

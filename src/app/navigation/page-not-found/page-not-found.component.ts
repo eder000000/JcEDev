@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found.component.css']
 })
 export class PageNotFoundComponent implements OnInit {
+	imageError = './assets/img/undraw_Notify_re_65on.png';
 
   constructor() { }
 
