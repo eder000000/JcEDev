@@ -57,17 +57,11 @@ export class SignupComponent implements OnInit {
         this.signupGroup.value.username,
         this.signupGroup.value.email,
         this.signupGroup.value.password
-        ).subscribe(() => 
-          this.remoteDbService.login(
-          this.signupGroup.value.username, 
-          this.signupGroup.value.password
-          ).subscribe(session => {
-              this.authService.login({
-              token: session.token, 
-              user_model_id: session.user_model_id, 
-              user_auth_id: session.user_auth_id
-            })
-      }));  
+        ).subscribe(() => {
+          alert("Registro completado. Espere verificación.");
+          this.router.navigate(['/']);
+    },
+      () => alert("Es posible que la dirección de correo ya esté en uso."));  
     } else alert("Formulario no enviado. Hay campos con errores.");
   }
 
