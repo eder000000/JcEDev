@@ -38,8 +38,7 @@ import { Subject } from 'rxjs';
 })
 export class RegisterProComponent implements OnInit {
 
-	endpoint:string = "http://127.0.0.1:5000/"
-
+	endpoint:string = "https://jce-flask-02.herokuapp.com/"
 	isLinear = true;
 	formNewProfesional: FormGroup;
 	selected: any;
