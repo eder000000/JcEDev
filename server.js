@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const whitelist = ['http://localhost:3000','https://jce-flask-02.herokuapp.com'];
+const whitelist = ['https://jce-demo-deploy-01.herokuapp.com','http://localhost:3000','https://jce-flask-02.herokuapp.com'];
 
 const corsOptions = {
     origin: function (origin, callback) {
