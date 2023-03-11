@@ -8,6 +8,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { map, startWith } from 'rxjs/operators';
 import { RemoteDbService } from 'src/app/remote-db/remote-db.service'
 import { UserModel } from 'src/app/remote-models/user-model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 // FIXME: Default job is not the right one [@serviciosocial]
 
@@ -51,6 +52,7 @@ export class ListProComponent  implements OnInit {
   requestedJob: string;
   iconOrganization: IconOrganization[];
 
+  imagePrefix: string = "data:image/jpeg;base64, ";
   availableProfessions: string[];
   separatorKeysCodes: number[] = [ENTER, COMMA]; 
   professionCtrl = new FormControl();
@@ -68,7 +70,8 @@ export class ListProComponent  implements OnInit {
   @ViewChild('profesionInput') profesionInput: ElementRef<HTMLInputElement>;
 
   constructor(private remoteDbService: RemoteDbService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -118,7 +121,7 @@ export class ListProComponent  implements OnInit {
         
         // Save the professionals' media for a set profession in the map with a unique id
         this.remoteDbService.getUserMediaById(pro.user_model_id).subscribe(media => {
-          this.proIdToMedia.set(pro.user_model_id, media.media_link)
+          this.proIdToMedia.set(pro.user_model_id, media.media_data)
         });
         
       });
@@ -401,7 +404,7 @@ export class ListProComponent  implements OnInit {
         formattedProfessions[k] = {
           "oficio_name": this.profIdtoName.get(pro.user_model_professions[k].profession_skill),
           "oficio_descripcion": this.profIdtoDesc.get(pro.user_model_professions[k].profession_skill),
-          "fotos": this.proAndSkillToMedia.get('pro'+pro.user_model_id+'sk'+pro.user_model_professions[k].profession_id)
+          "fotos": this.proAndSkillToMedia.get('pro'+pro.user_model_id+'sk'+pro.user_model_professions[k].profession_id).map(foto => this.imagePrefix + foto)
         }
       }
 
@@ -420,7 +423,7 @@ export class ListProComponent  implements OnInit {
       
       currentCard.professionals.push({
         id: this.queryPros.indexOf(pro),
-        fotoPerfil: this.proIdToMedia.get(pro.user_model_id), 
+        fotoPerfil: this.imagePrefix + this.proIdToMedia.get(pro.user_model_id), 
         primerNombre: pro.user_model_first_name,
         segundoNombre: pro.user_model_surname,
         apellidos: pro.user_model_last_name,

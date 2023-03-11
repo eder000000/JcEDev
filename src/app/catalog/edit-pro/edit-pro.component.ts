@@ -36,7 +36,7 @@ import { WorkingArea } from 'src/app/remote-models/working-area-model';
 	styleUrls: [ './edit-pro.component.css' ]
 })
 export class EditProComponent implements OnInit {
-	endpoint:string = "https://jce-flask-02.herokuapp.com"
+	endpoint:string = "https://dashboard.heroku.com/apps/jce-demo-deploy-01"
 
 	isLoaded = false;
 	isLinear = true;
@@ -50,7 +50,6 @@ export class EditProComponent implements OnInit {
 
 	allMunicipalities: Municipality[];
 	allColonies: Colony[];
-	selectedMun: string;
 	allSkills: Skills[]; 
 
 	profileImageId: number
@@ -146,10 +145,8 @@ export class EditProComponent implements OnInit {
 		});
 	}
 
-	loadInfo(user, address, colony, zipCode, mun) {
+	loadInfo(user, address?, colony?, zipCode?, mun?) {
 		console.log(user);
-
-		this.selectedMun = mun.municipality_name;
 
 		this.firstFormNewProfesional.setValue({
 			nombres: user.user_model_first_name,
@@ -160,12 +157,12 @@ export class EditProComponent implements OnInit {
 		})
 
 		this.secondFormNewProfesional.setValue({
-			calle: address.street_name, 
-			numExterior: address.main_number, 
-			numInterior: address.interior_number, 
-			codigoPostal: zipCode.zip_code,
-			colonia: colony.id_colony_code + "", 
-			municipio: mun.id_municipality + ""
+			calle: address ? address.street_name : "", 
+			numExterior: address ? address.main_number : "", 
+			numInterior: address ? address.interior_number : "", 
+			codigoPostal: zipCode ? zipCode.zip_code : "",
+			colonia: colony ? colony.id_colony_code + "" : "", 
+			municipio: mun ? mun.id_municipality + "" : ""
 		})
 		
 		// Set professions and evidences
@@ -215,7 +212,6 @@ export class EditProComponent implements OnInit {
 	ngOnInit() {
 		this.maxDate = new Date();
 		this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
-		this.selectedMun = ""
 		this.showProfilePicturePreview = "hidden"
 		this.photoEvidences = [[]]
 		this.isPhotoEvidencesLoading = [false]
@@ -266,6 +262,9 @@ export class EditProComponent implements OnInit {
 								})							
 							})
 						})
+					}, () => {
+						this.loadInfo(user);
+						this.isLoaded = true;
 					})
 				})
 			})

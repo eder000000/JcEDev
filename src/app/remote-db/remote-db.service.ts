@@ -22,9 +22,9 @@ import { ZipCode } from '../remote-models/zip-code-model';
 })
 
 export class RemoteDbService {
-  // FIXME: Endopint change for local testing
-  //endpoint:string = 'http://127.0.0.1:5000'
-  endpoint:string = 'https://jce-server.herokuapp.com'
+  // FIXME: Endpoint change for local testing
+  endpoint:string = 'https://jce-flask-02.herokuapp.com/'
+  //endpoint:string = 'https://jce-server.herokuapp.com'
   headers:{}
   token:string
 
@@ -312,11 +312,51 @@ export class RemoteDbService {
   }
 
   /**
+   * POST /resetPassword
+   */
+     resetPassword(newPassword:string, token:string): Observable<boolean> {
+      return this.httpClient.post<any>(
+        this.endpoint + '/resetpwd', {
+          'user_new_password': newPassword,
+          'reset_token': token
+        }, {
+          'headers': this.headers
+        }
+      )
+    }
+
+  /**
    * POST /logout
    */
    logout(userAuth:UserAuth): Observable<any> {
     return this.httpClient.post<any>(
       this.endpoint + '/logout', JSON.stringify(userAuth), {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
+   * POST /signup
+   */
+  signup(username:string, email:string, password:string): Observable<any> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/signup', {
+        'user_auth_name': username, 
+        'user_auth_email': email,
+        'user_auth_password': password
+      }, {
+        'headers': this.headers
+      }
+    )
+  }
+
+  /**
+   * POST /recoverpwd
+   */
+  sendRecoveryEmail(email: string): Observable<boolean> {
+    return this.httpClient.post<any>(
+      this.endpoint + '/recoverpwd', JSON.stringify(email), {
         'headers': this.headers
       }
     )
@@ -523,6 +563,9 @@ export class RemoteDbService {
     ).pipe(retry(1))
   }
 
+  /**
+   * GET /users/public
+   */
   getPublicUsersInfo(): Observable<PublicUserModel[]> {
     return this.httpClient.get<PublicUserModel[]>(
       this.endpoint + '/users/public', {
@@ -530,4 +573,5 @@ export class RemoteDbService {
       }
     ).pipe(retry(1))
   }
+
 }

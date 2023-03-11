@@ -12,6 +12,8 @@ import { AuthGuard } from './auth/auth.guard';
 import { EditProComponent } from './catalog/edit-pro/edit-pro.component';
 import { PrivacyComponent } from './navigation/privacy/privacy.component';
 import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -19,7 +21,8 @@ const routes: Routes = [
 	{ path: 'signup', component: SignupComponent },
 	{ path: 'privacidad', component: PrivacyComponent },
 	{ path: 'login', component: LoginComponent, canActivate:[AuthGuard]},
-	
+	{ path: 'recoverPassword', component: PasswordRecoveryComponent },
+	{ path: 'resetPassword/:token', component: PasswordResetComponent },
 	{ path: 'listado', component: ListProComponent },
 	{ path: 'cardError', component: ProfessionalCardErrorComponent },
 

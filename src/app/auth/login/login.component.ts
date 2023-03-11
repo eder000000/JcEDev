@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(){
     this.loginForm = new FormGroup({
-      email: new FormControl('', {
+      username: new FormControl('', {
         validators: [Validators.required]
       }),
       password: new FormControl('', {
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit{
 
   onSubmit(){
     this.remoteDbService.login(
-      this.loginForm.value.email, 
+      this.loginForm.value.username, 
       this.loginForm.value.password
     ).subscribe(session => {
       this.authService.login({

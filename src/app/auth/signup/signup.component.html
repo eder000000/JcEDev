@@ -1,0 +1,89 @@
+<section class="signup-form">
+    <mat-card  class="box mat-elevation-z8" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <form  class="login-form" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="signupGroup">
+        <mat-card-header>
+          <mat-card-title>Registro de usuarios</mat-card-title>
+        </mat-card-header>
+        <mat-form-field class="login-full-width">
+            <input 
+                type="text" 
+                matInput 
+                placeholder="Ingresa un nombre de usuario" 
+                name="username"
+                autocomplete="off"
+                required
+                formControlName="username">
+            <mat-error>Campo obligatorio.</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-full-width">
+            <input 
+                type="email" 
+                matInput 
+                placeholder="Ingresa tu correo electrónico" 
+                name="email"
+                autocomplete="off"
+                required
+                email
+                formControlName="email">
+            <mat-error>
+                <div *ngIf="f.email.errors">
+                    <div *ngIf="f.email.errors.email">
+                    Debe ser un correo electrónico válido.
+                    </div>
+                    <div *ngIf="f.email.errors.required">Campo obligatorio.</div>
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-full-width">
+            <input 
+                type="password" 
+                matInput 
+                placeholder="Ingresa tu contraseña" 
+                name="password"
+                autocomplete="off"
+                minlength="8"
+                required
+                formControlName="password"
+                pattern="^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$">
+                <mat-error>
+                  <div *ngIf="f.password.errors">
+                    <div *ngIf="f.password.errors.pattern">
+                      Debe tener al menos 8 caracteres e incluir mayúsculas, minúsculas, números y símbolos.
+                    </div>
+                    <div *ngIf="f.password.errors.required">Campo obligatorio.</div>
+                  </div>
+                </mat-error>
+        </mat-form-field>
+        <mat-form-field  class="login-full-width" hintLabel="Las contraseñas deben coincidir.">
+            <input 
+                type="password" 
+                matInput 
+                placeholder="Repite la contraseña" 
+                name="confirmPassword" 
+                autocomplete="off"
+                minlength="8"
+                required
+                formControlName="confirmPassword"
+                pattern="^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$">
+                <mat-error>
+                  <div *ngIf="f.confirmPassword.errors">
+                    <div *ngIf="f.confirmPassword.errors.passwordMatch">Las contraseñas no son iguales.</div>
+                    <div *ngIf="f.confirmPassword.errors.pattern">
+                      Debe tener al menos 8 caracteres e incluir mayúsculas, minúsculas, números y símbolos.
+                    </div>
+                    <div *ngIf="f.confirmPassword.errors.required">Campo obligatorio.</div>
+                  </div>
+                </mat-error>
+              </mat-form-field>
+              <mat-card-actions>
+          <button class="signup-button"
+            type="submit" 
+            mat-raised-button 
+            color="primary"
+            (click)="onSubmit()">
+            Registrar
+        </button>
+        </mat-card-actions>
+    </form>
+    </mat-card>
+  </section>

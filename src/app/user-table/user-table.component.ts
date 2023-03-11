@@ -79,7 +79,6 @@ export class UserTableComponent implements OnInit{
   
   //See more (see the complete information of the user)
     openDialog(idUser: number): void {  
-    console.log("ESTO ES VER MAS")
 
 
     this.remoteDbService.getUsersById(idUser).subscribe(userInfo => {
@@ -128,7 +127,7 @@ export class UserTableComponent implements OnInit{
                                 userInformation: userInfoFormat,
                                 userAddressInformation: userAddressFormat,
                                 userProfessions: "Profesiones",
-                                userAreas: "Areas usuario"
+                                userAreas: "Áreas usuario"
                               }
                       });
                     })

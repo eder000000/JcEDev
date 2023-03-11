@@ -38,8 +38,7 @@ import { Subject } from 'rxjs';
 })
 export class RegisterProComponent implements OnInit {
 
-	endpoint:string = "https://jce-flask-02.herokuapp.com"
-
+	endpoint:string = "https://jce-flask-02.herokuapp.com/"
 	isLinear = true;
 	formNewProfesional: FormGroup;
 	selected: any;
@@ -107,7 +106,7 @@ export class RegisterProComponent implements OnInit {
 
 		// JAL_CODE = 14
 		this.remoteDbService.getFilteredMunicipalities(14).subscribe((mun) => {
-			this.allMunicipalities = mun;
+			this.allMunicipalities = mun.sort((a, b) => a.municipality_name.localeCompare(b.municipality_name));
 			
 			//For Working Area chiplist 
 			this.allMunicipalities.forEach(municipality => {
@@ -235,15 +234,15 @@ export class RegisterProComponent implements OnInit {
 		var newUserAddress:UserAddress = {
 			id_user_address: 1, 
 			street_name: profesional.calle, 
-			main_number: parseInt(profesional.numExterior), 
+			main_number: parseInt(profesional.numExterior) | 0, 
 			interior_number: parseInt(profesional.numInterior) | 0, 
-			id_colony_code: parseInt(profesional.colonia), 
-			id_zip_code: this.zipCodeId, 
+			id_colony_code: parseInt(profesional.colonia) | 5714, 
+			id_zip_code: this.zipCodeId ?? 1992, 
 			id_state_code: 14, 
-			id_municipality: parseInt(profesional.municipio), 
-			id_country_code: 52, 
-			date_added: (new Date()).toISOString(), 
-			last_update_date: (new Date()).toISOString()
+			id_municipality: parseInt(profesional.municipio) | 126, 
+			id_country_code: 1, 
+			date_added: new Date().toISOString(), 
+			last_update_date: new Date().toISOString()
 		}
 
 		// console.log('[Before Post] New User Address Object', newUserAddress)
@@ -289,21 +288,21 @@ export class RegisterProComponent implements OnInit {
 
 					var newUserModel:UserModel = {
 						"user_model_address_id": user_address.id_user_address,
-						"user_model_birthday": profesional.fechaNacimiento.toISOString(),
+						"user_model_birthday": profesional.fechaNacimiento ? profesional.fechaNacimiento.toISOString() : "1970-01-01",
 						"user_model_creator_id": this.authService.getSession().user_auth_id,
 						"user_model_first_name": profesional.nombres,
 						"user_model_id": 1,
 						"user_model_last_name": profesional.apellidos,
 						"user_model_media_id": this.profileImageId,
-						"user_model_org": 1,
+						"user_model_org": 3,
 						"user_model_phone_number": profesional.numeroCelular,
 						"user_model_professions": newUserModelProfessions,
 						"user_model_registry_date": (new Date()).toISOString(),
-						// "user_model_surname": profesional.segundoNombre,
+						"user_model_surname": profesional.segundoNombre ?? "",
 						"user_model_updated_date": (new Date()).toISOString(),
 						"user_model_working_areas": newUserModelWorkingAreas,
 						"user_model_description": profesional.general_description,
-						"user_role_id": 5,
+						"user_role_id": 3,
 						"user_status_id": 1
 					}	
 
@@ -322,7 +321,7 @@ export class RegisterProComponent implements OnInit {
 
 	renderColonies(value) {
 		this.remoteDbService.getFilteredColonies(undefined, value).subscribe((col) => {
-			this.allColonies = col;
+			this.allColonies = col.sort((a, b) => a.colony_name.localeCompare(b.colony_name));
 			this.secondFormNewProfesional.controls.codigoPostal.setValue('');
 		});
 	}
@@ -467,8 +466,8 @@ export class RegisterProComponent implements OnInit {
 			media_title: media_title, 
 			media_data: media_data, 
 			media_status_id: 1, 
-			media_content_updated_date: `${loadedDate}`, 
-			media_content_upload_date: `${loadedDate}`
+			media_content_updated_date: loadedDate.toISOString(), 
+			media_content_upload_date: loadedDate.toISOString()
 		}
 
 		this.remoteDbService.postMedia(newMedia).subscribe(media => {

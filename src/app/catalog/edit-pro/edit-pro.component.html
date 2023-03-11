@@ -78,7 +78,7 @@
     		fxLayout="column" 
     		fxLayoutAlign="center center" 
     		fxLayoutGap="10px">
-     	<ng-template matStepLabel>Direccion personal</ng-template>
+     	<ng-template matStepLabel>Dirección personal</ng-template>
             <mat-form-field  class="register-full-width">
                 <mat-label class="small-label">Municipio</mat-label>
                 <mat-select formControlName="municipio" (selectionChange) = "renderColonies($event.value)">
@@ -212,7 +212,7 @@
                 </button>
               </mat-chip>
               <input
-                placeholder="Selecciona una area."
+                placeholder="Selecciona un área."
                 #workingAreaInput
                 [formControl]="workingAreasCtrl"
                 [matAutocomplete]="auto"
@@ -248,7 +248,7 @@
         fxLayout="column" 
         fxLayoutAlign="center center" 
         fxLayoutGap="10px">
-        <h1 mat-dialog-title>Cargando informacion</h1>
+        <h1 mat-dialog-title>Cargando información</h1>
         <mat-list>
         <div mat-subheader>Por favor espere unos momentos</div>
         </mat-list>

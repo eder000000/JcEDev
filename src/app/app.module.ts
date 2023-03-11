@@ -44,6 +44,8 @@ import { PrivacyComponent } from './navigation/privacy/privacy.component';
 import { VerifiedProfessionalsComponent } from './navigation/verified-professionals/verified-professionals.component';
 import { ProfessionalCardErrorComponent } from './catalog/professional-card-error/professional-card-error.component';
 import { HeaderProComponent } from './catalog/header-pro/header-pro.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
 	declarations: [
@@ -69,6 +71,8 @@ import { HeaderProComponent } from './catalog/header-pro/header-pro.component';
 		IntroComponent,
 		PrivacyComponent,
 		VerifiedProfessionalsComponent,   
+		PasswordRecoveryComponent,
+		PasswordResetComponent,
 		EditProComponent, 
 		ProfessionalCardErrorComponent, HeaderProComponent
 	],

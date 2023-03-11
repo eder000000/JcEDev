@@ -1,0 +1,45 @@
+html,
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+
+mat-card {
+  background-color: #eff0f3;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card-title {
+  color: #ff8e3c;
+}
+
+.box {
+  margin: 15% 5%;
+}
+
+.login-form {
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.login-full-width {
+  width: 100%;
+}
+
+.signup-button {
+  background-color: #ff8e3c;
+  color: white;
+  width: 120px;
+  height: 30px;
+  line-height: 24px;
+  border: 0;
+  border-radius: 10px;
+}
