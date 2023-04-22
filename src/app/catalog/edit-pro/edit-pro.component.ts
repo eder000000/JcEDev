@@ -536,7 +536,7 @@ export class EditProComponent implements OnInit {
 				} else {
 					this.showProfilePicturePreview = "visible"
 					this.profileImageId = media.media_id;
-					this.profileImageUrl = `https://jce-flask-02.herokuapp.com/media/${media.media_id}/content`
+					this.profileImageUrl = `https://jce-server.herokuapp.com/media/${media.media_id}/content`
 				}
 			})
 		}
