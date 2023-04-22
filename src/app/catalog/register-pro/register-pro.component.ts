@@ -38,7 +38,7 @@ import { Subject } from 'rxjs';
 })
 export class RegisterProComponent implements OnInit {
 
-	endpoint:string = "https://jce-flask-02.herokuapp.com"
+	endpoint:string = "https://jce-server.herokuapp.com"
 	isLinear = true;
 	formNewProfesional: FormGroup;
 	selected: any;
