@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerifiedProfessionalsComponent implements OnInit {
   textPresentationCard = 'Jalisco con Empleo te conecta con los profesionales para todos tus proyectos de construcción, mejora, y/o reparación.';
-	imageProfessionals = './assets/img/undraw_Cooking_re_g99p.png'; 
+	imageVerified = './assets/img/Verificados.png'; 
 
   constructor() { }
 
